@@ -15,7 +15,6 @@ const commentSchema = new Schema.Schema(
       type: Number,
       ref: "User",
       required: true,
-      default: 1,
     },
   },
   {

@@ -20,10 +20,6 @@ const postSchema = new Schema(
       type: Array,
       default: [],
     },
-    likeCount: {
-      type: Number,
-      default: 0,
-    },
     comments: [CommentSchema],
   },
   { timestamps: true },
