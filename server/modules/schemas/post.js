@@ -1,7 +1,32 @@
 const { Schema } = require("mongoose");
-const shortId = require("./types/shortId");
-const PostSchema = new Schema({
-  shortId,
-});
+const CommentSchema = require("./Comment");
 
-module.exports = PostSchema;
+const postSchema = new Schema(
+  {
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
+    },
+    title: {
+      type: String,
+      require: true,
+    },
+    content: {
+      type: String,
+      require: true,
+    },
+    likes: {
+      type: Array,
+      default: [],
+    },
+    likeCount: {
+      type: Number,
+      default: 0,
+    },
+    comments: [CommentSchema],
+  },
+  { timestamps: true },
+);
+
+module.exports = postSchema;
