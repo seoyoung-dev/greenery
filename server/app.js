@@ -2,9 +2,16 @@ const express = require("express");
 const app = express();
 
 // required middlewares
-const passport = require("passport");
+// const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const multer = require("multer");
+const dotenv = require("dotenv");
+
 // mongoose
 const mongoose = require("mongoose");
+
 // routers
 const routers = require("./routes/routers-package");
 const { indexRouter } = routers;
@@ -15,9 +22,17 @@ var port = process.env.PORT || "8080";
 // body-parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(morgan("dev"));
+app.use(helmet());
+dotenv.config();
 
 app.use("/", indexRouter);
 
 app.listen(port, () => {
   console.log("server on");
+});
+
+mongoose.connect(process.env.MONGODB_URL).then(() => {
+  console.log("MongoDB connected...");
 });
