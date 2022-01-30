@@ -6,7 +6,6 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const helmet = require("helmet");
-const multer = require("multer");
 const dotenv = require("dotenv");
 
 // mongoose
