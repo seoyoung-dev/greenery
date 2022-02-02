@@ -1,10 +1,7 @@
-import Test from "../../components/Test/testfile";
-
 function Container() {
   return (
     <>
-      <h1>Test</h1>
-      <Test />;
+      <h1>Home</h1>
     </>
   );
 }
