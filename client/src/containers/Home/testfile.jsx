@@ -1,10 +1,8 @@
-import Test from "../../components/Test/testfile";
-
 function Container() {
   return (
     <>
       <h1>Test</h1>
-      <Test />;
+      <a href="/signup">회원가입</a>
     </>
   );
 }
