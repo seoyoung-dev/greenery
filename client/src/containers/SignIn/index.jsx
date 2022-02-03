@@ -1,5 +1,5 @@
-import HeaderLogo from "../../components/HeaderLogo";
-import SignInForm from "../../components/SignInForm";
+import HeaderLogo from "components/HeaderLogo";
+import SignInForm from "components/SignInForm";
 
 import styled from "styled-components";
 

@@ -1,14 +1,30 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./styles";
+import axios from "axios";
 
 function SignInForm() {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
-    <S.LayoutLoginForm>
+    <S.LayoutLoginForm onSubmit={event => event.preventDefault()}>
       <S.InputWrap>
-        <S.FullWidthInput placeholder="아이디를 입력하세요"></S.FullWidthInput>
+        <S.FullWidthInput
+          placeholder="아이디를 입력하세요"
+          autoComplete="on"
+          value={id}
+          onChange={event => setId(event.target.value)}
+        ></S.FullWidthInput>
       </S.InputWrap>
       <S.InputWrap>
-        <S.FullWidthInput type="password" placeholder="패스워드를 입력하세요" />
+        <S.FullWidthInput
+          type="password"
+          placeholder="패스워드를 입력하세요"
+          autoComplete="on"
+          value={password}
+          onChange={event => setPassword(event.target.value)}
+        />
       </S.InputWrap>
       <S.LayoutSignupOption>
         <S.Label>
@@ -19,7 +35,30 @@ function SignInForm() {
       </S.LayoutSignupOption>
       <S.FormFooter>
         <S.ButtonWrap>
-          <S.FullWidthButton onClick={event => event.preventDefault()}>
+          <S.FullWidthButton
+            onClick={async () => {
+              async function sendPostLoginRequest() {
+                try {
+                  const url = "http://localhost:800/users";
+                  const requestConfig = {
+                    method: "POST",
+                    url: url,
+                    data: {
+                      id,
+                      password,
+                    },
+                  };
+
+                  const response = axios(requestConfig);
+                  return response;
+                } catch (err) {
+                  return console.error("Error:", err);
+                }
+              }
+
+              sendPostLoginRequest().then(console.log);
+            }}
+          >
             로그인
           </S.FullWidthButton>
         </S.ButtonWrap>

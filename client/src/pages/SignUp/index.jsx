@@ -1,4 +1,4 @@
-import Container from "../../containers/SignUp";
+import Container from "containers/SignUp";
 
 function SignUp() {
   return <Container></Container>;

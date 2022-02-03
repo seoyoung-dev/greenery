@@ -1,4 +1,4 @@
-import Container from "../../containers/Home/testfile";
+import Container from "containers/Home/testfile";
 
 function Home() {
   return <Container />;
