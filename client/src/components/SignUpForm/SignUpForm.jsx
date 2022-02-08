@@ -1,8 +1,13 @@
 import * as S from "./SignUpForm.style";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SignUpForm(props) {
+  const { postSignUpRequest } = props;
+
   const [profileImage, setProfileImage] = useState("");
+
+  const navigate = useNavigate();
 
   const inputList = [
     {
@@ -34,16 +39,6 @@ export function SignUpForm(props) {
     },
   ];
 
-  function handleUploadFile(target) {
-    const reader = new FileReader();
-    const file = target.files[0];
-
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setProfileImage(reader.result);
-    };
-  }
-
   function CreateInput(list) {
     const InputList = list.map(({ title, type, placeholder }) => {
       return (
@@ -69,7 +64,7 @@ export function SignUpForm(props) {
           <input
             type={type}
             onChange={event => {
-              handleUploadFile(event.target);
+              setUploadFile(event.target);
               console.log(event.target.files);
             }}
           ></input>
@@ -80,6 +75,16 @@ export function SignUpForm(props) {
     return FileInput;
   }
 
+  function setUploadFile(target) {
+    const reader = new FileReader();
+    const file = target.files[0];
+
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setProfileImage(reader.result);
+    };
+  }
+
   return (
     <S.LayoutLoginForm>
       {CreateInput(inputList)}
@@ -88,7 +93,22 @@ export function SignUpForm(props) {
         <img id="profile-preview" src={profileImage} alt="Profile"></img>
       </S.ImagePreview>
       <S.FormFooter>
-        <S.FullWidthButton>가입하기</S.FullWidthButton>
+        <S.FullWidthButton
+          onClick={event => {
+            event.preventDefault();
+            postSignUpRequest().then(response => {
+              if (response.error.code === 11000) {
+                alert(`회원가입 실패: ${response.message}`);
+                navigate("/login");
+                return;
+              }
+              alert("회원가입이 성공하였습니다.");
+              navigate("/login");
+            });
+          }}
+        >
+          가입하기
+        </S.FullWidthButton>
       </S.FormFooter>
     </S.LayoutLoginForm>
   );
