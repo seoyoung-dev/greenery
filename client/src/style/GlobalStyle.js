@@ -9,6 +9,18 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+
+  :root {
+  --text: #000000;
+  --light-text: #121212;
+  --hightlight-text: #ffffff;
+  --primary: #45BA66;
+  --primary-dark: #5B734E;
+  --primary-light: #69BF3B;
+  --bg: #ffffff;
+  --bg-liner: linear-gradient(107.56deg, #DEF9F6 0%, #F9EBDE 100%);
+}
+
 `;
 
 export default GlobalStyle;
