@@ -4,23 +4,23 @@ import * as S from "./SignInForm.style";
 import axios from "axios";
 
 export function SignInForm() {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   async function handleSignIn() {
     try {
-      // const url;
-      // const reqConfig = {};
-      // const data = { id, password};
-      // const response = axios.post(url, data, requestConfig);
+      const url = "/users/login";
+      const reqConfig = {};
+      const data = { email, password };
+      const response = axios.post(url, data, reqConfig);
 
-      const access_token = "qwerasdf";
-      const response = {
-        isOk: true,
-        access_token,
-        message: "로그인 성공",
-      };
+      // const access_token = "qwerasdf";
+      // const response = {
+      //   isOk: true,
+      //   access_token,
+      //   message: "로그인 성공",
+      // };
       return response;
     } catch (err) {
       return console.error("Error:", err);
@@ -37,8 +37,8 @@ export function SignInForm() {
         <S.FullWidthInput
           placeholder="아이디를 입력하세요"
           autoComplete="on"
-          value={id}
-          onChange={event => setId(event.target.value)}
+          value={email}
+          onChange={event => setEmail(event.target.value)}
         ></S.FullWidthInput>
       </S.InputWrap>
       <S.InputWrap>
@@ -62,8 +62,8 @@ export function SignInForm() {
           <S.FullWidthButton
             onClick={() => {
               handleSignIn().then(response => {
-                saveLocalStorage("access_token", response.access_token);
-                navigate("/");
+                // saveLocalStorage("access_token", response.access_token);
+                // navigate("/");
               });
             }}
           >

@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 export function SignUpForm(props) {
   const { postSignUpRequest } = props;
 
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState("");
 
   const navigate = useNavigate();
@@ -14,11 +17,13 @@ export function SignUpForm(props) {
       title: "아이디(닉네임)",
       type: "text",
       placeholder: "ID",
+      set: setName,
     },
     {
       title: "비밀번호",
       type: "password",
       placeholder: "******",
+      set: setPassword,
     },
     {
       title: "비밀번호 확인",
@@ -29,6 +34,7 @@ export function SignUpForm(props) {
       title: "이메일 주소",
       type: "email",
       placeholder: "example@greenfriend.com",
+      set: setEmail,
     },
   ];
 
@@ -40,7 +46,7 @@ export function SignUpForm(props) {
   ];
 
   function CreateInput(list) {
-    const InputList = list.map(({ title, type, placeholder }) => {
+    const InputList = list.map(({ title, type, placeholder, set }) => {
       return (
         <S.InputWrap key={title + type}>
           <S.Label>{title}</S.Label>
@@ -48,6 +54,9 @@ export function SignUpForm(props) {
             type={type}
             placeholder={placeholder}
             autoComplete="on"
+            onChange={e => {
+              set(e.target.value);
+            }}
           ></S.FullWidthInput>
         </S.InputWrap>
       );
@@ -96,15 +105,18 @@ export function SignUpForm(props) {
         <S.FullWidthButton
           onClick={event => {
             event.preventDefault();
-            postSignUpRequest().then(response => {
-              if (response.error.code === 11000) {
-                alert(`회원가입 실패: ${response.message}`);
-                navigate("/login");
-                return;
-              }
-              alert("회원가입이 성공하였습니다.");
-              navigate("/login");
-            });
+            postSignUpRequest(name, password, email, profileImage).then(
+              response => {
+                // if (response.error.code === 11000) {
+                //   alert(`회원가입 실패: ${response.message}`);
+                //   navigate("/login");
+                //   return;
+                // }
+                // alert("회원가입이 성공하였습니다.");
+                // navigate("/login");
+                console.log(response);
+              },
+            );
           }}
         >
           가입하기

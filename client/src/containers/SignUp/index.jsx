@@ -16,21 +16,17 @@ function Container() {
   );
 }
 
-const handleSign = async () => {
-  // const url = ""
-  // const data = {id, password, email, profileImg}
-  // const config = {}
-  // const response = await axios.post(url, data, config);
+const handleSign = async (name, password, email, profileImg) => {
+  const url = "/users/register";
+  const data = { name, password, email, profileImg };
+  const config = {};
   try {
+    const response = await axios.post(url, data, config);
     // const response = {
     //   isOk: true,
     //   isAuthorize: false,
     //   message: "회원가입 성공",
-    // };
-
-    const response = {
-      error: { code: 11000 },
-    };
+    // }
 
     return response;
   } catch (err) {
