@@ -1,7 +1,7 @@
-import * as S from "./style";
+import * as S from "./SignUpForm.style";
 import { useState } from "react";
 
-function SignUpForm() {
+export function SignUpForm(props) {
   const [profileImage, setProfileImage] = useState("");
 
   const inputList = [
@@ -93,5 +93,3 @@ function SignUpForm() {
     </S.LayoutLoginForm>
   );
 }
-
-export default SignUpForm;

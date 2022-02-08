@@ -1,7 +1,7 @@
-import HeaderLogo from "components/HeaderLogo";
-import SignInForm from "components/SignInForm";
-
 import styled from "styled-components";
+
+import { HeaderLogo } from "components/HeaderLogo/HeaderLogo";
+import { SignInForm } from "components/SignInForm";
 
 function Container() {
   return (

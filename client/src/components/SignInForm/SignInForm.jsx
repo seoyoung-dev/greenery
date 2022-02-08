@@ -1,11 +1,35 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import * as S from "./styles";
+import { Link, useNavigate } from "react-router-dom";
+import * as S from "./SignInForm.style";
 import axios from "axios";
 
-function SignInForm() {
+export function SignInForm() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  async function handleSignIn() {
+    try {
+      // const url;
+      // const reqConfig = {};
+      // const data = { id, password};
+      // const response = axios.post(url, data, requestConfig);
+
+      const access_token = "qwerasdf";
+      const response = {
+        isOk: true,
+        access_token,
+        message: "로그인 성공",
+      };
+      return response;
+    } catch (err) {
+      return console.error("Error:", err);
+    }
+  }
+
+  const saveLocalStorage = (key, value) => {
+    localStorage.setItem(key, value);
+  };
 
   return (
     <S.LayoutLoginForm onSubmit={event => event.preventDefault()}>
@@ -36,27 +60,11 @@ function SignInForm() {
       <S.FormFooter>
         <S.ButtonWrap>
           <S.FullWidthButton
-            onClick={async () => {
-              async function sendPostLoginRequest() {
-                try {
-                  const url = "http://localhost:800/users";
-                  const requestConfig = {
-                    method: "POST",
-                    url: url,
-                    data: {
-                      id,
-                      password,
-                    },
-                  };
-
-                  const response = axios(requestConfig);
-                  return response;
-                } catch (err) {
-                  return console.error("Error:", err);
-                }
-              }
-
-              sendPostLoginRequest().then(console.log);
+            onClick={() => {
+              handleSignIn().then(response => {
+                saveLocalStorage("access_token", response.access_token);
+                navigate("/");
+              });
             }}
           >
             로그인
@@ -69,5 +77,3 @@ function SignInForm() {
     </S.LayoutLoginForm>
   );
 }
-
-export default SignInForm;

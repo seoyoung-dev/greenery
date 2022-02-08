@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import HeaderLogo from "components/HeaderLogo";
-import SignUpForm from "components/SignUpForm";
+import { HeaderLogo } from "components/HeaderLogo/HeaderLogo";
+import { SignUpForm } from "components/SignUpForm";
 
 function Container() {
   return (

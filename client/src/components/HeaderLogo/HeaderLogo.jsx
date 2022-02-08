@@ -1,8 +1,8 @@
-import * as S from "./styles";
+import * as S from "./HeaderLogo.styles";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "./logo.svg";
 
-function HeaderLogo() {
+export function HeaderLogo() {
   return (
     <S.LayoutMainLink>
       <Link to="/">
@@ -13,5 +13,3 @@ function HeaderLogo() {
     </S.LayoutMainLink>
   );
 }
-
-export default HeaderLogo;
