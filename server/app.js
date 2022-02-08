@@ -26,8 +26,11 @@ app.use(morgan("dev"));
 app.use(helmet());
 dotenv.config();
 
+const post_router = require("./routes/post_router");
+
 app.use("/", indexRouter);
 app.use("/users", userRouter);
+app.use("/post", post_router);
 
 app.listen(port, () => {
   console.log(`server on, port ${port}`);
