@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 
 // routers
 const routers = require("./routes/routers-package");
-const { indexRouter, userRouter } = routers;
+const { indexRouter, userRouter, postRouter } = routers;
 // port
 var port = process.env.PORT || "8080";
 
@@ -30,6 +30,7 @@ dotenv.config();
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/", indexRouter);
 app.use("/users", userRouter);
+app.use("/post", postRouter);
 
 app.listen(port, () => {
   console.log(`server on, port ${port}`);
