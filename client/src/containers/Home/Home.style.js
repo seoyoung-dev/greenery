@@ -5,11 +5,3 @@ export const Main = styled.main`
   flex-direction: column;
   align-items: center;
 `;
-
-export const ContentsWrapper = styled.section`
-  width: 1140px;
-`;
-// export const ContentsWrapper = styled.section`
-//   display: flex;
-//   width: 1140px;
-// `
