@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
+const path = require("path");
 
 // mongoose
 const mongoose = require("mongoose");
@@ -26,6 +27,7 @@ app.use(morgan("dev"));
 app.use(helmet());
 dotenv.config();
 
+app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 
