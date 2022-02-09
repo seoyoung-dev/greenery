@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   --primary-dark: #5B734E;
   --primary-light: #69BF3B;
   --bg: #ffffff;
-  --bg-liner: linear-gradient(107.56deg, #DEF9F6 0%, #F9EBDE 100%);
+  --bg-linear: linear-gradient(107.56deg, #DEF9F6 0%, #F9EBDE 100%);
 }
 
 `;
