@@ -1,8 +1,7 @@
-// import Container from "containers/SignUp";
-// import Container from "containers/SignUp";
-import Container from "containers/Sign";
+import Container from "containers/SignUp";
+
 function SignUp() {
-  return <Container isSignIn={false}></Container>;
+  return <Container></Container>;
 }
 
 export default SignUp;
