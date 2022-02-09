@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const TodaysPlantSection = styled.section`
+  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Noto Serif KR", serif;
   width: 1140px;
   display: flex;
   flex-direction: column;
@@ -12,6 +14,7 @@ export const TodaysPlantSection = styled.section`
   padding: 48px 60px;
   box-sizing: border-box;
   border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
   & h3 {
     margin: 0;
     padding: 0 40px 30px;
