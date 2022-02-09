@@ -20,6 +20,12 @@ export const Button = styled.button`
   font-size: 18px;
   font-weight: bold;
   margin-top: 20px;
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    background: #ffffff;
+    transform: scale(1.01);
+  }
 `;
 
 const Content = styled.div`

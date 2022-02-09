@@ -1,5 +1,11 @@
 import React from "react";
-import { Main, PostContentsWrapper, Title, PostCardBox } from "./Home.style";
+import {
+  Main,
+  PostContentsWrapper,
+  Title,
+  PostCardBox,
+  StyledLink,
+} from "./Home.style";
 import TodaysPlant from "../../components/TodaysPlant";
 import PostCard from "../../components/PostCard";
 import ImgCard from "../../components/ImgCard";
@@ -38,7 +44,7 @@ export function Home() {
       <PostContentsWrapper>
         <Title>
           <span>많이 본 초록이들</span>
-          <span>더 많은 초록이들 보기</span>
+          <StyledLink to="/community">더 많은 초록이들 보기</StyledLink>
         </Title>
         <PostCardBox>
           {dummy.map(card => (

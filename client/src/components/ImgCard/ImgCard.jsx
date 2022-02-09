@@ -7,6 +7,7 @@ import {
   Detail,
   Button,
 } from "./ImgCard.style";
+import { Link } from "react-router-dom";
 
 export default function ServiceNav() {
   return (
@@ -15,12 +16,16 @@ export default function ServiceNav() {
         <PlantRecommedNav>
           <Detail>당신에게 어울리는</Detail>
           <Detail>반려 식물</Detail>
-          <Button>식물 추천</Button>
+          <Link to="/recommendation">
+            <Button>식물 추천</Button>
+          </Link>
         </PlantRecommedNav>
         <CommunityNav>
           <Detail>반려 식물과</Detail>
           <Detail>오랫동안 함께하기</Detail>
-          <Button>커뮤니티</Button>
+          <Link to="/community">
+            <Button>커뮤니티</Button>
+          </Link>
         </CommunityNav>
       </Nav>
     </Container>

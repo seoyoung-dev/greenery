@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Main = styled.main`
   display: flex;
@@ -22,15 +23,20 @@ export const Title = styled.div`
     font-size: 20px;
     font-weight: bold;
   }
-
-  & :nth-child(2) {
-    font-size: 14px;
-    color: #767676;
-  }
 `;
 
 export const PostCardBox = styled.div`
   display: flex;
   width: 1136px;
   justify-content: space-between;
+`;
+
+export const StyledLink = styled(Link)`
+  font-size: 14px;
+  text-decoration: none;
+  color: #767676;
+
+  &: hover {
+    text-decoration: underline;
+  }
 `;
