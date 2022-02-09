@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
+
 function Container() {
   return (
     <>
-      <h1>Test</h1>
-      <a href="/login">로그인</a>
-      <a href="/signup">회원가입</a>
       <h1>Home</h1>
+      <Link to="/signin">로그인</Link>
+      <Link to="/signup">회원가입</Link>
     </>
   );
 }
