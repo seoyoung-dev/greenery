@@ -16,7 +16,7 @@ const dummy = [
     postImgUrl: "img/post.png",
     title: "안녕 나는 첫번째 데이터야",
     profileImgUrl: "img/profile.png",
-    author: "elice-one",
+    author: "first-elice",
     likeNum: 11111,
   },
   {
@@ -24,7 +24,7 @@ const dummy = [
     postImgUrl: "img/post.png",
     title: "안녕 나는 두번째 데이터야",
     profileImgUrl: "img/profile.png",
-    author: "elice-two",
+    author: "second-elice",
     likeNum: 22222,
   },
   {
@@ -32,7 +32,7 @@ const dummy = [
     postImgUrl: "img/post.png",
     title: "안녕 나는 세번째 데이터야",
     profileImgUrl: "img/profile.png",
-    author: "elice-three",
+    author: "third-elice",
     likeNum: 33333,
   },
 ];
