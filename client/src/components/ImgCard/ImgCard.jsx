@@ -6,7 +6,7 @@ import {
   CommunityNav,
   Detail,
   Button,
-} from "./ServiceNav.style";
+} from "./ImgCard.style";
 
 export default function ServiceNav() {
   return (

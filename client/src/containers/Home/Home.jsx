@@ -1,13 +1,13 @@
 import React from "react";
 import { Main } from "./Home.style";
-import ContentsWrapper from "../../components/ContentsWrapper/ContentsWrapper";
-import ServiceNav from "../../components/ServiceNav/ServiceNav";
+import PostCardBox from "../../components/PostCardBox";
+import ImgCard from "../../components/ImgCard";
 
 export function Home() {
   return (
     <Main>
-      <ContentsWrapper />
-      <ServiceNav />
+      <PostCardBox />
+      <ImgCard />
     </Main>
   );
 }

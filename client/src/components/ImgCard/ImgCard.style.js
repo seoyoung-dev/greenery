@@ -1,6 +1,3 @@
-import PlantRecommendImg from "../ServiceNav/img/plant.png";
-import CommunityImg from "../ServiceNav/img/community.png";
-
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -41,9 +38,9 @@ export const Detail = styled.p`
 `;
 
 export const PlantRecommedNav = styled(Content)`
-  background-image: url(${PlantRecommendImg});
+  background-image: url(img/plant.png);
 `;
 
 export const CommunityNav = styled(Content)`
-  background-image: url(${CommunityImg});
+  background-image: url(img/community.png);
 `;
