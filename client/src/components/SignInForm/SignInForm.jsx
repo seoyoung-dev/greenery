@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./SignInForm.style";
 import axios from "axios";
@@ -8,27 +8,32 @@ export function SignInForm() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  async function handleSignIn() {
+  useEffect(() => {
+    onRefreshToken();
+  }, []);
+
+  async function onLoginRequest() {
     try {
       const url = "/users/login";
       const reqConfig = {};
       const data = { email, password };
-      const response = axios.post(url, data, reqConfig);
 
-      // const access_token = "qwerasdf";
-      // const response = {
-      //   isOk: true,
-      //   access_token,
-      //   message: "로그인 성공",
-      // };
+      const response = await axios.post(url, data, reqConfig);
+
       return response;
     } catch (err) {
       return console.error("Error:", err);
     }
   }
 
-  const saveLocalStorage = (key, value) => {
-    localStorage.setItem(key, value);
+  const onRefreshToken = () => {
+    axios.post("/users/refresh").then(response => onLoginSuccess(response));
+  };
+
+  const onLoginSuccess = response => {
+    const { accessToken } = response.data;
+
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   };
 
   return (
@@ -61,10 +66,19 @@ export function SignInForm() {
         <S.ButtonWrap>
           <S.FullWidthButton
             onClick={() => {
-              handleSignIn().then(response => {
-                // saveLocalStorage("access_token", response.access_token);
-                // navigate("/");
-              });
+              onLoginRequest()
+                .then(response => {
+                  if (!response.data.isOk) {
+                    throw new Error(response.data.message);
+                  }
+                  // 로그인 성공처리
+                  onLoginSuccess(response);
+                  alert("로그인되었습니다.");
+                  navigate("/");
+                })
+                .catch(err => {
+                  console.error(err);
+                });
             }}
           >
             로그인

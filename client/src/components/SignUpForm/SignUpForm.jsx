@@ -103,20 +103,8 @@ export function SignUpForm(props) {
       </S.ImagePreview>
       <S.FormFooter>
         <S.FullWidthButton
-          onClick={event => {
-            event.preventDefault();
-            postSignUpRequest(name, password, email, profileImage).then(
-              response => {
-                // if (response.error.code === 11000) {
-                //   alert(`회원가입 실패: ${response.message}`);
-                //   navigate("/login");
-                //   return;
-                // }
-                // alert("회원가입이 성공하였습니다.");
-                // navigate("/login");
-                console.log(response);
-              },
-            );
+          onClick={() => {
+            postSignUpRequest(name, password, email, profileImage, navigate);
           }}
         >
           가입하기
