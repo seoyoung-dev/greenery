@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import Community from "./pages/Community";
 import Post from "./pages/Post";
 import Article from "./pages/Article";
+import Recommendation from "./pages/Recommendation";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/post" element={<Post />} />
         <Route path="/article" element={<Article />} />
+        <Route path="/recommendation" element={<Recommendation />} />
       </Routes>
     </BrowserRouter>
   );
