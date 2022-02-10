@@ -1,7 +1,3 @@
-import Container from "../../containers/Home/testfile";
-
-function Home() {
-  return <Container />;
-}
+import { Home } from "../../containers/Home";
 
 export default Home;
