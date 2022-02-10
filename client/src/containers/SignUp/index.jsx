@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-import { HeaderLogo } from "components/HeaderLogo/HeaderLogo";
+import { HomeLogo } from "components/HomeLogo";
 import { TextInput } from "components/TextInput";
 import { SubmitButton } from "components/SubmitButton";
 
@@ -43,7 +43,7 @@ function Container() {
   return (
     <Main>
       <Section>
-        <HeaderLogo></HeaderLogo>
+        <HomeLogo />
         <form
           onSubmit={event => {
             event.preventDefault();
