@@ -11,10 +11,10 @@ export default function SideBar() {
         <img src={"icon/comment.svg"}></img>
       </Icon>
       <Icon>
-        <img src={"/icon/edit.svg"}></img>
+        <img src={"icon/edit.svg"}></img>
       </Icon>
       <Icon>
-        <img src={"/icon/trash.svg"}></img>
+        <img src={"icon/trash.svg"}></img>
       </Icon>
     </IconBox>
   );
