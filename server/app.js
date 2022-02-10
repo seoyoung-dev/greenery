@@ -27,10 +27,10 @@ app.use(morgan("dev"));
 app.use(helmet());
 dotenv.config();
 
-app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/post", postRouter);
+app.use("/images", express.static(path.join(__dirname, "/public/images")));
 
 app.listen(port, () => {
   console.log(`server on, port ${port}`);

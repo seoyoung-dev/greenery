@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { User } = require("../models");
 const auth = require("../middlewares/auth");
+const uploadProfileImage = require("../middlewares/uploadProfile");
 
 //유저 정보 조회
 router.get("/auth", auth, (req, res) => {
@@ -17,11 +18,20 @@ router.get("/auth", auth, (req, res) => {
 });
 
 // 회원가입
-router.post("/register", async (req, res) => {
+router.post("/register", uploadProfileImage, async (req, res) => {
   try {
+    const { email, name, password } = req.body;
     const salt = await bcrypt.genSalt(10);
-    req.body.password = await bcrypt.hash(req.body.password, salt);
-    const user = new User(req.body);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const userData = {
+      email,
+      name,
+      password: hashedPassword,
+    };
+    if (req.file)
+      userData.profileImg = `/images/userProfile/${req.file.filename}`;
+
+    const user = new User(userData);
     await user.save();
     res.json({ isOk: true, isAuthorize: false, message: "회원가입 성공" });
   } catch (err) {
