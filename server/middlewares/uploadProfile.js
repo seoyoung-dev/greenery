@@ -1,12 +1,11 @@
 const multer = require("multer");
 const path = require("path");
 
-const allowedTypeList = ["image/gif", "image/jpeg", "image/heic", "image/png"];
+const allowedTypeList = ["image/jpeg", "image/heic", "image/png"];
 const fileSize = 2 ** 20 * 20;
-const maxCount = 5;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/images/uploads/");
+    cb(null, "public/images/userProfile/");
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}${path.extname(file.originalname)}`);
@@ -26,14 +25,14 @@ const upload = multer({
   },
 });
 
-const uploadImage = (req, res, next) => {
-  upload.array("userfiles", maxCount)(req, res, err => {
+const uploadProfileImage = (req, res, next) => {
+  upload.single("profileImage")(req, res, err => {
     if (err) {
       console.log(err);
-      return res.json({ isOk: false, message: "이미지 업로드 실패" });
+      return res.json({ isOk: false, message: "프로필 이미지 업로드 실패" });
     }
     next();
   });
 };
 
-module.exports = uploadImage;
+module.exports = uploadProfileImage;
