@@ -7,13 +7,10 @@ import SignIn from "./pages/SignIn";
 import Community from "./pages/Community";
 import Post from "./pages/Post";
 
-import { Header } from "components/Header";
-
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
