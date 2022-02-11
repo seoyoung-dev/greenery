@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import axios from "axios";
+
+import {
+  Main,
+  Section,
+  ImagePreviewWrap,
+  UploadImage,
+  Label,
+  FormHeader,
+} from "./SignUp.style";
 
 import { HomeLogo } from "components/HomeLogo";
 import { TextInput } from "components/TextInput";
 import { SubmitButton } from "components/SubmitButton";
 
-import userProfileImage from "./userProfile.png";
-function Container() {
+export function SignUp() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [profileImage, setProfileImage] = useState(userProfileImage);
+  const [profileImage, setProfileImage] = useState("img/upload.svg");
 
   const navigate = useNavigate();
   function renderPreviewImage(target) {
@@ -40,14 +47,46 @@ function Container() {
     }
   };
 
+  const textInputList = [
+    {
+      title: "이메일(아이디)",
+      type: "email",
+      placeholder: "example@greenfriend.com",
+      autoComplete: "on",
+      setState: setEmail,
+    },
+    {
+      title: "비밀번호",
+      type: "password",
+      placeholder: "*******",
+      autoComplete: "on",
+      setState: setPassword,
+    },
+    {
+      title: "비밀번호 확인",
+      type: "password",
+      placeholder: "*******",
+      autoComplete: "on",
+      setState: setCheckPassword,
+    },
+    {
+      title: "닉네임",
+      type: "text",
+      placeholder: "ex) 초록집사",
+      autoComplete: "on",
+      setState: setName,
+    },
+  ];
+
   return (
     <Main>
       <Section>
-        <HomeLogo />
+        <FormHeader>
+          <HomeLogo />
+        </FormHeader>
         <form
           onSubmit={event => {
             event.preventDefault();
-
             onSignUpRequest({ name, password, email, profileImage })
               .then(() => {
                 alert("회원가입이 완료되었습니다.");
@@ -56,43 +95,28 @@ function Container() {
               .catch(err => alert(err));
           }}
         >
-          <TextInput
-            title={"아이디"}
-            type={"text"}
-            placeholder={"ID"}
-            autoComplete={"on"}
-            setState={setName}
-          ></TextInput>
-          <TextInput
-            title={"비밀번호"}
-            type={"password"}
-            placeholder={"******"}
-            autoComplete={"on"}
-            setState={setPassword}
-          ></TextInput>
-          <TextInput
-            title={"비밀번호 확인"}
-            type={"password"}
-            placeholder={"******"}
-            autoComplete={"on"}
-            setState={setCheckPassword}
-          ></TextInput>
-          <TextInput
-            title={"이메일"}
-            type={"password"}
-            placeholder={"example@greenfriend.com"}
-            autoComplete={"on"}
-            setState={setEmail}
-          ></TextInput>
-          <p>프로필 이미지(선택)</p>
+          {textInputList.map(
+            ({ title, type, placeholder, autoComplete, setState }) => {
+              return (
+                <TextInput
+                  title={title}
+                  type={type}
+                  placeholder={placeholder}
+                  autoComplete={autoComplete}
+                  setState={setState}
+                />
+              );
+            },
+          )}
+          <Label>프로필이미지(선택)</Label>
           <ImagePreviewWrap>
             <Label>
+              <UploadImage src={profileImage} alt="uploadImage"></UploadImage>
               <input
                 type="file"
                 style={{ display: "none" }}
                 onChange={event => renderPreviewImage(event.target)}
               />
-              <img id="profile-preview" src={profileImage} alt="Profile"></img>
             </Label>
           </ImagePreviewWrap>
           <SubmitButton type={"submit"} text={"회원가입"}></SubmitButton>
@@ -101,34 +125,3 @@ function Container() {
     </Main>
   );
 }
-
-const Main = styled.main`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`;
-
-const Section = styled.section`
-  width: 350px;
-  border-radius: 5px;
-  margin: 0 auto;
-`;
-
-export const ImagePreviewWrap = styled.div`
-  width: 100%;
-  height: 100px;
-  margin-bottom: 10px;
-  text-align: center;
-
-  & img {
-    width: 100px;
-    height: 100px;
-  }
-`;
-
-const Label = styled.label`
-  margin-bottom: 3px;
-`;
-
-export default Container;

@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import axios from "axios";
+
+import {
+  Main,
+  Section,
+  SignUpLinkWrap,
+  SignOptionWrap,
+  Label,
+  FormHeader,
+} from "./SignIn.style";
 
 import { HomeLogo } from "components/HomeLogo";
 import { TextInput } from "components/TextInput";
 import { SubmitButton } from "components/SubmitButton";
 
-function Container() {
+export function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -41,10 +49,28 @@ function Container() {
     axios.post("/users/refresh").then(response => onLoginSuccess(response));
   };
 
+  const textInputList = [
+    {
+      // type: "email",
+      placeholder: "example@greenfriend.com",
+      autoComplete: "on",
+      setState: setEmail,
+    },
+    {
+      // title: "비밀번호",
+      type: "password",
+      placeholder: "*******",
+      autoComplete: "on",
+      setState: setPassword,
+    },
+  ];
+
   return (
     <Main>
       <Section>
-        <HomeLogo />
+        <FormHeader>
+          <HomeLogo />
+        </FormHeader>
         <form
           onSubmit={event => {
             event.preventDefault();
@@ -57,20 +83,19 @@ function Container() {
               .catch(err => alert(err));
           }}
         >
-          <TextInput
-            title={"아이디"}
-            type={"text"}
-            placeholder={"ID"}
-            autoComplete={"on"}
-            setState={setEmail}
-          ></TextInput>
-          <TextInput
-            title={"비밀번호"}
-            type={"password"}
-            placeholder={"******"}
-            autoComplete={"on"}
-            setState={setPassword}
-          ></TextInput>
+          {textInputList.map(
+            ({ title, type, placeholder, autoComplete, setState }) => {
+              return (
+                <TextInput
+                  title={title}
+                  type={type}
+                  placeholder={placeholder}
+                  autoComplete={autoComplete}
+                  setState={setState}
+                />
+              );
+            },
+          )}
           <SignOptionWrap>
             <Label>
               <input type="checkbox" />
@@ -88,37 +113,3 @@ function Container() {
     </Main>
   );
 }
-
-const Main = styled.main`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`;
-
-const Section = styled.section`
-  width: 400px;
-  border-radius: 5px;
-  margin: 0 auto;
-`;
-
-const SignUpLinkWrap = styled.div`
-  margin: 7px 0 0 0;
-  text-align: center;
-
-  & a {
-    color: blue;
-    text-decoration: none;
-  }
-`;
-const SignOptionWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
-`;
-const Label = styled.label`
-  margin-bottom: 3px;
-`;
-
-export default Container;

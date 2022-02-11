@@ -9,7 +9,7 @@ export function TextInput({
 }) {
   return (
     <InputWrap>
-      <Label>{title}</Label>
+      {title && <Label>{title}</Label>}
       <Input
         type={type}
         placeholder={placeholder}
