@@ -18,7 +18,7 @@ import {
 
 import { HomeLogo } from "components/HomeLogo/HomeLogo";
 
-export function Header() {
+export default function Header() {
   const [isClick, setIsClick] = useState(false);
 
   const SimpleItem = ({ title, to }) => {
@@ -64,10 +64,10 @@ export function Header() {
               }}
             >
               <HambergIconWrap>
-                <img src="img/icon/hamburger.svg" alt="목록" />
+                <img src="icon/hamburger.svg" alt="목록" />
               </HambergIconWrap>
               <UserIconWrap>
-                <img src="img/icon/user.svg" alt="목록" />
+                <img src="icon/user.svg" alt="목록" />
               </UserIconWrap>
             </UserNavButton>
           </UserNavigationWrap>
