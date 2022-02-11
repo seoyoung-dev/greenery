@@ -4,7 +4,7 @@ const auth = require("../middlewares/auth");
 const { Post, Comment, User } = require("../models/index");
 
 // 댓글조회
-router.get("/:postId", async (req, res) => {
+router.get("/:postId/comment", async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await Post.findOne({ _id: postId }, "comments");
@@ -16,7 +16,7 @@ router.get("/:postId", async (req, res) => {
   }
 });
 // 댓글작성
-router.post("/:postId", auth, async (req, res) => {
+router.post("/:postId/comment", auth, async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await Post.findOne({ postId });
@@ -40,13 +40,13 @@ router.post("/:postId", auth, async (req, res) => {
 });
 
 // 댓글수정
-router.put("/:postId", (req, res) => {
+router.put("/:postId/comment/:commentId", (req, res) => {
   // $set : 필드값을 지정된값으로 변경
   // ...ing
 });
 
 // 댓글삭제
-router.delete("/:commentId/post/:postId", async (req, res) => {
+router.delete("/:postId/comment/:commentId", async (req, res) => {
   try {
     const { postId, commentId } = req.params;
     await Post.findOneAndUpdate(

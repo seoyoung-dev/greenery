@@ -30,7 +30,7 @@ dotenv.config();
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/post", postRouter);
-app.use("/comment", commentRouter);
+// app.use("/comment", commentRouter);
 app.use("/images", express.static(path.join(__dirname, "/public/images")));
 
 app.listen(port, () => {
