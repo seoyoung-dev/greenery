@@ -96,9 +96,10 @@ export function SignUp() {
           }}
         >
           {textInputList.map(
-            ({ title, type, placeholder, autoComplete, setState }) => {
+            ({ title, type, placeholder, autoComplete, setState }, index) => {
               return (
                 <TextInput
+                  key={title + index}
                   title={title}
                   type={type}
                   placeholder={placeholder}

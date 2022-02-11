@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import HeaderDropDown from "components/HeaderDropDown";
 
 import {
   HeaderTag,
   LayoutNavigationLeft,
   LayoutNavigationMenu,
   LayoutNavigationRight,
-  LayoutUserTap,
   NavigationBarContainer,
   UserNavigationWrap,
   HambergIconWrap,
@@ -21,28 +21,16 @@ import { HomeLogo } from "components/HomeLogo/HomeLogo";
 export default function Header() {
   const [isClick, setIsClick] = useState(false);
 
-  const SimpleItem = ({ title, to }) => {
+  const SimpleItem = ({ to, title, borderTop, handleLogout }) => {
     return (
-      <Item key={(title, to)}>
-        <Link to={to}>{title}</Link>
+      <Item key={(title, to)} borderTop={borderTop}>
+        <Link to={to} onClick={() => handleLogout()}>
+          {title}
+        </Link>
       </Item>
     );
   };
 
-  function UserTap() {
-    return (
-      <LayoutUserTap>
-        <ul className="user-tap">
-          <SimpleItem
-            to={"/signin"}
-            title="로그인"
-            option={"user"}
-          ></SimpleItem>
-          <SimpleItem to={"/signup"} title="회원가입"></SimpleItem>
-        </ul>
-      </LayoutUserTap>
-    );
-  }
   return (
     <HeaderTag>
       <NavigationBarContainer>
@@ -71,7 +59,7 @@ export default function Header() {
               </UserIconWrap>
             </UserNavButton>
           </UserNavigationWrap>
-          {isClick && <UserTap />}
+          {isClick && <HeaderDropDown SimpleItem={SimpleItem} />}
         </LayoutNavigationRight>
       </NavigationBarContainer>
     </HeaderTag>

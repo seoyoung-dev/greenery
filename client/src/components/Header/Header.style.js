@@ -48,26 +48,7 @@ const MenuItems = styled.ul`
 
 const Item = styled.li`
   font-weight: bold;
-`;
-
-const LayoutUserTap = styled.div`
-  width: 150px;
-  background: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  position: absolute;
-
-  top: calc(100% + 5px);
-  right: 0;
-
-  & li {
-    list-style: none;
-    margin-bottom: 10px;
-  }
-  & a {
-    text-decoration: none;
-    color: black;
-  }
+  border-top: ${props => props.borderTop || "none"};
 `;
 
 const UserNavButton = styled.button`
@@ -92,7 +73,6 @@ export {
   LayoutNavigationLeft,
   LayoutNavigationMenu,
   LayoutNavigationRight,
-  LayoutUserTap,
   NavigationBarContainer,
   UserNavigationWrap,
   HambergIconWrap,
