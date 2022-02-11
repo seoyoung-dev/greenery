@@ -1,3 +1,3 @@
-import { Article } from "../../containers/Article";
+import Article from "../../containers/Article";
 
 export default Article;

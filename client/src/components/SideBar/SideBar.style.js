@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const IconBox = styled.div`
+  position: sticky;
+  left: 75vw;
+  top: 328px;
   width: 54px;
   height: 276px;
   display: flex;
@@ -18,7 +21,7 @@ export const Icon = styled.div`
 
   img {
     color: #767676;
-    width: 22px;
+    width: ${props => props.width}px;
   }
 
   & + & {

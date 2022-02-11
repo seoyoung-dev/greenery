@@ -19,7 +19,7 @@ export const Title = styled.div`
   align-items: center;
   padding-bottom: 24px;
 
-  & span {
+  span {
     font-size: 20px;
     font-weight: bold;
   }

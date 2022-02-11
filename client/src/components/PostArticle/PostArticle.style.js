@@ -4,13 +4,14 @@ export const ArticleWrapper = styled.div`
   display: flex;
   width: 720px;
   flex-direction: column;
+  margin-top: 180px;
 `;
 
 export const ArticleTitle = styled.span`
   font-weight: bold;
   font-size: 34px;
   line-height: 40px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 export const PostInfo = styled.div`

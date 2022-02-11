@@ -15,7 +15,9 @@ export const TodaysPlantSection = styled.section`
   box-sizing: border-box;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
-  & h3 {
+  margin-top: 150px;
+
+  h3 {
     margin: 0;
     padding: 0 40px 30px;
     font-size: 28px;

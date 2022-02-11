@@ -20,6 +20,7 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/post" element={<Post />} />
         <Route path="/article" element={<Article />} />
+        <Route path="/article/:postId" element={<Article />} />
         <Route path="/recommendation" element={<Recommendation />} />
       </Routes>
     </BrowserRouter>
