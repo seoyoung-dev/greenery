@@ -83,7 +83,7 @@ router.get("/popularity", async function (req, res) {
 // Create
 router.post("/", auth, uploadImage, async function (req, res) {
   try {
-    const id = "61f7c965a3050c0ee095735f";
+    const id = req.user.id;
     const { title, contents, img } = req.body;
     const pictures = req.files;
     if (!title || (!contents && !pictures)) {
