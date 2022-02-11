@@ -16,9 +16,6 @@ import {
   Item,
 } from "./Header.style";
 
-import { ReactComponent as UserIcon } from "components/Icon/usericon.svg";
-import { ReactComponent as HambergIcon } from "components/Icon/hambergicon.svg";
-
 import { HomeLogo } from "components/HomeLogo/HomeLogo";
 
 export function Header() {
@@ -67,10 +64,10 @@ export function Header() {
               }}
             >
               <HambergIconWrap>
-                <HambergIcon width="100%" display="block" />
+                <img src="img/icon/hamburger.svg" alt="목록" />
               </HambergIconWrap>
               <UserIconWrap>
-                <UserIcon display="block" />
+                <img src="img/icon/user.svg" alt="목록" />
               </UserIconWrap>
             </UserNavButton>
           </UserNavigationWrap>
