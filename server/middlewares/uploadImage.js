@@ -1,7 +1,13 @@
 const multer = require("multer");
 const path = require("path");
 
-const allowedTypeList = ["image/gif", "image/jpeg", "image/heic", "image/png"];
+const allowedTypeList = [
+  "image/gif",
+  "image/jpeg",
+  "image/heic",
+  "image/png",
+  "multipart/form-data",
+];
 const fileSize = 2 ** 20 * 20;
 const maxCount = 5;
 const storage = multer.diskStorage({
@@ -18,11 +24,11 @@ const upload = multer({
   limits: {
     fileSize,
   },
-  filefilter: (req, file, cb) => {
-    if (allowedTypeList.includes(file.mymetype)) {
+  fileFilter: (req, file, cb) => {
+    if (allowedTypeList.includes(file.mimetype)) {
       return cb(null, true);
     }
-    cb("지원하지 않는 확장자");
+    cb(new Error("지원하지 않는 확장자"));
   },
 });
 
@@ -30,7 +36,11 @@ const uploadImage = (req, res, next) => {
   upload.array("userfiles", maxCount)(req, res, err => {
     if (err) {
       console.log(err);
-      return res.json({ isOk: false, message: "이미지 업로드 실패" });
+      return res.json({
+        isOk: false,
+        message: "이미지 업로드 실패",
+        err: "extension",
+      });
     }
     next();
   });
