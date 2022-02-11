@@ -1,4 +1,5 @@
 ﻿import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Modal = styled.section`
   position: absolute;
@@ -16,16 +17,17 @@ export const Modal = styled.section`
 
 export const Button = styled.button`
   background: var(--primary);
-  color: var(--hightlight-text);
-  padding: 5px 10px;
-  border-radius: 5px;
+  color: var(--highlight-text);
+  padding: 7px 14px;
+  border-radius: 3px;
   border: 0;
+  font-size: 1rem;
+  margin-top: 50px;
   cursor: pointer;
-  margin-top: 10px;
 `;
 
 export const CenterContainer = styled.div`
-  width: clamp(600px, 100%, 1200px);
+  width: clamp(0px, 1100px, 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,32 +37,9 @@ export const CenterContainer = styled.div`
 
 export const IntroContainer = styled.div`
   margin: 0 auto;
-`;
-
-export const ImageContainer = styled.figure``;
-
-export const GridContainer = styled.main`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-`;
-
-export const PlantCard = styled.div`
-  background: #fefefe;
-  width: 550px;
-  display: flex;
-  border-radius: 10px;
-
-  img {
-    width: 150px;
-  }
-
-  cursor: pointer;
-
-  &:hover {
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const Header = styled.div`
@@ -81,44 +60,28 @@ export const Header = styled.div`
   h5 {
     margin-top: 0;
   }
-`;
-
-export const Description = styled.div`
-  .origin {
-    color: var(--primary-light);
-  }
-`;
-
-export const QuestionContainer = styled.ul`
-  width: 100%;
-  padding: 0;
-`;
-
-export const QuestionBar = styled.li`
-  list-style-type: none;
-  width: 100%;
-  height: 40px;
-  background: var(--bg);
 
   ${props =>
-    props.active &&
+    props.result &&
     `
-    background: var(--primary);
-    a {
-      color: var(--hightlight-text);
-    }
-
+    text-align: center;
   `}
+`;
+
+export const CloseButton = styled(Link)`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+`;
+
+export const Nav = styled.nav`
+  text-align: right;
+  width: 100%;
+  margin: 50px 20px 20px 0;
+  font-size: 0.9rem;
 
   a {
-    display: inline-block;
-    width: 100%;
-    line-height: 40px;
     text-decoration: none;
-    color: var(--text);
-  }
-
-  & + li {
-    margin-top: 10px;
+    color: var(--lighter-text);
   }
 `;

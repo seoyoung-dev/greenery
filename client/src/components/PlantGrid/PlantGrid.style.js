@@ -9,10 +9,11 @@ export const GridContainer = styled.main`
 
 export const PlantCard = styled.div`
   background: #fefefe;
-  width: 550px;
+  width: clamp(0px, 500px, 100%);
+  padding: 25px;
   display: flex;
   border-radius: 10px;
-
+  align-items: center;
   cursor: pointer;
 
   &:hover {
@@ -22,21 +23,19 @@ export const PlantCard = styled.div`
 
 export const ImageContainer = styled.figure`
   margin: 0;
-  width: 200px;
+  width: clamp(0px, 100%, 200px);
   img {
-    width: 150px;
-    margin: 25px 0 25px 25px;
+    width: 100%;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 `;
 
 export const Description = styled.div`
-  margin: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
-
+  margin-left: 20px;
   h3 {
     margin-top: 0;
   }
