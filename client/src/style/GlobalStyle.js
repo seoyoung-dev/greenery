@@ -12,8 +12,9 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
   --text: #000000;
+  --highlight-text: #ffffff;
   --light-text: #121212;
-  --hightlight-text: #ffffff;
+  --lighter-text: #767676;
   --primary: #45BA66;
   --primary-dark: #5B734E;
   --primary-light: #69BF3B;

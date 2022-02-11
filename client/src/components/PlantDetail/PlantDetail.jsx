@@ -6,13 +6,16 @@
   Header,
   Main,
   Footer,
+  CloseButton,
 } from "./PlantDetail.style";
 
 export default function PlantDetail({ onClose, plant_info }) {
   return (
     <BlurBackground>
       <Modal>
-        <span onClick={() => onClose(false)}>X</span>
+        <CloseButton onClick={() => onClose(false)}>
+          <img src="icon/close.svg" alt="Close icon" />
+        </CloseButton>
         <DetailContainer>
           <ImageContainer>
             <img src={plant_info.photo} alt={plant_info.name_kor} />

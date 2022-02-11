@@ -1,6 +1,5 @@
 ﻿import { useState } from "react";
 
-import { recommendation_dummy } from "../../api/data";
 import PlantDetail from "../PlantDetail";
 import {
   GridContainer,
@@ -9,29 +8,28 @@ import {
   Description,
 } from "./PlantGrid.style";
 
-export default function PlantGrid({ filtered_data }) {
+export default function PlantGrid({ data }) {
   const [detailOpen, setDetailOpen] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState({});
 
-  console.log(filtered_data);
   return (
     <GridContainer>
-      {recommendation_dummy.map(data => {
+      {data.map(plant => {
         return (
           <PlantCard
-            key={data.id}
+            key={plant.id}
             onClick={() => {
               setDetailOpen(true);
-              setSelectedPlant({ ...selectedPlant, ...data });
+              setSelectedPlant({ ...selectedPlant, ...plant });
             }}
           >
             <ImageContainer>
-              <img src={data.photo} alt={data.name_kor} />
+              <img src={plant.photo} alt={plant.name_kor} />
             </ImageContainer>
             <Description>
-              <h3>{data.name_kor}</h3>
-              <p className="description">{data.description}</p>
-              <p className="origin">원산지: {data.origin}</p>
+              <h3>{plant.name_kor}</h3>
+              <p className="description">{plant.description}</p>
+              <p className="origin">원산지: {plant.origin}</p>
             </Description>
           </PlantCard>
         );

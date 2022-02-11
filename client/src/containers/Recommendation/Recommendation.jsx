@@ -1,13 +1,17 @@
 ﻿import { useState } from "react";
+import { Link } from "react-router-dom";
+import Survey from "../../components/Survey/Survey";
+import PlantGrid from "../../components/PlantGrid";
+import { recommendation_dummy } from "../../api/data";
 import {
   Modal,
   Button,
   CenterContainer,
   Header,
   IntroContainer,
+  CloseButton,
+  Nav,
 } from "./Recommendation.style";
-import Survey from "../../components/Survey/Survey";
-import PlantGrid from "../../components/PlantGrid";
 
 export default function Recommendation() {
   const [progress, setProgress] = useState(0);
@@ -21,12 +25,10 @@ export default function Recommendation() {
   function increaseProgress() {
     setProgress(progress + 1);
   }
-  function decreaseProgress() {
-    setProgress(progress - 1);
-  }
-  function saveAnswer(type, num) {
+
+  function saveAnswer(type, answer) {
     const newData = { ...filteredData };
-    newData[type] = num;
+    newData[type] = answer;
     setFilteredData(newData);
   }
 
@@ -64,11 +66,9 @@ export default function Recommendation() {
     element = (
       <Survey
         progress={progress}
-        element={element}
+        setProgress={setProgress}
         answers={filteredData}
         saveAnswer={saveAnswer}
-        decreaseProgress={decreaseProgress}
-        increaseProgress={increaseProgress}
       />
     );
 
@@ -76,11 +76,14 @@ export default function Recommendation() {
   } else {
     element = (
       <>
-        <Header>
-          <h1>초록친구</h1>
+        <Header result>
+          <img src="img/logo.svg" alt="logo" />
           <h1>함께하길 기다리는 초록이</h1>
         </Header>
-        <PlantGrid filtered_data={filteredData} />
+        <Nav>
+          <Link to="#">더 많은 초록이들 보기</Link>
+        </Nav>
+        <PlantGrid data={recommendation_dummy} />
         <Button onClick={reset}>다시하기</Button>
       </>
     );
@@ -88,6 +91,9 @@ export default function Recommendation() {
 
   return (
     <Modal>
+      <CloseButton to="/">
+        <img src="icon/close.svg" alt="Close icon" />
+      </CloseButton>
       <CenterContainer>{element}</CenterContainer>
     </Modal>
   );
