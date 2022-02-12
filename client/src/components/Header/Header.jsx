@@ -14,6 +14,7 @@ import {
   UserNavButton,
   MenuItems,
   Item,
+  PostButton,
 } from "./Header.style";
 
 import { HomeLogo } from "components/HomeLogo/HomeLogo";
@@ -46,7 +47,8 @@ export default function Header() {
         </LayoutNavigationMenu>
         <LayoutNavigationRight>
           <UserNavigationWrap>
-            <UserNavButton
+            <PostButton>올리기</PostButton>
+            {/* <UserNavButton
               onClick={() => {
                 setIsClick(prev => !prev);
               }}
@@ -57,7 +59,7 @@ export default function Header() {
               <UserIconWrap>
                 <img src="icon/user.svg" alt="목록" />
               </UserIconWrap>
-            </UserNavButton>
+            </UserNavButton> */}
           </UserNavigationWrap>
           {isClick && <HeaderDropDown SimpleItem={SimpleItem} />}
         </LayoutNavigationRight>

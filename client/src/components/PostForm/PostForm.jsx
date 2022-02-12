@@ -92,7 +92,6 @@ export default function PostForm() {
                   onChange={e => handleInputChange(e, i)}
                   style={{ display: "none" }}
                 />
-
                 {x.fileImage ? (
                   <UploadImg
                     style={{ width: 420, height: 350, objectFit: "cover" }}
@@ -103,6 +102,11 @@ export default function PostForm() {
                   <UploadImg src="/img/upload.png" alt="upload.png" />
                 )}
               </label>
+              {inputList.length !== 1 && (
+                <RemoveBtn onClick={() => handleRemoveClick(i)}>
+                  <img src="/icon/postTrash.svg" />
+                </RemoveBtn>
+              )}
 
               <PostTextarea
                 name="text"
@@ -110,15 +114,10 @@ export default function PostForm() {
                 value={x.text}
                 onChange={e => handleInputChange(e, i)}
               />
-              {inputList.length !== 1 && (
-                <RemoveBtn onClick={() => handleRemoveClick(i)}>
-                  <img src="/img/closeIcon.png" />
-                </RemoveBtn>
-              )}
             </ContentSection>
           );
         })}
-        <button type="submit">보내기</button>
+        {/* <button type="submit">보내기</button> */}
       </form>
 
       <CotentAddButton onClick={handleAddClick}>추가하기</CotentAddButton>
