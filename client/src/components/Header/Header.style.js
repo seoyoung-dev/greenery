@@ -48,26 +48,7 @@ const MenuItems = styled.ul`
 
 const Item = styled.li`
   font-weight: bold;
-`;
-
-const LayoutUserTap = styled.div`
-  width: 150px;
-  background: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  position: absolute;
-
-  top: calc(100% + 5px);
-  right: 0;
-
-  & li {
-    list-style: none;
-    margin-bottom: 10px;
-  }
-  & a {
-    text-decoration: none;
-    color: black;
-  }
+  border-top: ${props => props.borderTop || "none"};
 `;
 
 const UserNavButton = styled.button`
@@ -87,12 +68,26 @@ const UserNavigationWrap = styled.div``;
 
 const HambergIconWrap = styled.div``;
 const UserIconWrap = styled.div``;
+const PostButton = styled.button`
+  width: 126px;
+  height: 45px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 21px;
+  color: #ffffff;
+
+  background: #45ba66;
+  border-radius: 5px;
+  border: none;
+`;
 export {
   HeaderTag,
   LayoutNavigationLeft,
   LayoutNavigationMenu,
   LayoutNavigationRight,
-  LayoutUserTap,
   NavigationBarContainer,
   UserNavigationWrap,
   HambergIconWrap,
@@ -100,4 +95,5 @@ export {
   MenuItems,
   Item,
   UserNavButton,
+  PostButton,
 };

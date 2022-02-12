@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import HeaderDropDown from "components/HeaderDropDown";
 
 import {
   HeaderTag,
   LayoutNavigationLeft,
   LayoutNavigationMenu,
   LayoutNavigationRight,
-  LayoutUserTap,
   NavigationBarContainer,
   UserNavigationWrap,
   HambergIconWrap,
@@ -14,35 +14,24 @@ import {
   UserNavButton,
   MenuItems,
   Item,
+  PostButton,
 } from "./Header.style";
 
 import { HomeLogo } from "components/HomeLogo/HomeLogo";
 
-export default function Header() {
+export default function Header(props) {
   const [isClick, setIsClick] = useState(false);
 
-  const SimpleItem = ({ title, to }) => {
+  const SimpleItem = ({ to, title, borderTop, handleLogout }) => {
     return (
-      <Item key={(title, to)}>
-        <Link to={to}>{title}</Link>
+      <Item key={(title, to)} borderTop={borderTop}>
+        <Link to={to} onClick={() => handleLogout()}>
+          {title}
+        </Link>
       </Item>
     );
   };
 
-  function UserTap() {
-    return (
-      <LayoutUserTap>
-        <ul className="user-tap">
-          <SimpleItem
-            to={"/signin"}
-            title="로그인"
-            option={"user"}
-          ></SimpleItem>
-          <SimpleItem to={"/signup"} title="회원가입"></SimpleItem>
-        </ul>
-      </LayoutUserTap>
-    );
-  }
   return (
     <HeaderTag>
       <NavigationBarContainer>
@@ -58,20 +47,24 @@ export default function Header() {
         </LayoutNavigationMenu>
         <LayoutNavigationRight>
           <UserNavigationWrap>
-            <UserNavButton
-              onClick={() => {
-                setIsClick(prev => !prev);
-              }}
-            >
-              <HambergIconWrap>
-                <img src="icon/hamburger.svg" alt="목록" />
-              </HambergIconWrap>
-              <UserIconWrap>
-                <img src="icon/user.svg" alt="목록" />
-              </UserIconWrap>
-            </UserNavButton>
+            {props.id === "PostPage" ? (
+              <PostButton form="test">올리기</PostButton>
+            ) : (
+              <UserNavButton
+                onClick={() => {
+                  setIsClick(prev => !prev);
+                }}
+              >
+                <HambergIconWrap>
+                  <img src="icon/hamburger.svg" alt="목록" />
+                </HambergIconWrap>
+                <UserIconWrap>
+                  <img src="icon/user.svg" alt="목록" />
+                </UserIconWrap>
+              </UserNavButton>
+            )}
           </UserNavigationWrap>
-          {isClick && <UserTap />}
+          {isClick && <HeaderDropDown SimpleItem={SimpleItem} />}
         </LayoutNavigationRight>
       </NavigationBarContainer>
     </HeaderTag>

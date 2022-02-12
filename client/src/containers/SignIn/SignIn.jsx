@@ -21,9 +21,7 @@ export function SignIn() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    onRefreshToken();
-  }, []);
+  // setTimeout을 이용하여 엑세스 토큰의 유효기간이 일정시간 이하가 될 경우 엑세스 토큰을 다시받기 (x)
 
   const onLoginRequest = async data => {
     const url = "/users/login";
@@ -41,9 +39,10 @@ export function SignIn() {
   };
 
   const onLoginSuccess = response => {
-    const { accessToken } = response.data;
+    const { access_token } = response.data;
 
-    axios.defaults.headers.common["Authorization"] = `Bearer${accessToken}`;
+    axios.defaults.headers.common["Authorization"] = access_token;
+    console.log(axios.defaults.headers.common);
   };
   const onRefreshToken = () => {
     axios.post("/users/refresh").then(response => onLoginSuccess(response));
@@ -84,9 +83,10 @@ export function SignIn() {
           }}
         >
           {textInputList.map(
-            ({ title, type, placeholder, autoComplete, setState }) => {
+            ({ title, type, placeholder, autoComplete, setState }, index) => {
               return (
                 <TextInput
+                  key={type + index}
                   title={title}
                   type={type}
                   placeholder={placeholder}
