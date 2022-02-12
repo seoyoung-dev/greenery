@@ -9,7 +9,7 @@ export const GridContainer = styled.main`
 
 export const PlantCard = styled.div`
   background: #fefefe;
-  width: clamp(0px, 500px, 100%);
+  width: clamp(0px, 530px, 100%);
   padding: 25px;
   display: flex;
   border-radius: 10px;

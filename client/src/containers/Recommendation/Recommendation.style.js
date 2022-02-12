@@ -27,7 +27,7 @@ export const Button = styled.button`
 `;
 
 export const CenterContainer = styled.div`
-  width: clamp(0px, 1100px, 100%);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
