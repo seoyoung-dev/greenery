@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 
 // required middlewares
-// const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -13,8 +12,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 
 // routers
-const routers = require("./routes/routers-package");
-const { indexRouter, userRouter, postRouter } = routers;
+const routers = require("./routes");
+const { landingRouter, userRouter, postRouter } = routers;
 // port
 var port = process.env.PORT || "8080";
 
@@ -27,7 +26,7 @@ app.use(morgan("dev"));
 app.use(helmet());
 dotenv.config();
 
-app.use("/", indexRouter);
+app.use("/", landingRouter);
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 app.use("/images", express.static(path.join(__dirname, "/public/images")));

@@ -1,8 +1,5 @@
-const express = require("express");
-const router = express.Router();
-
-router.get("/", (req, res) => {
-  res.send("indexRouter.js");
-});
-
-module.exports = router;
+module.exports = {
+  landingRouter: require("./landing_router"),
+  userRouter: require("./user_router"),
+  postRouter: require("./post_router"),
+};
