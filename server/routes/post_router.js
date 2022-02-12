@@ -219,11 +219,10 @@ router.post("/:postId/comment", auth, async (req, res) => {
     comment.save();
     await Post.findOneAndUpdate(
       { _id: postId },
-      // $push: Array field에 값을 push 한다.
       { $push: { comments: comment } },
     );
 
-    res.status(200).json(comment);
+    res.status(200).json({ isOk: true, message: "댓글작성 완료" });
   } catch (err) {
     res.status(400).json({ isOk: false, message: err.message });
     return;
@@ -234,20 +233,22 @@ router.post("/:postId/comment", auth, async (req, res) => {
 // 배열인 경우 pull push는 알겠는데 중간값을 수정하는 방법을 모르겠다..😥
 router.put("/:postId/comment/:commentId", async (req, res) => {
   try {
+    const { content } = req.body;
     const { postId, commentId } = req.params;
-
-    await Post.findOneAndUpdate(
-      { _id: postId },
+    const posts = await Post.findOneAndUpdate(
       {
-        $set: {
-          comments: { _ },
-        },
+        _id: postId,
+      },
+      {
+        $set: { "comments.$[el].content": content },
+      },
+      {
+        arrayFilters: [{ "el._id": commentId }],
       },
     );
-    // $set : 필드값을 지정된값으로 변경
-    // ...ing
+    res.status(200).json({ ok: true, message: "댓글 수정완료" });
   } catch (err) {
-    res.status(400).json({ message: "댓글 수정 실패" });
+    res.status(400).json({ ok: false, message: "댓글 수정 실패" });
   }
 });
 
