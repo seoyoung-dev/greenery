@@ -1,8 +1,9 @@
-﻿import { useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Survey from "../../components/Survey/Survey";
 import PlantGrid from "../../components/PlantGrid";
-import { recommendation_dummy } from "../../api/data";
+import Loading from "../../components/Loading";
+import fetchPlant from "../../api/plant";
 import {
   Modal,
   Button,
@@ -12,6 +13,7 @@ import {
   CloseButton,
   Nav,
 } from "./Recommendation.style";
+import { WideContainer } from "style/ContainerStyle";
 
 export default function Recommendation() {
   const [progress, setProgress] = useState(0);
@@ -21,6 +23,7 @@ export default function Recommendation() {
     bloomingSeason: "",
     growthHeight: "",
   });
+  const [plantData, setPlantData] = useState();
 
   function increaseProgress() {
     setProgress(progress + 1);
@@ -41,6 +44,24 @@ export default function Recommendation() {
       growthHeight: "",
     });
   }
+
+  function isDataFilled(d) {
+    const data = Object.entries(d);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][1] === "") {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  useEffect(() => {
+    if (isDataFilled(filteredData)) {
+      fetchPlant(2).then(data => {
+        setPlantData(data);
+      });
+    }
+  }, [filteredData]);
 
   let element;
   // 설문 인트로
@@ -81,9 +102,9 @@ export default function Recommendation() {
           <h1>함께하길 기다리는 초록이</h1>
         </Header>
         <Nav>
-          <Link to="#">더 많은 초록이들 보기</Link>
+          <Link to="/wiki">더 많은 초록이들 보기</Link>
         </Nav>
-        <PlantGrid data={recommendation_dummy} />
+        {plantData ? <PlantGrid data={plantData} /> : <Loading />}
         <Button onClick={reset}>다시하기</Button>
       </>
     );
@@ -94,7 +115,9 @@ export default function Recommendation() {
       <CloseButton to="/">
         <img src="icon/close.svg" alt="Close icon" />
       </CloseButton>
-      <CenterContainer>{element}</CenterContainer>
+      <WideContainer>
+        <CenterContainer>{element}</CenterContainer>
+      </WideContainer>
     </Modal>
   );
 }

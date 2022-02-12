@@ -1,4 +1,4 @@
-﻿import { survey_data } from "../../api/data";
+﻿import { survey_data } from "./data";
 import Progress from "../Progress";
 import {
   Button,
