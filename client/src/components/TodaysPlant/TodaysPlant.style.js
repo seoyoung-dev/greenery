@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const TodaysPlantSection = styled.section`
-  font-family: "Noto Sans KR", sans-serif;
   font-family: "Noto Serif KR", serif;
   width: 1140px;
   display: flex;

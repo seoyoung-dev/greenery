@@ -45,18 +45,19 @@ export const DetailedInfo = styled.div`
   div p {
     font-size: 16px;
     line-height: 19px;
-    color: #767676;
+    color: var(--lighter-text);
   }
 `;
 
 export const Like = styled.div`
   img {
-    width: 10px;
-    height: 10px;
+    width: 13px;
+    height: 13px;
   }
 
-  p {
-    font-size: 10px;
+  div {
+    font-size: 13px;
+    color: var(--lighter-text);
     margin: 0 0 0 3px;
   }
 `;
