@@ -5,7 +5,7 @@ export const PostFormWrapper = styled.div``;
 export const PostTitle = styled.input`
   width: 862px;
   height: 44px;
-  margin: 32px 0px 32px 0px;
+  margin: 122px 0px 32px 0px;
 
   font-family: Roboto;
   font-style: normal;
@@ -36,8 +36,10 @@ export const UploadImg = styled.img`
 `;
 
 export const PostTextarea = styled.textarea`
+  position: relative;
+
   width: 420px;
-  height: 153px;
+  height: 350px;
 
   font-family: Roboto;
   font-style: normal;
@@ -47,7 +49,7 @@ export const PostTextarea = styled.textarea`
   line-height: 20px;
   margin-left: 22px;
   resize: none;
-  padding: 10px;
+  padding: 15px;
 
   border-radius: 5px;
   border: 1px solid #e5e5e5;
@@ -60,18 +62,21 @@ export const PostTextarea = styled.textarea`
 
 export const RemoveBtn = styled.button`
   position: absolute;
-  top: 0;
-  right: 0;
 
   background-color: transparent;
   border: none;
 
   img {
-    width: 30px;
-    height: 26px;
+    width: 34px;
+    height: auto;
+
+    :hover {
+      filter: drop-shadow(1px 1px 1px #000);
+    }
   }
-  left: 820px;
-  bottom: 300px;
+
+  left: 10px;
+  bottom: 15px;
 `;
 
 export const CotentAddButton = styled.button`

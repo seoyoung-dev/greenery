@@ -68,6 +68,21 @@ const UserNavigationWrap = styled.div``;
 
 const HambergIconWrap = styled.div``;
 const UserIconWrap = styled.div``;
+const PostButton = styled.button`
+  width: 126px;
+  height: 45px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 21px;
+  color: #ffffff;
+
+  background: #45ba66;
+  border-radius: 5px;
+  border: none;
+`;
 export {
   HeaderTag,
   LayoutNavigationLeft,
@@ -80,4 +95,5 @@ export {
   MenuItems,
   Item,
   UserNavButton,
+  PostButton,
 };

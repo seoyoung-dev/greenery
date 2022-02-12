@@ -14,11 +14,12 @@ import {
   UserNavButton,
   MenuItems,
   Item,
+  PostButton,
 } from "./Header.style";
 
 import { HomeLogo } from "components/HomeLogo/HomeLogo";
 
-export default function Header() {
+export default function Header(props) {
   const [isClick, setIsClick] = useState(false);
 
   const SimpleItem = ({ to, title, borderTop, handleLogout }) => {
@@ -46,18 +47,22 @@ export default function Header() {
         </LayoutNavigationMenu>
         <LayoutNavigationRight>
           <UserNavigationWrap>
-            <UserNavButton
-              onClick={() => {
-                setIsClick(prev => !prev);
-              }}
-            >
-              <HambergIconWrap>
-                <img src="icon/hamburger.svg" alt="목록" />
-              </HambergIconWrap>
-              <UserIconWrap>
-                <img src="icon/user.svg" alt="목록" />
-              </UserIconWrap>
-            </UserNavButton>
+            {props.id === "PostPage" ? (
+              <PostButton form="test">올리기</PostButton>
+            ) : (
+              <UserNavButton
+                onClick={() => {
+                  setIsClick(prev => !prev);
+                }}
+              >
+                <HambergIconWrap>
+                  <img src="icon/hamburger.svg" alt="목록" />
+                </HambergIconWrap>
+                <UserIconWrap>
+                  <img src="icon/user.svg" alt="목록" />
+                </UserIconWrap>
+              </UserNavButton>
+            )}
           </UserNavigationWrap>
           {isClick && <HeaderDropDown SimpleItem={SimpleItem} />}
         </LayoutNavigationRight>
