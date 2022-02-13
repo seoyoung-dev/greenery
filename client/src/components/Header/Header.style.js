@@ -46,11 +46,6 @@ const MenuItems = styled.ul`
   }
 `;
 
-const Item = styled.li`
-  font-weight: bold;
-  border-top: ${props => props.borderTop || "none"};
-`;
-
 const UserNavButton = styled.button`
   width: 80px;
   height: 40px;
@@ -64,10 +59,7 @@ const UserNavButton = styled.button`
   justify-content: space-evenly;
   align-items: center;
 `;
-const UserNavigationWrap = styled.div``;
 
-const HambergIconWrap = styled.div``;
-const UserIconWrap = styled.div``;
 const PostButton = styled.button`
   width: 126px;
   height: 45px;
@@ -83,6 +75,10 @@ const PostButton = styled.button`
   border-radius: 5px;
   border: none;
 `;
+
+const UserNavigationWrap = styled.div``;
+const HambergIconWrap = styled.div``;
+const UserIconWrap = styled.div``;
 export {
   HeaderTag,
   LayoutNavigationLeft,
@@ -93,7 +89,6 @@ export {
   HambergIconWrap,
   UserIconWrap,
   MenuItems,
-  Item,
   UserNavButton,
   PostButton,
 };
