@@ -21,6 +21,9 @@ const GlobalStyle = createGlobalStyle`
   --primary-light: #69BF3B;
   --bg: #ffffff;
   --bg-linear: linear-gradient(107.56deg, #DEF9F6 0%, #F9EBDE 100%);
+  --gray: #c4c4c4;
+  --gray-light: #e5e5e5;
+  --red: #ff0000;
 }
 
 `;
