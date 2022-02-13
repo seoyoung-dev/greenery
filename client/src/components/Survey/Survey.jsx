@@ -1,12 +1,7 @@
 ﻿import { survey_data } from "./data";
 import Progress from "../Progress";
-import {
-  Button,
-  Header,
-  QuestionContainer,
-  QuestionBar,
-  Footer,
-} from "./Survey.style";
+import Button from "../Button";
+import { Header, QuestionContainer, QuestionBar, Footer } from "./Survey.style";
 
 export default function Survey({ progress, setProgress, answers, saveAnswer }) {
   const [{ title, subtitle, questions, type }] = survey_data.filter(
@@ -47,8 +42,8 @@ export default function Survey({ progress, setProgress, answers, saveAnswer }) {
         })}
       </QuestionContainer>
       <Footer>
-        <Button onClick={decreaseProgress}>이전</Button>
-        <Button onClick={increaseProgress}>다음</Button>
+        <Button handleClick={decreaseProgress}>이전</Button>
+        <Button handleClick={increaseProgress}>다음</Button>
       </Footer>
     </>
   );

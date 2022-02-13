@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import Survey from "../../components/Survey/Survey";
 import PlantGrid from "../../components/PlantGrid";
 import Loading from "../../components/Loading";
+import Button from "../../components/Button";
 import fetchPlant from "../../api/plant";
 import {
   Modal,
-  Button,
   CenterContainer,
   Header,
   IntroContainer,
@@ -78,7 +78,7 @@ export default function Recommendation() {
             <span className="small"> (*약 2분 소요)</span>
           </h1>
         </Header>
-        <Button onClick={increaseProgress}>시작하기</Button>
+        <Button handleClick={increaseProgress}>시작하기</Button>
       </IntroContainer>
     );
 
@@ -105,7 +105,7 @@ export default function Recommendation() {
           <Link to="/wiki">더 많은 초록이들 보기</Link>
         </Nav>
         {plantData ? <PlantGrid data={plantData} /> : <Loading />}
-        <Button onClick={reset}>다시하기</Button>
+        <Button handleClick={reset}>다시하기</Button>
       </>
     );
   }
