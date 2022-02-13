@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import HeaderDropDown from "components/HeaderDropDown";
-
 import {
   HeaderTag,
   LayoutNavigationLeft,
@@ -13,25 +10,40 @@ import {
   UserIconWrap,
   UserNavButton,
   MenuItems,
-  Item,
   PostButton,
 } from "./Header.style";
 
-import { HomeLogo } from "components/HomeLogo/HomeLogo";
+import HomeLogo from "components/HomeLogo";
+import HeaderDropDown from "components/HeaderDropDown";
+import SimpleItem from "components/SimpleItem";
 
 export default function Header(props) {
-  const [isClick, setIsClick] = useState(false);
+  const [isDropDown, setIsDropDown] = useState(false);
 
-  const SimpleItem = ({ to, title, borderTop, handleLogout }) => {
-    return (
-      <Item key={(title, to)} borderTop={borderTop}>
-        <Link to={to} onClick={() => handleLogout()}>
-          {title}
-        </Link>
-      </Item>
-    );
-  };
+  const menusData = [
+    {
+      title: "커뮤니티",
+      to: "/community",
+    },
+    {
+      title: "식물추천",
+      to: "/recommendation",
+    },
+    {
+      title: "초록위키",
+      to: "/wiki",
+    },
+  ];
 
+  //event handler
+  function focusHandler() {
+    setIsDropDown(!isDropDown);
+  }
+  function blurHandler(e) {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setIsDropDown(!isDropDown);
+    }
+  }
   return (
     <HeaderTag>
       <NavigationBarContainer>
@@ -40,31 +52,27 @@ export default function Header(props) {
         </LayoutNavigationLeft>
         <LayoutNavigationMenu>
           <MenuItems>
-            <SimpleItem title={"커뮤니티"} to="/community"></SimpleItem>
-            <SimpleItem title={"식물추천"} to="/recommendation"></SimpleItem>
-            <SimpleItem title={"초록위키"} to="/wiki"></SimpleItem>
+            {menusData.map(({ title, to }, index) => {
+              return <SimpleItem key={index} title={title} to={to} />;
+            })}
           </MenuItems>
         </LayoutNavigationMenu>
         <LayoutNavigationRight>
-          <UserNavigationWrap>
+          <UserNavigationWrap onBlur={e => blurHandler(e)}>
             {props.id === "PostPage" ? (
               <PostButton form="test">올리기</PostButton>
             ) : (
-              <UserNavButton
-                onClick={() => {
-                  setIsClick(prev => !prev);
-                }}
-              >
+              <UserNavButton onClick={focusHandler}>
                 <HambergIconWrap>
-                  <img src="icon/hamburger.svg" alt="목록" />
+                  <img src="icon/hamburger.svg" alt="hamburger" />
                 </HambergIconWrap>
                 <UserIconWrap>
-                  <img src="icon/user.svg" alt="목록" />
+                  <img src="icon/user.svg" alt="usericon" />
                 </UserIconWrap>
               </UserNavButton>
             )}
+            {isDropDown && <HeaderDropDown />}
           </UserNavigationWrap>
-          {isClick && <HeaderDropDown SimpleItem={SimpleItem} />}
         </LayoutNavigationRight>
       </NavigationBarContainer>
     </HeaderTag>
