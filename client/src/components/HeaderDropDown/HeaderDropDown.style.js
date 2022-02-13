@@ -3,10 +3,10 @@ import styled from "styled-components";
 export const LayoutUserTap = styled.div`
   width: 150px;
   background: white;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--gray-light);
   border-radius: 10px;
   position: absolute;
-  padding: 10px 0;
+  overflow: hidden;
 
   top: calc(100% + 5px);
   right: 0;
@@ -14,18 +14,23 @@ export const LayoutUserTap = styled.div`
   & ul {
     padding: 0;
     margin: 0;
-  }
-  & li {
     list-style: none;
-    padding: 10px 25px;
   }
   & a {
+    display: block;
     text-decoration: none;
     color: black;
+    padding: 15px 25px;
+  }
+  & a:hover {
+    background-color: #e5e5e5;
+  }
+`;
+export const LogoutWrap = styled.div`
+  border-top: 1px solid var(--gray-light);
+  & a {
+    color: var(--red);
   }
 `;
 
 export const DropDownMenus = styled.ul``;
-export const LogoutWrap = styled.div`
-  border-top: 1px solid #797979;
-`;
