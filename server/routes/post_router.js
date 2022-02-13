@@ -199,7 +199,7 @@ router.get("/:postId/comment", async (req, res) => {
     const post = await Post.findOne({ _id: postId }, "comments");
     const comments = post.comments;
 
-    res.status(200).json(comments);
+    res.status(200).json({ isok: true, comments: comments });
   } catch (err) {
     res.status(400).json({ isOk: false, message: "댓글조회 실패" });
   }
@@ -224,7 +224,7 @@ router.post("/:postId/comment", auth, async (req, res) => {
 
     res.status(200).json({ isOk: true, message: "댓글작성 완료" });
   } catch (err) {
-    res.status(400).json({ isOk: false, message: err.message });
+    res.status(400).json({ isOk: false, message: "댓글작성 실패" });
     return;
   }
 });
@@ -246,9 +246,9 @@ router.put("/:postId/comment/:commentId", async (req, res) => {
         arrayFilters: [{ "el._id": commentId }],
       },
     );
-    res.status(200).json({ ok: true, message: "댓글 수정완료" });
+    res.status(200).json({ isOk: true, message: "댓글 수정완료" });
   } catch (err) {
-    res.status(400).json({ ok: false, message: "댓글 수정 실패" });
+    res.status(400).json({ isOk: false, message: "댓글 수정 실패" });
   }
 });
 
@@ -267,9 +267,9 @@ router.delete("/:postId/comment/:commentId", async (req, res) => {
       },
     );
 
-    res.status(200).json({ message: "댓글이 삭제되었습니다." });
+    res.status(200).json({ isOk: true, message: "댓글이 삭제되었습니다." });
   } catch (err) {
-    res.status(400).json({ message: "댓글 삭제 실패" });
+    res.status(400).json({ isOk: false, message: "댓글 삭제 실패" });
   }
 });
 
