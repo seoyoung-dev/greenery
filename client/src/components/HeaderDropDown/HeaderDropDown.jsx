@@ -1,10 +1,18 @@
-import axios from "axios";
+import {
+  LayoutUserTap,
+  DropDownMenus,
+  LogoutWrap,
+} from "./HeaderDropDown.style";
+import { useNavigate } from "react-router-dom";
+import { useResetRecoilState } from "recoil";
+import { userState } from "Store";
 
-import { LayoutUserTap, DropDownMenus } from "./HeaderDropDown.style";
+import axios from "axios";
 import SimpleItem from "components/SimpleItem/SimpleItem";
 
-export default function HeaderDropDown() {
-  const isLogined = true;
+export default function HeaderDropDown({ user }) {
+  const resetUserState = useResetRecoilState(userState);
+  const navigate = useNavigate();
   const beforeLoginItems = [
     {
       title: "로그인",
@@ -46,14 +54,23 @@ export default function HeaderDropDown() {
     await onLogoutRequest()
       .then(() => {
         removeAccessToken();
+        resetUserState();
       })
+      .then(() => navigate("/login"))
       .catch(err => alert(err.message));
   };
 
   function renderSimpleItem(datas, handleLogout) {
     const simpelList = datas.map(({ title, to, logout }, index) => {
       return logout ? (
-        <SimpleItem key={index} to={to} title={title} onClick={handleLogout} />
+        <LogoutWrap>
+          <SimpleItem
+            key={index}
+            to={to}
+            title={title}
+            handleLogout={handleLogout}
+          />
+        </LogoutWrap>
       ) : (
         <SimpleItem key={index} to={to} title={title} />
       );
@@ -64,7 +81,7 @@ export default function HeaderDropDown() {
   return (
     <LayoutUserTap>
       <DropDownMenus>
-        {isLogined
+        {!user.id
           ? renderSimpleItem(beforeLoginItems)
           : renderSimpleItem(afterLoginItems, handleLogout)}
       </DropDownMenus>
