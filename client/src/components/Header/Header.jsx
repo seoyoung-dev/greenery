@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { userState } from "Store";
 import {
   HeaderTag,
   LayoutNavigationLeft,
@@ -19,7 +21,7 @@ import SimpleItem from "components/SimpleItem";
 
 export default function Header(props) {
   const [isDropDown, setIsDropDown] = useState(false);
-
+  const user = useRecoilValue(userState);
   const menusData = [
     {
       title: "커뮤니티",
@@ -41,7 +43,7 @@ export default function Header(props) {
   }
   function blurHandler(e) {
     if (!e.currentTarget.contains(e.relatedTarget)) {
-      setIsDropDown(!isDropDown);
+      setIsDropDown(false);
     }
   }
   return (
@@ -71,7 +73,7 @@ export default function Header(props) {
                 </UserIconWrap>
               </UserNavButton>
             )}
-            {isDropDown && <HeaderDropDown />}
+            {isDropDown && <HeaderDropDown user={user} />}
           </UserNavigationWrap>
         </LayoutNavigationRight>
       </NavigationBarContainer>

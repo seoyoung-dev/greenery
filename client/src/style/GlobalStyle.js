@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
   --bg: #ffffff;
   --bg-linear: linear-gradient(107.56deg, #DEF9F6 0%, #F9EBDE 100%);
   --gray: #c4c4c4;
-  --gray-light: #e5e5e5;
+  --gray-light: #f2f2f2;
   --red: #ff0000;
 }
 

@@ -23,7 +23,7 @@ export const LayoutUserTap = styled.div`
     padding: 15px 25px;
   }
   & a:hover {
-    background-color: #e5e5e5;
+    background-color: var(--gray-light);
   }
 `;
 export const LogoutWrap = styled.div`
