@@ -1,7 +1,7 @@
 import { LogoWrap, LogoImage } from "./HomeLogo.style";
 import { Link } from "react-router-dom";
 
-export function HomeLogo() {
+export default function HomeLogo() {
   return (
     <LogoWrap>
       <Link to="/">

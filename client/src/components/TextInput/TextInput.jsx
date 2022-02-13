@@ -1,6 +1,6 @@
 import { InputWrap, Input, Label } from "./TextInput.style";
 
-export function TextInput({
+export default function TextInput({
   title,
   type,
   placeholder,

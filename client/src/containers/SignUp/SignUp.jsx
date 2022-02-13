@@ -11,9 +11,9 @@ import {
   FormHeader,
 } from "./SignUp.style";
 
-import { HomeLogo } from "components/HomeLogo";
-import { TextInput } from "components/TextInput";
-import { SubmitButton } from "components/SubmitButton";
+import HomeLogo from "components/HomeLogo";
+import TextInput from "components/TextInput";
+import SubmitButton from "components/SubmitButton";
 
 export function SignUp() {
   const [name, setName] = useState("");
