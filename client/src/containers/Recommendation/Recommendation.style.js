@@ -21,7 +21,7 @@ export const CenterContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 30px;
+  /* padding: 0 30px; */
 `;
 
 export const IntroContainer = styled.div`

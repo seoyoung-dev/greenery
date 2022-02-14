@@ -7,14 +7,14 @@ export const BlurBackground = styled.section`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 200;
+  z-index: 20000;
 `;
 
 export const Modal = styled.div`
   background: #fefefe;
   width: clamp(0px, 100%, 600px);
   margin: 50px auto 0;
-  z-index: 300;
+  z-index: 30000;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   position: relative;

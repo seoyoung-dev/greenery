@@ -1,5 +1,9 @@
 import { StyledButton } from "./Button.style";
 
-export default function Button({ handleClick, children }) {
-  return <StyledButton onClick={handleClick}>{children}</StyledButton>;
+export default function Button({ handleClick, className, children }) {
+  return (
+    <StyledButton className={className} onClick={handleClick}>
+      {children}
+    </StyledButton>
+  );
 }

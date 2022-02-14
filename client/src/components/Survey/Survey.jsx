@@ -24,18 +24,18 @@ export default function Survey({ progress, setProgress, answers, saveAnswer }) {
           <h1>{title}</h1>
           <h5>{subtitle && subtitle}</h5>
         </Header>
-        {questions.map(q => {
+        {questions.map(item => {
           return (
-            <QuestionBar active={q.id === answers[type]} key={q.id}>
+            <QuestionBar active={item.id === answers[type]} key={item.id}>
               <a
                 href="#null"
                 onClick={evt => {
                   evt.preventDefault();
-                  saveAnswer(type, q.id);
+                  saveAnswer(type, item.id);
                 }}
               >
-                <img src={q.icon} alt="Question icon" />
-                <span>{q.text}</span>
+                <img src={item.icon} alt="Question icon" />
+                <span>{item.text}</span>
               </a>
             </QuestionBar>
           );
