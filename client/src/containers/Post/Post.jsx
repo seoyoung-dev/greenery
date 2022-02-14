@@ -120,13 +120,13 @@ export function Post(props) {
           {inputList.map((x, i) => {
             return (
               <ContentSection key={i}>
-                <label htmlFor={x.uploadFile}>
+                {console.log(x)}
+                <label>
                   <input
                     ref={e => {
                       inputRef.current[i] = e;
                     }}
                     type="file"
-                    id={x.uploadFile}
                     name="fileImage"
                     accept="image/*"
                     onChange={e => handleInputChange(e, i)}
@@ -142,7 +142,6 @@ export function Post(props) {
                     <img src="/icon/postTrash.svg" alt="postTrash.svg" />
                   </RemoveBtn>
                 )}
-
                 <PostTextarea
                   name="content"
                   placeholder="내용을 입력하세요."
