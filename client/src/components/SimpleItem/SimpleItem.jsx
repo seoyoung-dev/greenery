@@ -3,7 +3,7 @@ import { Item } from "./SimpleItem.style";
 
 export default function SimpleItem({ to, title, handleLogout }) {
   return (
-    <Item key={(title, to)}>
+    <Item>
       {handleLogout ? (
         <Link to={to} onClick={() => handleLogout()}>
           {title}

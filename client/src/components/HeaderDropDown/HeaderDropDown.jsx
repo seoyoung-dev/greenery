@@ -1,18 +1,22 @@
+import { useNavigate } from "react-router-dom";
+import { useResetRecoilState } from "recoil";
+import { userProfileState } from "Atoms";
+import { useCookies } from "react-cookie";
 import {
   LayoutUserTap,
   DropDownMenus,
   LogoutWrap,
 } from "./HeaderDropDown.style";
-import { useNavigate } from "react-router-dom";
-import { useResetRecoilState } from "recoil";
-import { userState } from "Store";
 
 import axios from "axios";
 import SimpleItem from "components/SimpleItem/SimpleItem";
 
-export default function HeaderDropDown({ user }) {
-  const resetUserState = useResetRecoilState(userState);
+export default function HeaderDropDown() {
+  const resetUserState = useResetRecoilState(userProfileState);
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const access_token = cookies["access_token"];
   const beforeLoginItems = [
     {
       title: "로그인",
@@ -49,41 +53,39 @@ export default function HeaderDropDown({ user }) {
   const removeAccessToken = () => {
     delete axios.defaults.headers.common.Authorization;
   };
+  const removeAccessTokenByCookie = () => {
+    removeCookie("access_token");
+  };
 
   const handleLogout = async () => {
     await onLogoutRequest()
       .then(() => {
         removeAccessToken();
+        removeAccessTokenByCookie();
         resetUserState();
       })
       .then(() => navigate("/login"))
       .catch(err => alert(err.message));
   };
 
-  function renderSimpleItem(datas, handleLogout) {
+  const renderSimpleItem = (datas, handleLogout) => {
     const simpelList = datas.map(({ title, to, logout }, index) => {
       return logout ? (
-        <LogoutWrap>
-          <SimpleItem
-            key={index}
-            to={to}
-            title={title}
-            handleLogout={handleLogout}
-          />
+        <LogoutWrap key={index}>
+          <SimpleItem to={to} title={title} handleLogout={handleLogout} />
         </LogoutWrap>
       ) : (
         <SimpleItem key={index} to={to} title={title} />
       );
     });
     return simpelList;
-  }
-
+  };
   return (
     <LayoutUserTap>
       <DropDownMenus>
-        {!user.id
-          ? renderSimpleItem(beforeLoginItems)
-          : renderSimpleItem(afterLoginItems, handleLogout)}
+        {access_token
+          ? renderSimpleItem(afterLoginItems, handleLogout)
+          : renderSimpleItem(beforeLoginItems)}
       </DropDownMenus>
     </LayoutUserTap>
   );
