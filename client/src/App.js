@@ -9,6 +9,7 @@ import Post from "./pages/Post";
 import Article from "./pages/Article";
 import Recommendation from "./pages/Recommendation";
 import { RecoilRoot } from "recoil";
+import Wiki from "./pages/Wiki";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           {/* <Route path="/article/:postId" element={<Article />} /> */}
           <Route path="/article/:postId" element={<Article />} />
           <Route path="/recommendation" element={<Recommendation />} />
+          <Route path="/wiki" element={<Wiki />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

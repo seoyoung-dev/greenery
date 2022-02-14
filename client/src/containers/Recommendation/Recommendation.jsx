@@ -17,36 +17,30 @@ import { WideContainer } from "style/ContainerStyle";
 
 export default function Recommendation() {
   const [progress, setProgress] = useState(0);
-  const [filteredData, setFilteredData] = useState({
+  const [plantData, setPlantData] = useState(null);
+  const [filter, setFilter] = useState({
     brightness: "",
     smell: "",
     bloomingSeason: "",
     growthHeight: "",
   });
-  const [plantData, setPlantData] = useState();
 
-  function increaseProgress() {
-    setProgress(progress + 1);
-  }
+  useEffect(() => {
+    if (isDataFilled(filter)) {
+      fetchPlant(2).then(data => {
+        setPlantData(data);
+      });
+    }
+  }, [filter]);
 
   function saveAnswer(type, answer) {
-    const newData = { ...filteredData };
+    const newData = { ...filter };
     newData[type] = answer;
-    setFilteredData(newData);
+    setFilter(newData);
   }
 
-  function reset() {
-    setProgress(0);
-    setFilteredData({
-      brightness: "",
-      smell: "",
-      bloomingSeason: "",
-      growthHeight: "",
-    });
-  }
-
-  function isDataFilled(d) {
-    const data = Object.entries(d);
+  function isDataFilled(filter_data) {
+    const data = Object.entries(filter_data);
     for (let i = 0; i < data.length; i++) {
       if (data[i][1] === "") {
         return false;
@@ -55,14 +49,19 @@ export default function Recommendation() {
     return true;
   }
 
-  useEffect(() => {
-    if (isDataFilled(filteredData)) {
-      fetchPlant(2).then(data => {
-        setPlantData(data);
-      });
-    }
-  }, [filteredData]);
+  function increaseProgress() {
+    setProgress(progress + 1);
+  }
 
+  function reset() {
+    setProgress(0);
+    setFilter({
+      brightness: "",
+      smell: "",
+      bloomingSeason: "",
+      growthHeight: "",
+    });
+  }
   let element;
   // 설문 인트로
   if (progress === 0) {
@@ -88,7 +87,7 @@ export default function Recommendation() {
       <Survey
         progress={progress}
         setProgress={setProgress}
-        answers={filteredData}
+        answers={filter}
         saveAnswer={saveAnswer}
       />
     );
