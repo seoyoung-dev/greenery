@@ -120,7 +120,6 @@ export function Post(props) {
           {inputList.map((x, i) => {
             return (
               <ContentSection key={i}>
-                {console.log(x)}
                 <label>
                   <input
                     ref={e => {
