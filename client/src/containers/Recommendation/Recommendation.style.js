@@ -15,24 +15,13 @@ export const Modal = styled.section`
   z-index: 100;
 `;
 
-export const Button = styled.button`
-  background: var(--primary);
-  color: var(--highlight-text);
-  padding: 7px 14px;
-  border-radius: 3px;
-  border: 0;
-  font-size: 1rem;
-  margin-top: 50px;
-  cursor: pointer;
-`;
-
 export const CenterContainer = styled.div`
-  width: clamp(0px, 1100px, 100%);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 30px;
+  /* padding: 0 30px; */
 `;
 
 export const IntroContainer = styled.div`

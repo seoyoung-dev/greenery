@@ -1,4 +1,9 @@
 import React from "react";
+import Header from "../../components/Header";
+import TodaysPlant from "../../components/TodaysPlant";
+import PostCard from "../../components/PostCard";
+import ImgCard from "../../components/ImgCard";
+import Footer from "../../components/Footer";
 import {
   Main,
   PostContentsWrapper,
@@ -6,10 +11,6 @@ import {
   PostCardBox,
   StyledLink,
 } from "./Home.style";
-import Header from "../../components/Header";
-import TodaysPlant from "../../components/TodaysPlant";
-import PostCard from "../../components/PostCard";
-import ImgCard from "../../components/ImgCard";
 
 const dummy = [
   {
@@ -62,6 +63,7 @@ export default function Home() {
         </PostCardBox>
       </PostContentsWrapper>
       <ImgCard />
+      <Footer />
     </Main>
   );
 }

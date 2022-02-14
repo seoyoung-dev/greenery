@@ -5,17 +5,6 @@ export const QuestionContainer = styled.ul`
   padding: 0;
 `;
 
-export const Button = styled.button`
-  background: var(--primary);
-  color: var(--highlight-text);
-  padding: 7px 14px;
-  border-radius: 4px;
-  border: 0;
-  font-weight: bolder;
-  cursor: pointer;
-  margin-top: 10px;
-`;
-
 export const Header = styled.div`
   width: 100%;
   .green {

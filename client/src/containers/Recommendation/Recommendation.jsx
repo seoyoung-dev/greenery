@@ -1,47 +1,67 @@
-﻿import { useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Survey from "../../components/Survey/Survey";
 import PlantGrid from "../../components/PlantGrid";
-import { recommendation_dummy } from "../../api/data";
+import Loading from "../../components/Loading";
+import Button from "../../components/Button";
+import fetchPlant from "../../api/plant";
 import {
   Modal,
-  Button,
   CenterContainer,
   Header,
   IntroContainer,
   CloseButton,
   Nav,
 } from "./Recommendation.style";
+import { WideContainer } from "style/ContainerStyle";
 
 export default function Recommendation() {
   const [progress, setProgress] = useState(0);
-  const [filteredData, setFilteredData] = useState({
+  const [plantData, setPlantData] = useState(null);
+  const [filter, setFilter] = useState({
     brightness: "",
     smell: "",
     bloomingSeason: "",
     growthHeight: "",
   });
 
+  useEffect(() => {
+    if (isDataFilled(filter)) {
+      fetchPlant(2).then(data => {
+        setPlantData(data);
+      });
+    }
+  }, [filter]);
+
+  function saveAnswer(type, answer) {
+    const newData = { ...filter };
+    newData[type] = answer;
+    setFilter(newData);
+  }
+
+  function isDataFilled(filter_data) {
+    const data = Object.entries(filter_data);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][1] === "") {
+        return false;
+      }
+    }
+    return true;
+  }
+
   function increaseProgress() {
     setProgress(progress + 1);
   }
 
-  function saveAnswer(type, answer) {
-    const newData = { ...filteredData };
-    newData[type] = answer;
-    setFilteredData(newData);
-  }
-
   function reset() {
     setProgress(0);
-    setFilteredData({
+    setFilter({
       brightness: "",
       smell: "",
       bloomingSeason: "",
       growthHeight: "",
     });
   }
-
   let element;
   // 설문 인트로
   if (progress === 0) {
@@ -57,7 +77,7 @@ export default function Recommendation() {
             <span className="small"> (*약 2분 소요)</span>
           </h1>
         </Header>
-        <Button onClick={increaseProgress}>시작하기</Button>
+        <Button handleClick={increaseProgress}>시작하기</Button>
       </IntroContainer>
     );
 
@@ -67,7 +87,7 @@ export default function Recommendation() {
       <Survey
         progress={progress}
         setProgress={setProgress}
-        answers={filteredData}
+        answers={filter}
         saveAnswer={saveAnswer}
       />
     );
@@ -81,10 +101,10 @@ export default function Recommendation() {
           <h1>함께하길 기다리는 초록이</h1>
         </Header>
         <Nav>
-          <Link to="#">더 많은 초록이들 보기</Link>
+          <Link to="/wiki">더 많은 초록이들 보기</Link>
         </Nav>
-        <PlantGrid data={recommendation_dummy} />
-        <Button onClick={reset}>다시하기</Button>
+        {plantData ? <PlantGrid data={plantData} /> : <Loading />}
+        <Button handleClick={reset}>다시하기</Button>
       </>
     );
   }
@@ -94,7 +114,9 @@ export default function Recommendation() {
       <CloseButton to="/">
         <img src="icon/close.svg" alt="Close icon" />
       </CloseButton>
-      <CenterContainer>{element}</CenterContainer>
+      <WideContainer>
+        <CenterContainer>{element}</CenterContainer>
+      </WideContainer>
     </Modal>
   );
 }

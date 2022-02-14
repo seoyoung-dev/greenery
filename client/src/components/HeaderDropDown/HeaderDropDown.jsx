@@ -1,9 +1,40 @@
+import {
+  LayoutUserTap,
+  DropDownMenus,
+  LogoutWrap,
+} from "./HeaderDropDown.style";
+import { useNavigate } from "react-router-dom";
+import { useResetRecoilState } from "recoil";
+import { userState } from "Store";
+
 import axios from "axios";
+import SimpleItem from "components/SimpleItem/SimpleItem";
 
-import { LayoutUserTap, DropDownMenus } from "./HeaderDropDown.style";
-
-export default function HeaderDropDown({ SimpleItem }) {
-  const dummyState = true;
+export default function HeaderDropDown({ user }) {
+  const resetUserState = useResetRecoilState(userState);
+  const navigate = useNavigate();
+  const beforeLoginItems = [
+    {
+      title: "로그인",
+      to: "/login",
+    },
+    {
+      title: "회원가입",
+      to: "/signup",
+    },
+  ];
+  const afterLoginItems = [
+    {
+      title: "마이페이지",
+      to: "/mypage",
+      logout: false,
+    },
+    {
+      title: "로그아웃",
+      to: "/",
+      logout: true,
+    },
+  ];
 
   const onLogoutRequest = async () => {
     const url = "/users/logout";
@@ -23,29 +54,36 @@ export default function HeaderDropDown({ SimpleItem }) {
     await onLogoutRequest()
       .then(() => {
         removeAccessToken();
+        resetUserState();
       })
+      .then(() => navigate("/login"))
       .catch(err => alert(err.message));
   };
+
+  function renderSimpleItem(datas, handleLogout) {
+    const simpelList = datas.map(({ title, to, logout }, index) => {
+      return logout ? (
+        <LogoutWrap>
+          <SimpleItem
+            key={index}
+            to={to}
+            title={title}
+            handleLogout={handleLogout}
+          />
+        </LogoutWrap>
+      ) : (
+        <SimpleItem key={index} to={to} title={title} />
+      );
+    });
+    return simpelList;
+  }
 
   return (
     <LayoutUserTap>
       <DropDownMenus>
-        {dummyState ? (
-          <>
-            <SimpleItem to={"/mypage"} title="마이페이지" />
-            <SimpleItem
-              to={"#"}
-              title="로그아웃"
-              borderTop={"1px solid #C4C4C4"}
-              handleLogout={handleLogout}
-            />
-          </>
-        ) : (
-          <>
-            <SimpleItem to={"/signin"} title="로그인" />
-            <SimpleItem to={"/signup"} title="회원가입" />
-          </>
-        )}
+        {!user.id
+          ? renderSimpleItem(beforeLoginItems)
+          : renderSimpleItem(afterLoginItems, handleLogout)}
       </DropDownMenus>
     </LayoutUserTap>
   );

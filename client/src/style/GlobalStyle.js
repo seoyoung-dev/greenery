@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
   }
@@ -20,6 +21,9 @@ const GlobalStyle = createGlobalStyle`
   --primary-light: #69BF3B;
   --bg: #ffffff;
   --bg-linear: linear-gradient(107.56deg, #DEF9F6 0%, #F9EBDE 100%);
+  --gray: #c4c4c4;
+  --gray-light: #f2f2f2;
+  --red: #ff0000;
 }
 
 `;

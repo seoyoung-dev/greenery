@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import {
   ArticleWrapper,
   ArticleTitle,
@@ -8,7 +9,6 @@ import {
   ContentBox,
   Content,
 } from "./PostArticle.style";
-import { useParams } from "react-router-dom";
 
 export default function PostArticle({
   title,
@@ -18,20 +18,20 @@ export default function PostArticle({
   likeNum,
   contents,
 }) {
+  // postId를 get 요청 url에 사용예정
   const { postId } = useParams();
-  console.log(postId);
   return (
     <ArticleWrapper>
       <ArticleTitle>{title}</ArticleTitle>
       <PostInfo>
-        <img src={profileImgUrl} alt={"프로필 이미지"}></img>
+        <img src={profileImgUrl} alt="프로필 이미지"></img>
         <DetailedInfo>
           <p>{author}</p>
           <div>
             <p>{date}</p>
             <Like>
-              <img src={"icon/thumbs-up.svg"} alt="좋아요 수" />
-              <p>{likeNum}</p>
+              <img src="icon/thumbs-up.svg" alt="좋아요 수" />
+              <div>{likeNum}</div>
             </Like>
           </div>
         </DetailedInfo>
