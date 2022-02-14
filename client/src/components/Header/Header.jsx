@@ -62,14 +62,21 @@ export default function Header(props) {
         <LayoutNavigationRight>
           <UserNavigationWrap onBlur={e => blurHandler(e)}>
             {props.id === "PostPage" ? (
-              <PostButton form="test">올리기</PostButton>
+              <PostButton form="PostFormSubmit">올리기</PostButton>
             ) : (
               <UserNavButton onClick={focusHandler}>
                 <HambergIconWrap>
+<<<<<<< HEAD
+                  <img src="/icon/hamburger.svg" alt="목록" />
+                </HambergIconWrap>
+                <UserIconWrap>
+                  <img src="/icon/user.svg" alt="목록" />
+=======
                   <img src="icon/hamburger.svg" alt="hamburger" />
                 </HambergIconWrap>
                 <UserIconWrap>
                   <img src="icon/user.svg" alt="usericon" />
+>>>>>>> 45093e8058b7990ce35cbe64244d9b8b560d0809
                 </UserIconWrap>
               </UserNavButton>
             )}
