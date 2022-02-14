@@ -5,7 +5,7 @@ export function HomeLogo() {
   return (
     <LogoWrap>
       <Link to="/">
-        <LogoImage src="icon/homelogo.svg" alt="qwe" />
+        <LogoImage src="/icon/homelogo.svg" alt="qwe" />
       </Link>
     </LogoWrap>
   );

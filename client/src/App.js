@@ -19,7 +19,11 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/community" element={<Community />} />
         <Route path="/post" element={<Post />} />
-        <Route path="/article" element={<Article />} />
+        <Route
+          path="/post/:postId"
+          element={<Post postId="620a8815403fd6e972e9b41b" />}
+        />
+        <Route exact path="/article" element={<Article />} />
         <Route path="/article/:postId" element={<Article />} />
         <Route path="/recommendation" element={<Recommendation />} />
       </Routes>

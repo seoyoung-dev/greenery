@@ -48,7 +48,7 @@ export default function Header(props) {
         <LayoutNavigationRight>
           <UserNavigationWrap>
             {props.id === "PostPage" ? (
-              <PostButton form="test">올리기</PostButton>
+              <PostButton form="PostFormSubmit">올리기</PostButton>
             ) : (
               <UserNavButton
                 onClick={() => {
@@ -56,10 +56,10 @@ export default function Header(props) {
                 }}
               >
                 <HambergIconWrap>
-                  <img src="icon/hamburger.svg" alt="목록" />
+                  <img src="/icon/hamburger.svg" alt="목록" />
                 </HambergIconWrap>
                 <UserIconWrap>
-                  <img src="icon/user.svg" alt="목록" />
+                  <img src="/icon/user.svg" alt="목록" />
                 </UserIconWrap>
               </UserNavButton>
             )}
