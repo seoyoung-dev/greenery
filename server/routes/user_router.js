@@ -5,6 +5,12 @@ const bcrypt = require("bcrypt");
 const { User } = require("../models");
 const auth = require("../middlewares/auth");
 const uploadProfileImage = require("../middlewares/uploadProfile");
+const {
+  accessTokenExpires,
+  refreshTokenExpires,
+  accessKey,
+  refreshKey,
+} = require("../config");
 
 //유저 정보 조회
 router.get("/auth", auth, (req, res) => {
@@ -71,32 +77,30 @@ router.post("/login", async (req, res) => {
         message: "잘못된 비밀번호입니다.",
       });
     }
-    const accessTokenExpireTime = process.env.access_token_expire_time;
+    console.log(accessKey);
     const access_token = jwt.sign(
       { id: user.id, email: user.email, name: user.name },
-      process.env.access_key,
+      accessKey,
       {
-        expiresIn: accessTokenExpireTime,
+        expiresIn: accessTokenExpires,
       },
     );
 
-    const refreshTokenExpireTime = Number(
-      process.env.refresh_token_expire_time,
-    );
-    const expires = Date.now() + refreshTokenExpireTime * 3600000;
-    const refresh_token = jwt.sign({ id: user.id }, process.env.refresh_key, {
-      expiresIn: expires,
+    const refresh_token = jwt.sign({ id: user.id }, refreshKey, {
+      expiresIn: refreshTokenExpires,
     });
 
     await user.updateOne({ token: refresh_token });
+
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
-      expires: new Date(expires),
+      expires: new Date(refreshTokenExpires),
     });
 
     res.json({
       isOk: true,
       access_token,
+      exp: accessTokenExpires,
       message: "로그인 성공",
     });
   } catch (err) {
@@ -131,27 +135,26 @@ router.get("/logout", auth, async (req, res) => {
 //silent refresh
 router.post("/refresh", async (req, res) => {
   const { refresh_token } = req.cookies;
-  const refresh_key = process.env.refresh_key;
-  const accessTokenExpireTime = process.env.access_token_expire_time;
 
   try {
     if (refresh_token) {
-      const { id } = jwt.verify(refresh_token, refresh_key);
+      const { id } = jwt.verify(refresh_token, refreshKey);
       const user = await User.findOne({ _id: id });
 
       if (user.token !== refresh_token) throw new Error("wrong access");
 
       const access_token = jwt.sign(
         { id: user.id, email: user.email, name: user.name },
-        process.env.access_key,
+        accessKey,
         {
-          expiresIn: accessTokenExpireTime,
+          expiresIn: accessTokenExpires,
         },
       );
 
       res.json({
         isOk: true,
         access_token,
+        exp: accessTokenExpires,
         message: "access token 재발급",
       });
     }
