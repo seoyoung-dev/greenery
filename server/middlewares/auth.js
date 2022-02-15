@@ -1,13 +1,12 @@
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
-
+const { accessKey } = require("../config");
 module.exports = async (req, res, next) => {
-  const access_key = process.env.access_key;
   const { refresh_token } = req.cookies;
   const access_token = req.headers.authorization;
   try {
     if (access_token) {
-      const decoded = jwt.verify(access_token, access_key);
+      const decoded = jwt.verify(access_token, accessKey);
 
       req.user = {
         id: decoded.id,
@@ -26,21 +25,20 @@ module.exports = async (req, res, next) => {
     switch (err.message) {
       case "jwt expired":
         res.clearCookie("refresh_token");
-        res.json({
+        return res.status(401).json({
           isOk: false,
           isAuthorize: false,
           message: "인증이 만료되었습니다.",
         });
         return;
       case "wrong access":
-        res.json({
+        return res.status(401).json({
           isOk: false,
           isAuthorize: false,
           message: "잘못된 접근입니다.",
         });
-        return;
       default:
-        next(err);
+        return res.status(500);
     }
   }
 };
