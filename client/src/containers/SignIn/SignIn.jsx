@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { userState } from "Store";
+import { userProfileState } from "Atoms";
 import { useSetRecoilState } from "recoil";
+import { useCookies } from "react-cookie";
 import {
   Main,
   Section,
@@ -22,19 +23,18 @@ export function SignIn() {
   const JWT_EXPIRY_TIME = 3600 * 1000;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(userState);
+  const navigate = useNavigate();
   // recoil global state Update Function
-  const setUser = useSetRecoilState(userState);
+  const setUserProfile = useSetRecoilState(userProfileState);
+  const [cookies, setCookie, removeCookie] = useCookies([]);
 
   const textInputList = [
     {
-      // type: "email",
       placeholder: "example@greenfriend.com",
       autoComplete: "on",
       setState: setEmail,
     },
     {
-      // title: "비밀번호",
       type: "password",
       placeholder: "*******",
       autoComplete: "on",
@@ -65,14 +65,16 @@ export function SignIn() {
 
     axios.defaults.headers.common["Authorization"] = access_token;
   };
-  const setUserProfile = () => {
+
+  // set global userProfileState
+  const handleUserProfile = () => {
     axios
       .get("users/auth")
       .then(response => {
         const { email, id, name } = response.data;
-        setUser(prev => {
-          const newUser = { ...prev, email, id, name };
-          return newUser;
+        setUserProfile(prev => {
+          const newUserProfile = { ...prev, email, id, name };
+          return newUserProfile;
         });
       })
       .catch(err => {
@@ -81,7 +83,7 @@ export function SignIn() {
   };
 
   // refresh_token을 이용하여 access_token 재발급
-  const onRefreshToken = () => {
+  const refreshAccessToken = () => {
     axios
       .post("/users/refresh")
       .then(response => setAxiosDefaultAccessToken(response));
@@ -93,11 +95,16 @@ export function SignIn() {
     onLoginRequest({ email, password })
       .then(response => {
         setAxiosDefaultAccessToken(response);
-        // recoil atom update function
-        // axios.get url: 'users/auth'
-        setUserProfile();
+        const access_token = response.data.access_token;
+        setCookie("access_token", access_token, {
+          path: "/",
+          maxAge: 3600,
+        });
         // 10분 전에 로그인 연장
-        setTimeout(onRefreshToken, JWT_EXPIRY_TIME - 10 * 6000);
+        setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
+      })
+      .then(() => {
+        handleUserProfile();
       })
       .then(() => {
         navigate("/");
@@ -137,7 +144,6 @@ export function SignIn() {
             </Label>
             <Link to="#">아이디/비밀번호 찾기</Link>
           </SignOptionWrap>
-
           <SubmitButton type={"submit"} text={"로그인"}></SubmitButton>
           <SignUpLinkWrap>
             <Link to="/signup">처음 방문하셨나요?</Link>

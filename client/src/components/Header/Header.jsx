@@ -1,27 +1,16 @@
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { userState } from "Store";
-import {
-  HeaderTag,
-  LayoutNavigationLeft,
-  LayoutNavigationMenu,
-  LayoutNavigationRight,
-  NavigationBarContainer,
-  UserNavigationWrap,
-  HambergIconWrap,
-  UserIconWrap,
-  UserNavButton,
-  MenuItems,
-  PostButton,
-} from "./Header.style";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { userProfileState } from "Atoms";
+
+import * as S from "./Header.style";
 
 import HomeLogo from "components/HomeLogo";
 import HeaderDropDown from "components/HeaderDropDown";
 import SimpleItem from "components/SimpleItem";
 
 export default function Header(props) {
+  const userProfile = useRecoilValue(userProfileState);
   const [isDropDown, setIsDropDown] = useState(false);
-  const user = useRecoilValue(userState);
   const menusData = [
     {
       title: "커뮤니티",
@@ -47,36 +36,36 @@ export default function Header(props) {
     }
   }
   return (
-    <HeaderTag>
-      <NavigationBarContainer>
-        <LayoutNavigationLeft id="left">
+    <S.HeaderTag>
+      <S.NavigationBarContainer>
+        <S.LayoutNavigationLeft id="left">
           <HomeLogo />
-        </LayoutNavigationLeft>
-        <LayoutNavigationMenu>
-          <MenuItems>
+        </S.LayoutNavigationLeft>
+        <S.LayoutNavigationMenu>
+          <S.MenuItems>
             {menusData.map(({ title, to }, index) => {
               return <SimpleItem key={index} title={title} to={to} />;
             })}
-          </MenuItems>
-        </LayoutNavigationMenu>
-        <LayoutNavigationRight>
-          <UserNavigationWrap onBlur={e => blurHandler(e)}>
+          </S.MenuItems>
+        </S.LayoutNavigationMenu>
+        <S.LayoutNavigationRight>
+          <S.UserNavigationWrap onBlur={e => blurHandler(e)}>
             {props.id === "PostPage" ? (
-              <PostButton form="PostFormSubmit">올리기</PostButton>
+              <S.PostButton form="test">올리기</S.PostButton>
             ) : (
-              <UserNavButton onClick={focusHandler}>
-                <HambergIconWrap>
-                  <img src="/icon/hamburger.svg" alt="hamburger" />
-                </HambergIconWrap>
-                <UserIconWrap>
-                  <img src="/icon/user.svg" alt="usericon" />
-                </UserIconWrap>
-              </UserNavButton>
+              <S.UserNavButton onClick={focusHandler}>
+                <S.HambergIconWrap>
+                  <img src="icon/hamburger.svg" alt="hamburger" />
+                </S.HambergIconWrap>
+                <S.UserIconWrap>
+                  <img src="icon/user.svg" alt="usericon" />
+                </S.UserIconWrap>
+              </S.UserNavButton>
             )}
-            {isDropDown && <HeaderDropDown user={user} />}
-          </UserNavigationWrap>
-        </LayoutNavigationRight>
-      </NavigationBarContainer>
-    </HeaderTag>
+            {isDropDown && <HeaderDropDown />}
+          </S.UserNavigationWrap>
+        </S.LayoutNavigationRight>
+      </S.NavigationBarContainer>
+    </S.HeaderTag>
   );
 }

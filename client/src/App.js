@@ -1,4 +1,10 @@
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { userProfileState } from "Atoms";
+import { CookiesProvider } from "react-cookie";
+
+import axios from "axios";
 import GlobalStyle from "style/GlobalStyle";
 
 import Home from "./pages/Home";
@@ -8,12 +14,61 @@ import Community from "./pages/Community";
 import Post from "./pages/Post";
 import Article from "./pages/Article";
 import Recommendation from "./pages/Recommendation";
-import { RecoilRoot } from "recoil";
 import Wiki from "./pages/Wiki";
 
 function App() {
+  const setUserProfile = useSetRecoilState(userProfileState);
+
+  // 페이지 리로드시 access_token을 재발급받기
+  const refreshAccessToken = async () => {
+    const url = "/users/refresh";
+    console.log("refresh");
+    try {
+      const response = await axios.post(url);
+      setAxiosDefaultAccessToken(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // response의 access_token을 axios.defaults로 설정하기
+  const setAxiosDefaultAccessToken = response => {
+    const { access_token } = response.data;
+
+    axios.defaults.headers.common["Authorization"] = access_token;
+  };
+  //
+  const handleUserProfile = async () => {
+    const url = "users/auth";
+    console.log("handle");
+    try {
+      const response = await axios.get(url);
+      const { email, id, name } = response.data;
+      setUserProfile(oldUserProfile => {
+        return { ...oldUserProfile, email, id, name };
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const reloadHandler = async () => {
+    try {
+      await refreshAccessToken();
+      await handleUserProfile();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  console.log(axios.defaults.headers);
+
+  // 완료가 되면 userProfileState에 저장하기
+  useEffect(() => {
+    reloadHandler();
+  }, []);
+
   return (
-    <RecoilRoot>
+    <CookiesProvider>
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
@@ -33,7 +88,7 @@ function App() {
           <Route path="/wiki" element={<Wiki />} />
         </Routes>
       </BrowserRouter>
-    </RecoilRoot>
+    </CookiesProvider>
   );
 }
 
