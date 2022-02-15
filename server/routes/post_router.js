@@ -8,15 +8,23 @@ const changeTimeFormat = require("../util/changeTimeFormat");
 router.get("/", async function (req, res) {
   try {
     const postId = req.query.postId;
-    const posts = await Post.findOne({ _id: postId }).populate(
+    const post = await Post.findOne({ _id: postId }).populate(
       "author",
       "name profileImg _id",
     );
-    const recorded = changeTimeFormat(posts.createdAt);
-    res.json({ isOk: true, posts, recorded });
+    const processedData = {
+      id: post.id,
+      author: post.author,
+      title: post.title,
+      contents: post.contents,
+      likes: post.likes.length,
+      createdAt: changeTimeFormat(post.createdAt),
+    };
+
+    res.status(200).json({ isOk: true, post: processedData });
   } catch (err) {
     console.log(err);
-    res.json({ isOk: false, message: "게시글을 불러오기 실패" });
+    res.status(500).json({ isOk: false, message: "게시글을 불러오기 실패" });
   }
 });
 
@@ -39,14 +47,14 @@ router.get("/page/:pageNumber", async function (req, res) {
         author: post.author,
         title: post.title,
         contents: post.contents,
-        likes: post.likes,
+        likes: post.likes.length,
         createdAt: changeTimeFormat(post.createdAt),
       };
     });
-    res.json({ isOk: true, total, newPosts });
+    res.status(200).json({ isOk: true, total, posts: newPosts });
   } catch (err) {
     console.log(err);
-    res.json({ isOk: false, message: "불러오기 실패" });
+    res.status(500).json({ isOk: false, message: "불러오기 실패" });
   }
 });
 
@@ -69,14 +77,14 @@ router.get("/popularity", async function (req, res) {
         author: post.author,
         title: post.title,
         contents: post.contents,
-        likes: post.likes,
+        likes: post.likes.length,
         createdAt: changeTimeFormat(post.createdAt),
       };
     });
-    res.json({ isOk: true, newPosts });
+    res.status(200).json({ isOk: true, newPosts });
   } catch (err) {
     console.log(err);
-    res.json({ isOk: false, message: "게시글을 불러오기 실패" });
+    res.status(500).json({ isOk: false, message: "게시글을 불러오기 실패" });
   }
 });
 
@@ -93,7 +101,7 @@ router.post("/", auth, uploadImage, async function (req, res) {
       if (!img[idx]) {
         return {
           content,
-          imgUrl: pictures[idx].path.replace("public/", ""),
+          imgUrl: pictures[idx].path.replace("public", ""),
         };
       }
     });
@@ -101,7 +109,7 @@ router.post("/", auth, uploadImage, async function (req, res) {
     const postData = { author: id, title, contents: contentList };
     const post = new Post(postData);
     await post.save();
-    res.json({
+    res.status(201).json({
       isOk: true,
       message: "Post 생성 완료",
     });
@@ -109,9 +117,11 @@ router.post("/", auth, uploadImage, async function (req, res) {
     console.log(err);
     switch (err.message) {
       case "wrong format":
-        return res.json({ isOk: false, message: "잘못된 포스팅 양식", err });
+        return res
+          .status(400)
+          .json({ isOk: false, message: "잘못된 포스팅 양식" });
       default:
-        return res.json({ isOk: false, message: "Post 생성 실패" });
+        return res.status(500).json({ isOk: false, message: "Post 생성 실패" });
     }
   }
 });
@@ -131,15 +141,18 @@ router.get("/search", async function (req, res) {
         .limit(postsCount)
         .populate("author", "name profileImg _id"),
     ]);
-    if (posts.length == 0)
-      return res.json({
-        ok: false,
-        error: "해당 제목을 가진 글이 존재하지 않습니다.",
-      });
-    res.json({ isOk: true, total, posts });
+    if (posts.length == 0) res.status(200).json({ isOk: true, total, posts });
   } catch (err) {
-    console.log(err);
-    res.json({ isOk: false, message: "검색 실패" });
+    switch (err.message) {
+      case "no exist":
+        return res.status(204).json({
+          ok: false,
+          error: "해당 제목을 가진 글이 존재하지 않습니다.",
+        });
+      default:
+        console.log(err);
+        res.status(500).json({ isOk: false, message: "검색 실패" });
+    }
   }
 });
 
@@ -157,7 +170,7 @@ router.put("/:postId", auth, uploadImage, async function (req, res) {
       if (!img[idx]) {
         return {
           content,
-          imgUrl: pictures[idx].path.replace("public/", ""),
+          imgUrl: pictures[idx].path.replace("public", ""),
         };
       }
       return {
@@ -169,13 +182,25 @@ router.put("/:postId", auth, uploadImage, async function (req, res) {
 
     const post = await Post.findOne({ _id: postId }).populate("author");
     if (post.author.id !== id) {
-      throw new Error("불일치");
+      throw new Error("unauthorized");
     }
     await post.updateOne({ $set: postData });
-    res.json({ isOk: true, message: "수정 완료" });
+
+    res.status(201).json({ isOk: true, message: "수정 완료" });
   } catch (err) {
+    switch (err.message) {
+      case "wrong format":
+        return res
+          .status(400)
+          .json({ isOk: false, message: "잘못된 포스팅 양식" });
+
+      case "unauthorized":
+        return res.status(401).json({ isOk: false, message: "권한 없음" });
+
+      default:
+        res.status(500).json({ isOk: false, message: "수정 실패", err });
+    }
     console.log(err);
-    res.json({ isOk: false, message: "수정 실패", err });
   }
 });
 
@@ -184,7 +209,7 @@ router.delete("/:postId", auth, async function (req, res) {
   const post = await Post.findOne({ _id: req.params.postId });
   try {
     await Post.deleteOne({ _id: req.params.postId });
-    res.json({ isOk: true, message: "post 삭제 완료" });
+    res.status(204).json({ isOk: true, message: "post 삭제 완료" });
   } catch (err) {
     console.log(err);
     res.json({ isOk: false, message: "post 삭제 실패", err });
@@ -222,7 +247,7 @@ router.post("/:postId/comment", auth, async (req, res) => {
       { $push: { comments: comment } },
     );
 
-    res.status(200).json({ isOk: true, message: "댓글작성 완료" });
+    res.status(201).json({ isOk: true, message: "댓글작성 완료" });
   } catch (err) {
     res.status(400).json({ isOk: false, message: "댓글작성 실패" });
     return;
@@ -246,7 +271,7 @@ router.put("/:postId/comment/:commentId", async (req, res) => {
         arrayFilters: [{ "el._id": commentId }],
       },
     );
-    res.status(200).json({ isOk: true, message: "댓글 수정완료" });
+    res.status(201).json({ isOk: true, message: "댓글 수정완료" });
   } catch (err) {
     res.status(400).json({ isOk: false, message: "댓글 수정 실패" });
   }
@@ -267,7 +292,7 @@ router.delete("/:postId/comment/:commentId", async (req, res) => {
       },
     );
 
-    res.status(200).json({ isOk: true, message: "댓글이 삭제되었습니다." });
+    res.status(204).json({ isOk: true, message: "댓글이 삭제되었습니다." });
   } catch (err) {
     res.status(400).json({ isOk: false, message: "댓글 삭제 실패" });
   }

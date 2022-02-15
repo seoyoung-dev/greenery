@@ -15,13 +15,13 @@ router.get("/search", async (req, res) => {
       .limit(plantCount);
 
     if (!plants) {
-      return res.json({ isOk: false, message: "empty" });
+      return res.status(205).json({ isOk: false, message: "empty" });
     }
 
-    res.json({ isOk: true, plants });
+    res.status(200).json({ isOk: true, plants });
   } catch (err) {
     console.log(err);
-    res.json({ isOk: false });
+    res.status(500).json({ isOk: false });
   }
 });
 

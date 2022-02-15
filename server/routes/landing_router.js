@@ -19,15 +19,15 @@ router.post("/todays/article", auth, async (req, res) => {
     const article = { postId, imgUrl, content };
     const todayArticle = new TodayArticle(article);
     todayArticle.save();
-    res.json({ isOk: true, message: "성공" });
+    res.status(201).json({ isOk: true, message: "성공" });
   } catch (err) {
     console.log(err);
     switch (err.message) {
       case "Admin Error":
-        return res.json({ isOk: false });
+        return res.status(401).json({ isOk: false });
 
       default:
-        return res.json({ isOk: false });
+        return res.status(500).json({ isOk: false });
     }
   }
 });
@@ -39,8 +39,7 @@ router.get("/todays/article", async (req, res) => {
       .limit(1);
 
     const { postId, imgUrl, content } = article[0];
-    // console.log(postId, imgUrl, content);
-    res.json({
+    res.status(200).json({
       isOk: true,
       postId,
       imgUrl,
@@ -48,7 +47,7 @@ router.get("/todays/article", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.json({ isOk: false });
+    res.status(500).json({ isOk: false });
   }
 });
 
