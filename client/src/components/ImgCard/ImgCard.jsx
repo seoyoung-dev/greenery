@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Container,
   Nav,
@@ -6,7 +7,6 @@ import {
   Detail,
   Button,
 } from "./ImgCard.style";
-import { Link } from "react-router-dom";
 
 export default function ServiceNav() {
   return (

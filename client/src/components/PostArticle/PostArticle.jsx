@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import {
   ArticleWrapper,
@@ -24,7 +23,7 @@ export default function PostArticle({
     <ArticleWrapper>
       <ArticleTitle>{title}</ArticleTitle>
       <PostInfo>
-        <img src={profileImgUrl} alt="프로필 이미지"></img>
+        <img src={`/${profileImgUrl}`} alt="프로필 이미지"></img>
         <DetailedInfo>
           <p>{author}</p>
           <div>
@@ -37,8 +36,8 @@ export default function PostArticle({
         </DetailedInfo>
       </PostInfo>
       <ContentBox>
-        {contents.map((card, i) => (
-          <Content key={`content-${i}`}>
+        {contents.map((card, index) => (
+          <Content key={`content-${index}`}>
             <img src={card.imgUrl} alt="포스트 이미지"></img>
             <p>{card.content}</p>
           </Content>
