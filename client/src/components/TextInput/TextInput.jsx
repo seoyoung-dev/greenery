@@ -1,6 +1,6 @@
 import { InputWrap, Input, Label } from "./TextInput.style";
 
-export function TextInput({
+export default function TextInput({
   title,
   type,
   placeholder,
@@ -9,7 +9,7 @@ export function TextInput({
 }) {
   return (
     <InputWrap>
-      <Label>{title}</Label>
+      {title && <Label>{title}</Label>}
       <Input
         type={type}
         placeholder={placeholder}

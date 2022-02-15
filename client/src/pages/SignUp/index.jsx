@@ -1,7 +1,3 @@
-import Container from "containers/SignUp";
-
-function SignUp() {
-  return <Container></Container>;
-}
+import { SignUp } from "containers/SignUp";
 
 export default SignUp;
