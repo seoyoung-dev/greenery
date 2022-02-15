@@ -77,6 +77,10 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/community" element={<Community />} />
           <Route path="/post" element={<Post />} />
+          <Route
+            path="/post/:postId"
+            element={<Post postId="620aa3908dd9226e99b57cbc" />}
+          />
           <Route path="/article" element={<Article />} />
           {/* <Route path="/article/:postId" element={<Article />} /> */}
           <Route path="/article/:postId" element={<Article />} />
