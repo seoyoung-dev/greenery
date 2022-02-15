@@ -4,10 +4,10 @@ export const CommentSection = styled.section`
   display: flex;
   flex-direction: column;
   width: 720px;
-  margin: 0 auto;
+  margin: 60px auto 100px auto;
 
   & h3 {
-    margin: 100px 0 30px 0;
+    margin: 0 0 30px 0;
     font-size: 18px;
     font-weight: bold;
   }

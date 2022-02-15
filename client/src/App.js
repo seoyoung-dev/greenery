@@ -12,7 +12,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Community from "./pages/Community";
 import Post from "./pages/Post";
-import Comment from "./components/Comment";
 import Article from "./pages/Article";
 import Recommendation from "./pages/Recommendation";
 import Wiki from "./pages/Wiki";
@@ -78,7 +77,6 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/community" element={<Community />} />
           <Route path="/post" element={<Post />} />
-          <Route path="/comment" element={<Comment />} />
           <Route
             path="/post/:postId"
             element={<Post postId="620aa3908dd9226e99b57cbc" />}
