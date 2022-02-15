@@ -1,11 +1,17 @@
 import styled from "styled-components";
 
-export const IconBox = styled.div`
-  position: absolute;
-  left: 75vw;
-  top: 150px;
+export const SideBarWrapper = styled.section`
+  position: fixed;
+  top: 330px;
   width: 54px;
   height: 276px;
+`;
+
+export const IconBox = styled.div`
+  position: absolute;
+  left: 800px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;

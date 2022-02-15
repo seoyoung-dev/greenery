@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ArticleWrapper = styled.div`
+export const ArticleWrapper = styled.article`
   display: flex;
   width: 720px;
   flex-direction: column;

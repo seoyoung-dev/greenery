@@ -3,5 +3,8 @@ import styled from "styled-components";
 export const Main = styled.div`
   display: flex;
   justify-content: center;
-  heigth: content;
+`;
+
+export const PostArticleWrapper = styled.div`
+  width: 720px;
 `;

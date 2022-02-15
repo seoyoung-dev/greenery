@@ -1,5 +1,5 @@
 import React from "react";
-import { Main } from "./Article.style";
+import { Main, PostArticleWrapper } from "./Article.style";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import PostArticle from "../../components/PostArticle";
@@ -29,15 +29,17 @@ export default function Article() {
   return (
     <Main>
       <Header />
-      <PostArticle
-        title={dummy.title}
-        profileImgUrl={dummy.profileImgUrl}
-        author={dummy.author}
-        date={dummy.date}
-        likeNum={dummy.likeNum}
-        contents={dummy.contents}
-      />
-      <SideBar />
+      <PostArticleWrapper>
+        <PostArticle
+          title={dummy.title}
+          profileImgUrl={dummy.profileImgUrl}
+          author={dummy.author}
+          date={dummy.date}
+          likeNum={dummy.likeNum}
+          contents={dummy.contents}
+        />
+        <SideBar />
+      </PostArticleWrapper>
     </Main>
   );
 }
