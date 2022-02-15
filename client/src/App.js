@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Community from "./pages/Community";
 import Post from "./pages/Post";
+import Comment from "./components/Comment";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/community" element={<Community />} />
         <Route path="/post" element={<Post />} />
+        <Route path="/comment" element={<Comment />} />
       </Routes>
     </BrowserRouter>
   );
