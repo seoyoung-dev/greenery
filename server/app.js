@@ -35,6 +35,7 @@ app.listen(port, () => {
   console.log(`server on, port ${port}`);
 });
 
-mongoose.connect(process.env.MONGODB_URL).then(() => {
+const { mongoURL } = require("./config");
+mongoose.connect(mongoURL).then(() => {
   console.log("MongoDB connected...");
 });
