@@ -66,17 +66,10 @@ export default function Header(props) {
             ) : (
               <UserNavButton onClick={focusHandler}>
                 <HambergIconWrap>
-<<<<<<< HEAD
-                  <img src="/icon/hamburger.svg" alt="목록" />
+                  <img src="/icon/hamburger.svg" alt="hamburger" />
                 </HambergIconWrap>
                 <UserIconWrap>
-                  <img src="/icon/user.svg" alt="목록" />
-=======
-                  <img src="icon/hamburger.svg" alt="hamburger" />
-                </HambergIconWrap>
-                <UserIconWrap>
-                  <img src="icon/user.svg" alt="usericon" />
->>>>>>> 45093e8058b7990ce35cbe64244d9b8b560d0809
+                  <img src="/icon/user.svg" alt="usericon" />
                 </UserIconWrap>
               </UserNavButton>
             )}
