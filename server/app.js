@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 
 // routers
 const routers = require("./routes");
-const { landingRouter, userRouter, postRouter } = routers;
+const { landingRouter, userRouter, postRouter, wikiRouter } = routers;
 // port
 var port = process.env.PORT || "8080";
 
@@ -29,6 +29,7 @@ dotenv.config();
 app.use("/", landingRouter);
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
+app.use("/wiki", wikiRouter);
 app.use("/images", express.static(path.join(__dirname, "/public/images")));
 
 app.listen(port, () => {
