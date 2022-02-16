@@ -3,6 +3,7 @@ import { Main, PostArticleWrapper } from "./Article.style";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import PostArticle from "../../components/PostArticle";
+import Comment from "../../components/Comment";
 
 const dummy = {
   postId: 54321,
@@ -40,6 +41,7 @@ export default function Article() {
         />
         <SideBar />
       </PostArticleWrapper>
+      <Comment />
     </Main>
   );
 }
