@@ -55,10 +55,10 @@ export default function Header(props) {
             ) : (
               <S.UserNavButton onClick={focusHandler}>
                 <S.HambergIconWrap>
-                  <img src="icon/hamburger.svg" alt="hamburger" />
+                  <img src="/icon/hamburger.svg" alt="hamburger" />
                 </S.HambergIconWrap>
                 <S.UserIconWrap>
-                  <img src="icon/user.svg" alt="usericon" />
+                  <img src="/icon/user.svg" alt="usericon" />
                 </S.UserIconWrap>
               </S.UserNavButton>
             )}

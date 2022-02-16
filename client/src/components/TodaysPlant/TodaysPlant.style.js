@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const TodaysPlantSection = styled.section`
@@ -29,14 +30,20 @@ export const ContentBox = styled.div`
 
   & img {
     width: 30%;
-    padding-right: 40px;
-    border-right: 1px solid #dbdbdb;
+    margin-right: 40px;
+    border-radius: 10px;
   }
 
-  & p {
+  & > p {
+    width: 70%;
     padding: 0 40px;
-    margin: 0px;
+    border-left: 1px solid #dbdbdb;
     font-size: 20px;
     line-height: 36px;
   }
+`;
+
+export const TodaysLink = styled(Link)`
+  color: #000;
+  font-weight: bold;
 `;

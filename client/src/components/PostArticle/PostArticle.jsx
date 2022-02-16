@@ -29,7 +29,7 @@ export default function PostArticle({
           <div>
             <p>{date}</p>
             <Like>
-              <img src="icon/thumbs-up.svg" alt="좋아요 수" />
+              <img src="/icon/thumbs-up.svg" alt="좋아요 수" />
               <div>{likeNum}</div>
             </Like>
           </div>
