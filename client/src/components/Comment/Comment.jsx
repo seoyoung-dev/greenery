@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useParams } from "react";
 import axios from "axios";
 import Comments from "./Comments";
 import Pagination from "./Pagination";
@@ -36,6 +36,8 @@ export function Comment() {
     obj.style.height = 'auto';
     obj.style.height = obj.scrollHeight + 'px';
   }
+
+  const { postId } = useParams();
 
   return (
     <CommentSection>
