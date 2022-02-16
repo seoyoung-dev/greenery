@@ -19,8 +19,6 @@ import TextInput from "components/TextInput";
 import SubmitButton from "components/SubmitButton";
 
 export function SignIn() {
-  // accessToken의 유효시간 1시간
-  const JWT_EXPIRY_TIME = 3600 * 1000;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -32,13 +30,13 @@ export function SignIn() {
     {
       placeholder: "example@greenfriend.com",
       autoComplete: "on",
-      setState: setEmail,
+      onChange: setEmail,
     },
     {
       type: "password",
       placeholder: "*******",
       autoComplete: "on",
-      setState: setPassword,
+      onChange: setPassword,
     },
   ];
 
@@ -54,7 +52,6 @@ export function SignIn() {
       }
       return response;
     } catch (err) {
-      console.error(err);
       throw new Error(err);
     }
   };
@@ -94,14 +91,19 @@ export function SignIn() {
 
     onLoginRequest({ email, password })
       .then(response => {
-        setAxiosDefaultAccessToken(response);
+        // accessToken의 유효시간
+        const JWT_EXPIRY_TIME = 3600 * 1000;
+
         const access_token = response.data.access_token;
+        setAxiosDefaultAccessToken(response);
         setCookie("access_token", access_token, {
           path: "/",
           maxAge: 3600,
+          secure: true,
+          // httpOnly: true,
         });
         // 10분 전에 로그인 연장
-        setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
+        setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 100 * 6000);
       })
       .then(() => {
         handleUserProfile();
@@ -124,15 +126,15 @@ export function SignIn() {
           }}
         >
           {textInputList.map(
-            ({ title, type, placeholder, autoComplete, setState }, index) => {
+            ({ title, type, placeholder, autoComplete, onChange }, index) => {
               return (
                 <TextInput
-                  key={type + index}
+                  key={index}
                   title={title}
                   type={type}
                   placeholder={placeholder}
                   autoComplete={autoComplete}
-                  setState={setState}
+                  onChange={onChange}
                 />
               );
             },
