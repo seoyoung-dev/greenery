@@ -3,7 +3,12 @@ import Progress from "../Progress";
 import Button from "../Button";
 import { Header, QuestionContainer, QuestionBar, Footer } from "./Survey.style";
 
-export default function Survey({ progress, setProgress, answers, saveAnswer }) {
+export default function Survey({
+  progress,
+  setProgress,
+  answers,
+  addAnswerToFilter,
+}) {
   const [{ title, subtitle, questions, type }] = survey_data.filter(
     d => d.num === progress,
   );
@@ -12,9 +17,13 @@ export default function Survey({ progress, setProgress, answers, saveAnswer }) {
     setProgress(progress - 1);
   }
   function increaseProgress() {
-    if (answers[type]) {
+    if (answers[type][0]) {
       setProgress(progress + 1);
     }
+  }
+  function saveFilter(evt, id) {
+    evt.preventDefault();
+    addAnswerToFilter(type, id);
   }
   return (
     <>
@@ -26,14 +35,8 @@ export default function Survey({ progress, setProgress, answers, saveAnswer }) {
         </Header>
         {questions.map(item => {
           return (
-            <QuestionBar active={item.id === answers[type]} key={item.id}>
-              <a
-                href="#null"
-                onClick={evt => {
-                  evt.preventDefault();
-                  saveAnswer(type, item.id);
-                }}
-              >
+            <QuestionBar active={item.id === answers[type][0]} key={item.id}>
+              <a href="#null" onClick={evt => saveFilter(evt, item.id)}>
                 <img src={item.icon} alt="Question icon" />
                 <span>{item.text}</span>
               </a>
