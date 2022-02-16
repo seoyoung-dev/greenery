@@ -22,7 +22,6 @@ function App() {
   // 페이지 리로드시 access_token을 재발급받기
   const refreshAccessToken = async () => {
     const url = "/users/refresh";
-    console.log("refresh");
     try {
       const response = await axios.post(url);
       setAxiosDefaultAccessToken(response);
@@ -40,7 +39,6 @@ function App() {
   //
   const handleUserProfile = async () => {
     const url = "users/auth";
-    console.log("handle");
     try {
       const response = await axios.get(url);
       const { email, id, name } = response.data;
@@ -65,8 +63,7 @@ function App() {
   // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
     reloadHandler();
-  }, []);
-
+  });
   return (
     <CookiesProvider>
       <BrowserRouter>
