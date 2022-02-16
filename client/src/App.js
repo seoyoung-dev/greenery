@@ -10,15 +10,17 @@ import GlobalStyle from "style/GlobalStyle";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import MyPage from "./pages/MyPage";
 import Community from "./pages/Community";
 import Post from "./pages/Post";
 import Article from "./pages/Article";
 import Recommendation from "./pages/Recommendation";
 import Wiki from "./pages/Wiki";
+import { useCookies } from "react-cookie";
 
 function App() {
   const setUserProfile = useSetRecoilState(userProfileState);
-
+  const [cookies, setCookie] = useCookies();
   // 페이지 리로드시 access_token을 재발급받기
   const refreshAccessToken = async () => {
     const url = "/users/refresh";
@@ -26,6 +28,10 @@ function App() {
     try {
       const response = await axios.post(url);
       setAxiosDefaultAccessToken(response);
+      setCookie("access_token", response.data.access_token, {
+        path: "/",
+        maxAge: 3600,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -75,6 +81,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<SignIn />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/community" element={<Community />} />
           <Route path="/post" element={<Post />} />
           <Route
