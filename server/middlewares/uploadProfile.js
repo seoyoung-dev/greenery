@@ -31,7 +31,7 @@ const uploadProfileImage = (req, res, next) => {
       console.log(err);
       return res.json({ isOk: false, message: "프로필 이미지 업로드 실패" });
     }
-    next();
+    return next();
   });
 };
 

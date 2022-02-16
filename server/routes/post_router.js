@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const uploadImage = require("../middlewares/uploadImage");
-const auth = require("../middlewares/auth");
-const { Post, Comment } = require("../models/index");
+const { auth, verifyToken, uploadImage } = require("../middlewares/");
+const { Post, Comment, User } = require("../models/index");
 const changeTimeFormat = require("../util/changeTimeFormat");
 
-router.get("/", async function (req, res) {
+router.get("/", verifyToken, async function (req, res) {
   try {
     const postId = req.query.postId;
     const post = await Post.findOne({ _id: postId }).populate(
@@ -18,47 +17,75 @@ router.get("/", async function (req, res) {
       title: post.title,
       contents: post.contents,
       likes: post.likes.length,
+      liked: false,
       createdAt: changeTimeFormat(post.createdAt),
     };
 
-    res.status(200).json({ isOk: true, post: processedData });
+    if (req.user && post.comments.includes(req.user.id)) {
+      processedData.liked = true;
+    }
+
+    return res.status(200).json({ isOk: true, post: processedData });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ isOk: false, message: "게시글을 불러오기 실패" });
+    return res
+      .status(500)
+      .json({ isOk: false, message: "게시글을 불러오기 실패" });
   }
 });
 
-// 페이지네이션
-router.get("/page/:pageNumber", async function (req, res) {
+// 페이지네이션 && 검색
+router.get("/page", verifyToken, async function (req, res) {
   try {
     const postsCount = 12;
-    const { pageNumber } = req.params;
+    const page = req.query.page || 1;
+    const keyword = req.query.keyword || "";
+    const userId = req.query.userId;
     const [total, posts] = await Promise.all([
-      Post.countDocuments(),
-      Post.find({})
+      Post.countDocuments({ title: { $regex: keyword } }),
+      Post.find({ title: { $regex: keyword } })
         .sort({ createdAt: -1 })
-        .skip(postsCount * (pageNumber - 1))
+        .skip(postsCount * (page - 1))
         .limit(postsCount)
         .populate("author", "name profileImg _id"),
     ]);
+
+    if (!posts) {
+      throw new Error("no content");
+    }
     const newPosts = posts.map(post => {
-      return {
+      const userInformation = {
         id: post.id,
         author: post.author,
         title: post.title,
-        contents: post.contents,
+        imgUrl: post.contents[0].imgUrl,
         likes: post.likes.length,
+        liked: false,
         createdAt: changeTimeFormat(post.createdAt),
       };
+
+      if (req.user && post.likes.includes(req.user.id)) {
+        userInformation.liked = true;
+      }
+      return userInformation;
     });
-    res.status(200).json({ isOk: true, total, posts: newPosts });
+    return res.status(200).json({ isOk: true, total, posts: newPosts });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ isOk: false, message: "불러오기 실패" });
+    const message = err.message;
+
+    if (message === "no content") {
+      return res.status(204).json({
+        isOk: true,
+        error: "글이 존재하지 않습니다.",
+      });
+    }
+
+    return res.status(500).json({ isOk: false, message: "불러오기 실패" });
   }
 });
 
-router.get("/popularity", async function (req, res) {
+router.get("/popularity", verifyToken, async function (req, res) {
   try {
     const current = Date.now();
     const monthToSecond = 30 * 24 * 3600000;
@@ -72,19 +99,28 @@ router.get("/popularity", async function (req, res) {
       .limit(3)
       .populate("author", "name profileImg _id");
     const newPosts = posts.map(post => {
-      return {
+      const userInformation = {
         id: post.id,
         author: post.author,
         title: post.title,
-        contents: post.contents,
+        imgUrl: post.contents[0].imgUrl,
         likes: post.likes.length,
+        liked: false,
         createdAt: changeTimeFormat(post.createdAt),
       };
+
+      if (req.user && post.likes.includes(req.user.id)) {
+        userInformation.liked = true;
+      }
+      return userInformation;
     });
-    res.status(200).json({ isOk: true, newPosts });
+
+    return res.status(200).json({ isOk: true, posts: newPosts });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ isOk: false, message: "게시글을 불러오기 실패" });
+    return res
+      .status(500)
+      .json({ isOk: false, message: "게시글 불러오기 실패" });
   }
 });
 
@@ -94,7 +130,7 @@ router.post("/", auth, uploadImage, async function (req, res) {
     const id = req.user.id;
     const { title, contents, img } = req.body;
     const pictures = req.files;
-    if (!title || (!contents && !pictures)) {
+    if (!title || !contents || !pictures) {
       throw new Error("wrong format");
     }
     const contentList = contents.map((content, idx) => {
@@ -114,45 +150,16 @@ router.post("/", auth, uploadImage, async function (req, res) {
       message: "Post 생성 완료",
     });
   } catch (err) {
+    const message = err.message;
     console.log(err);
-    switch (err.message) {
-      case "wrong format":
-        return res
-          .status(400)
-          .json({ isOk: false, message: "잘못된 포스팅 양식" });
-      default:
-        return res.status(500).json({ isOk: false, message: "Post 생성 실패" });
-    }
-  }
-});
 
-// Search
-router.get("/search", async function (req, res) {
-  try {
-    const postsCount = 12;
-    const { pageNumber, keyword } = req.query;
-    const [total, posts] = await Promise.all([
-      Post.countDocuments({ title: { $regex: keyword } }),
-      Post.find({
-        title: { $regex: new RegExp(keyword) },
-      })
-        .sort({ createdAt: -1 })
-        .skip(postsCount * (pageNumber - 1))
-        .limit(postsCount)
-        .populate("author", "name profileImg _id"),
-    ]);
-    if (posts.length == 0) res.status(200).json({ isOk: true, total, posts });
-  } catch (err) {
-    switch (err.message) {
-      case "no exist":
-        return res.status(204).json({
-          ok: false,
-          error: "해당 제목을 가진 글이 존재하지 않습니다.",
-        });
-      default:
-        console.log(err);
-        res.status(500).json({ isOk: false, message: "검색 실패" });
+    if (message === "wrong format") {
+      return res
+        .status(400)
+        .json({ isOk: false, message: "잘못된 포스팅 양식" });
     }
+
+    return res.status(500).json({ isOk: false, message: "Post 생성 실패" });
   }
 });
 
@@ -163,7 +170,7 @@ router.put("/:postId", auth, uploadImage, async function (req, res) {
     const { postId } = req.params;
     const { title, contents, img } = req.body;
     const pictures = req.files;
-    if (!title || (!contents && !pictures)) {
+    if (!title || !contents || !pictures) {
       throw new Error("wrong format");
     }
     const contentList = contents.map((content, idx) => {
@@ -178,29 +185,45 @@ router.put("/:postId", auth, uploadImage, async function (req, res) {
         imgUrl: img[idx],
       };
     });
-    const postData = { title, contents: contentList };
 
     const post = await Post.findOne({ _id: postId }).populate("author");
+
+    if (!post) {
+      throw new Error("no exist");
+    }
     if (post.author.id !== id) {
       throw new Error("unauthorized");
     }
-    await post.updateOne({ $set: postData });
 
-    res.status(201).json({ isOk: true, message: "수정 완료" });
+    await post.updateOne({
+      $set: {
+        title,
+        contents: contentList,
+      },
+    });
+
+    return res.status(201).json({ isOk: true, message: "수정 완료" });
   } catch (err) {
-    switch (err.message) {
-      case "wrong format":
-        return res
-          .status(400)
-          .json({ isOk: false, message: "잘못된 포스팅 양식" });
-
-      case "unauthorized":
-        return res.status(401).json({ isOk: false, message: "권한 없음" });
-
-      default:
-        res.status(500).json({ isOk: false, message: "수정 실패", err });
-    }
     console.log(err);
+    const message = err.message;
+
+    if (message === "no exist") {
+      return res
+        .status(400)
+        .json({ isOk: false, message: "존재하지 않는 포스터" });
+    }
+
+    if (message === "wrong format") {
+      return res
+        .status(400)
+        .json({ isOk: false, message: "잘못된 포스팅 양식" });
+    }
+
+    if (message === "unauthorized") {
+      return res.status(401).json({ isOk: false, message: "권한 없음" });
+    }
+
+    return res.status(500).json({ isOk: false, message: "수정 실패", err });
   }
 });
 
@@ -209,10 +232,43 @@ router.delete("/:postId", auth, async function (req, res) {
   const post = await Post.findOne({ _id: req.params.postId });
   try {
     await Post.deleteOne({ _id: req.params.postId });
-    res.status(204).json({ isOk: true, message: "post 삭제 완료" });
+    return res.status(204).json({ isOk: true, message: "post 삭제 완료" });
   } catch (err) {
     console.log(err);
-    res.json({ isOk: false, message: "post 삭제 실패", err });
+    return res
+      .status(500)
+      .json({ isOk: false, message: "post 삭제 실패", err });
+  }
+});
+
+//likes
+router.put("/:postId/like", auth, async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { id } = req.user;
+    const post = await Post.findOne({ _id: postId });
+
+    if (!post) {
+      throw new Error("no exist");
+    }
+
+    if (post.likes.includes(id)) {
+      await post.updateOne({ $pull: { likes: id } });
+    } else {
+      await post.updateOne({ $push: { likes: id } });
+    }
+
+    return res.status(200).json({ isOk: true, message: "요청 성공" });
+  } catch {
+    console.log(err);
+    const message = err.message;
+
+    if (message === "no exist") {
+      return res
+        .status(400)
+        .json({ isOk: false, message: "존재하지 않는 포스트" });
+    }
+    return res.status(500).json({ isOk: false });
   }
 });
 
@@ -220,13 +276,35 @@ router.delete("/:postId", auth, async function (req, res) {
 // 댓글 조회
 router.get("/:postId/comment", async (req, res) => {
   try {
+    const page = req.query.page || 1;
+    const commentCount = 5;
+    const skip = (page - 1) * commentCount;
     const { postId } = req.params;
-    const post = await Post.findOne({ _id: postId }, "comments");
-    const comments = post.comments;
+    const post = await Post.findOne({ _id: postId }).slice("comments", [
+      skip,
+      commentCount,
+    ]);
+    const comments = await User.populate(post.comments, {
+      path: "author",
+      select: "name profileImg _id",
+    });
 
-    res.status(200).json({ isok: true, comments: comments });
+    if (!comments) {
+      throw new Error("no content");
+    }
+
+    return res
+      .status(200)
+      .json({ isok: true, total: comments.length, comments });
   } catch (err) {
-    res.status(400).json({ isOk: false, message: "댓글조회 실패" });
+    console.log(err);
+    const message = err.message;
+
+    if (message === "no content") {
+      return res.status(204).json({ isOk: true, message: "댓글이 없습니다." });
+    }
+
+    return res.status(400).json({ isOk: false, message: "댓글조회 실패" });
   }
 });
 
@@ -235,7 +313,7 @@ router.post("/:postId/comment", auth, async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await Post.findOne({ postId });
-    if (!post) throw new Error("해당 게시물이 존재하지 않습니다.");
+    if (!post) throw new Error("no exist");
 
     const { content } = req.body;
     const author = req.user.id;
@@ -247,33 +325,18 @@ router.post("/:postId/comment", auth, async (req, res) => {
       { $push: { comments: comment } },
     );
 
-    res.status(201).json({ isOk: true, message: "댓글작성 완료" });
+    return res.status(201).json({ isOk: true, message: "댓글작성 완료" });
   } catch (err) {
-    res.status(400).json({ isOk: false, message: "댓글작성 실패" });
-    return;
-  }
-});
+    console.log(err);
+    const message = err.message;
 
-// 댓글수정
-// 배열인 경우 pull push는 알겠는데 중간값을 수정하는 방법을 모르겠다..😥
-router.put("/:postId/comment/:commentId", async (req, res) => {
-  try {
-    const { content } = req.body;
-    const { postId, commentId } = req.params;
-    const posts = await Post.findOneAndUpdate(
-      {
-        _id: postId,
-      },
-      {
-        $set: { "comments.$[el].content": content },
-      },
-      {
-        arrayFilters: [{ "el._id": commentId }],
-      },
-    );
-    res.status(201).json({ isOk: true, message: "댓글 수정완료" });
-  } catch (err) {
-    res.status(400).json({ isOk: false, message: "댓글 수정 실패" });
+    if (message === "no exist") {
+      return res
+        .status(400)
+        .json({ isOk: false, message: "존재하지 않는 포스트입니다." });
+    }
+
+    return res.status(500).json({ isOk: false, message: "댓글작성 실패" });
   }
 });
 
@@ -292,12 +355,12 @@ router.delete("/:postId/comment/:commentId", async (req, res) => {
       },
     );
 
-    res.status(204).json({ isOk: true, message: "댓글이 삭제되었습니다." });
+    return res
+      .status(204)
+      .json({ isOk: true, message: "댓글이 삭제되었습니다." });
   } catch (err) {
-    res.status(400).json({ isOk: false, message: "댓글 삭제 실패" });
+    return res.status(400).json({ isOk: false, message: "댓글 삭제 실패" });
   }
 });
-
-module.exports = router;
 
 module.exports = router;

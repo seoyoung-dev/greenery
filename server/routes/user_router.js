@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { User } = require("../models");
+const { User, Post } = require("../models");
 const auth = require("../middlewares/auth");
 const uploadProfileImage = require("../middlewares/uploadProfile");
 const {
@@ -52,7 +52,7 @@ router.post("/register", uploadProfileImage, async (req, res) => {
         error: { code: err.code, keyPattern },
       });
     }
-    res.status(500).json({
+    return res.status(500).json({
       isOk: false,
       message: "회원가입 실패",
     });
@@ -73,19 +73,21 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       throw new Error("wrong password");
     }
-    console.log(accessKey);
+
     const access_token = jwt.sign(
-      { id: user.id, email: user.email, name: user.name },
-      accessKey,
       {
-        expiresIn: accessTokenExpires,
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        exp: accessTokenExpires,
       },
+      accessKey,
     );
 
-    const refresh_token = jwt.sign({ id: user.id }, refreshKey, {
-      expiresIn: refreshTokenExpires,
-    });
-
+    const refresh_token = jwt.sign(
+      { id: user.id, exp: refreshTokenExpires },
+      refreshKey,
+    );
     await user.updateOne({ token: refresh_token });
 
     res.cookie("refresh_token", refresh_token, {
@@ -100,26 +102,27 @@ router.post("/login", async (req, res) => {
       message: "로그인 성공",
     });
   } catch (err) {
-    switch (err.message) {
-      case "no exist":
-        return res.status(400).json({
-          isOk: false,
-          message: "존재하지 않는 유저입니다.",
-        });
+    console.log(err);
+    const message = err.message;
 
-      case "wrong password":
-        return res.status(400).json({
-          isOk: false,
-          message: "잘못된 비밀번호입니다.",
-        });
-
-      default:
-        console.log(err);
-        return res.status(500).json({
-          isOk: false,
-          message: "로그인 실패",
-        });
+    if (message === "no exist") {
+      return res.status(400).json({
+        isOk: false,
+        message: "존재하지 않는 유저입니다.",
+      });
     }
+
+    if (message === "wrong password") {
+      return res.status(400).json({
+        isOk: false,
+        message: "잘못된 비밀번호입니다.",
+      });
+    }
+
+    return res.status(500).json({
+      isOk: false,
+      message: "로그인 실패",
+    });
   }
 });
 
@@ -130,13 +133,13 @@ router.get("/logout", auth, async (req, res) => {
     const user = await User.findOne({ _id: id });
     await user.updateOne({ token: "" });
     res.clearCookie("refresh_token");
-    res.status(200).json({
+    return res.status(200).json({
       isOk: true,
       message: "로그아웃 성공",
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({
+    return res.status(500).json({
       isOk: false,
       message: "로그아웃 실패",
     });
@@ -155,11 +158,13 @@ router.post("/refresh", async (req, res) => {
       if (user.token !== refresh_token) throw new Error("wrong access");
 
       const access_token = jwt.sign(
-        { id: user.id, email: user.email, name: user.name },
-        accessKey,
         {
-          expiresIn: accessTokenExpires,
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          exp: accessTokenExpires,
         },
+        accessKey,
       );
 
       res.status(200).json({
@@ -170,25 +175,75 @@ router.post("/refresh", async (req, res) => {
       });
     }
   } catch (err) {
-    switch (err.message) {
-      case "jwt expired":
-        return res.status(401).json({
-          isOk: false,
-          isAuthorize: false,
-          message: "access token 재발급 실패",
-        });
+    console.log(err);
+    const message = err.message;
 
-      case "wrong access":
-        return res.status(401).json({
-          isOk: false,
-          isAuthorize: false,
-          message: "잘못된 접근입니다.",
-        });
-
-      default:
-        console.log(error);
-        return res.status(500).json({ isOk: false, message: "실패" });
+    if (message === "jwt expired") {
+      return res.status(401).json({
+        isOk: false,
+        isAuthorize: false,
+        message: "access token 재발급 실패",
+      });
     }
+
+    if (message === "wrong access") {
+      return res.status(401).json({
+        isOk: false,
+        isAuthorize: false,
+        message: "잘못된 접근입니다.",
+      });
+    }
+
+    return res.status(500).json({ isOk: false, message: "실패" });
+  }
+});
+
+router.get("/post", auth, async function (req, res) {
+  try {
+    const postsCount = 12;
+    const page = req.query.page || 1;
+    const userId = req.user.id;
+    const [total, posts] = await Promise.all([
+      Post.countDocuments({ author: userId }),
+      Post.find({ author: userId })
+        .sort({ createdAt: -1 })
+        .skip(postsCount * (page - 1))
+        .limit(postsCount)
+        .populate("author", "name profileImg _id"),
+    ]);
+
+    if (!posts) {
+      throw new Error("no content");
+    }
+    const newPosts = posts.map(post => {
+      const userInformation = {
+        id: post.id,
+        author: post.author,
+        title: post.title,
+        imgUrl: post.contents[0].imgUrl,
+        likes: post.likes.length,
+        liked: false,
+        createdAt: changeTimeFormat(post.createdAt),
+      };
+
+      if (req.user && post.likes.includes(req.user.id)) {
+        userInformation.liked = true;
+      }
+      return userInformation;
+    });
+    return res.status(200).json({ isOk: true, total, posts: newPosts });
+  } catch (err) {
+    console.log(err);
+    const message = err.message;
+
+    if (message === "no content") {
+      return res.status(204).json({
+        isOk: true,
+        error: "글이 존재하지 않습니다.",
+      });
+    }
+
+    return res.status(500).json({ isOk: false, message: "불러오기 실패" });
   }
 });
 
