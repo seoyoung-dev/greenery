@@ -4,7 +4,7 @@ import Survey from "../../components/Survey/Survey";
 import PlantGrid from "../../components/PlantGrid";
 import Loading from "../../components/Loading";
 import Button from "../../components/Button";
-import fetchPlant from "../../api/plant";
+import { dummyFetchPlant } from "../../api/plant";
 import {
   Modal,
   CenterContainer,
@@ -27,7 +27,7 @@ export default function Recommendation() {
 
   useEffect(() => {
     if (isDataFilled(filter)) {
-      fetchPlant(2).then(data => {
+      dummyFetchPlant(2).then(data => {
         setPlantData(data);
       });
     }
