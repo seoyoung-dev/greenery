@@ -16,7 +16,6 @@ import Post from "./pages/Post";
 import Article from "./pages/Article";
 import Recommendation from "./pages/Recommendation";
 import Wiki from "./pages/Wiki";
-import { useCookies } from "react-cookie";
 
 function App() {
   const setUserProfile = useSetRecoilState(userProfileState);
