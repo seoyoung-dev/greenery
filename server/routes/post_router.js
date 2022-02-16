@@ -137,7 +137,7 @@ router.post("/", auth, uploadImage, async function (req, res) {
       if (!img[idx]) {
         return {
           content,
-          imgUrl: pictures[idx].path.replace("public", ""),
+          imgUrl: pictures[idx].path.replace("public", "/api"),
         };
       }
     });
@@ -177,7 +177,7 @@ router.put("/:postId", auth, uploadImage, async function (req, res) {
       if (!img[idx]) {
         return {
           content,
-          imgUrl: pictures[idx].path.replace("public", ""),
+          imgUrl: pictures[idx].path.replace("public", "/api"),
         };
       }
       return {
