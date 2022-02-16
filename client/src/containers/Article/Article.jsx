@@ -1,4 +1,3 @@
-import React from "react";
 import { Main, PostArticleWrapper } from "./Article.style";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";

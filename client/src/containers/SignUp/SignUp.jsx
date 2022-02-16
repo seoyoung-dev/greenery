@@ -34,31 +34,38 @@ export function SignUp() {
       type: "email",
       placeholder: "example@greenfriend.com",
       autoComplete: "on",
-      setState: setEmail,
+      minLength: 12,
+      maxLength: 32,
+      onChange: setEmail,
     },
     {
       title: "비밀번호",
       type: "password",
       placeholder: "*******",
+      minLength: 8,
+      maxLength: 12,
       autoComplete: "on",
-      setState: setPassword,
+      onChange: setPassword,
     },
     {
       title: "비밀번호 확인",
       type: "password",
       placeholder: "*******",
+      minLength: 8,
+      maxLength: 12,
       autoComplete: "on",
-      setState: setCheckPassword,
+      onChange: setCheckPassword,
     },
     {
       title: "닉네임",
       type: "text",
       placeholder: "ex) 초록집사",
       autoComplete: "on",
-      setState: setName,
+      minLength: 4,
+      maxLength: 12,
+      onChange: setName,
     },
   ];
-
   // 이미지 업로드시 미리보기
   function renderPreviewImage(target) {
     const reader = new FileReader();
@@ -83,8 +90,38 @@ export function SignUp() {
     return data;
   }
 
+  function validateFormInput(list, string) {
+    const compareTwoString = ([str1, str2]) => {
+      return str1 === str2;
+    };
+
+    const checkNotSpecialString = string => {
+      // a-zA-Z0-9-가-힣 가 아닌 문자열이 있으면 true를 반환한다.
+      const regExp = /[^a-zA-Z0-9-가-힣]+/g;
+      if (regExp.test(string)) {
+        return false;
+      }
+      return true;
+    };
+
+    if (!compareTwoString(list)) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return false;
+    }
+    if (!checkNotSpecialString(string)) {
+      alert("한글, 알파벳 대소문자, 숫자만 입력하세요");
+      return false;
+    }
+
+    return true;
+  }
+
   function submitHandler(event) {
     event.preventDefault();
+
+    if (!validateFormInput([password, checkPassword], name)) {
+      return;
+    }
 
     const url = "/users/register";
     const data = handleFormData();
@@ -106,7 +143,18 @@ export function SignUp() {
         </FormHeader>
         <form onSubmit={event => submitHandler(event)}>
           {textInputList.map(
-            ({ title, type, placeholder, autoComplete, setState }, index) => {
+            (
+              {
+                title,
+                type,
+                placeholder,
+                autoComplete,
+                minLength,
+                maxLength,
+                onChange,
+              },
+              index,
+            ) => {
               return (
                 <TextInput
                   key={index}
@@ -114,7 +162,9 @@ export function SignUp() {
                   type={type}
                   placeholder={placeholder}
                   autoComplete={autoComplete}
-                  setState={setState}
+                  minLength={minLength}
+                  maxLength={maxLength}
+                  onChange={onChange}
                 />
               );
             },
@@ -131,7 +181,7 @@ export function SignUp() {
               />
             </Label>
           </ImagePreviewWrap>
-          <SubmitButton type={"submit"} text={"회원가입"}></SubmitButton>
+          <SubmitButton type="submit" text="회원가입"></SubmitButton>
         </form>
       </Section>
     </Main>
