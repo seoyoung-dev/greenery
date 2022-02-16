@@ -23,7 +23,7 @@ function App() {
 
   // 페이지 리로드시 access_token을 재발급받기
   const refreshAccessToken = async () => {
-    const url = "/users/refresh";
+    const url = "/api/users/refresh";
     try {
       const response = await axios.post(url);
       setAxiosDefaultAccessToken(response);
@@ -53,7 +53,7 @@ function App() {
   };
   //
   const handleUserProfile = async () => {
-    const url = "users/auth";
+    const url = "/api/users/auth";
     try {
       const response = await axios.get(url);
       const { email, id, name } = response.data;
@@ -92,7 +92,7 @@ function App() {
           <Route path="/post" element={<Post />} />
           <Route
             path="/post/:postId"
-            element={<Post postId="620aa3908dd9226e99b57cbc" />}
+            element={<Post postId="620d091db133f690ba9d2781" />}
           />
           <Route path="/article" element={<Article />} />
           {/* <Route path="/article/:postId" element={<Article />} /> */}

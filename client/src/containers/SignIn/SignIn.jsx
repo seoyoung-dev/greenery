@@ -43,7 +43,7 @@ export function SignIn() {
   // setTimeout을 이용하여 엑세스 토큰의 유효기간이 일정시간 이하가 될 경우 엑세스 토큰을 다시받기 (x)
 
   const onLoginRequest = async data => {
-    const url = "/users/login";
+    const url = "/api/users/login";
     try {
       const response = await axios.post(url, data);
 
@@ -66,7 +66,7 @@ export function SignIn() {
   // set global userProfileState
   const handleUserProfile = () => {
     axios
-      .get("users/auth")
+      .get("/api/users/auth")
       .then(response => {
         const { email, id, name } = response.data;
         setUserProfile(prev => {
@@ -82,7 +82,7 @@ export function SignIn() {
   // refresh_token을 이용하여 access_token 재발급
   const refreshAccessToken = () => {
     axios
-      .post("/users/refresh")
+      .post("/api/users/refresh")
       .then(response => setAxiosDefaultAccessToken(response));
   };
 
