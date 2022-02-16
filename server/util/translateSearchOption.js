@@ -20,56 +20,54 @@ const brightnessObject = {
 
 const translateOptionToText = optionObj => {
   const translated = [];
-  if (Boolean(optionObj)) {
+  if (!Boolean(optionObj)) {
     return translated;
   }
 
   for (const [key, options] of Object.entries(optionObj)) {
-    switch (key) {
-      case "search":
-        console.log("hi");
-        if (!options) break;
-        const keyword = options;
-        translated.push({ plantName: { $regex: new RegExp(keyword) } });
-        break;
-      case "brightness":
-        if (options.length === 0) break;
-        const brightnessParams = options.map(
-          option => brightnessObject[option],
-        );
-        translated.push({ brightness: { $in: brightnessParams } });
-        break;
-      case "smell":
-        if (options.length === 0) break;
-        const smellParams = options.map(option => smellObject[option]);
-        translated.push({ smell: { $in: smellParams } });
-        break;
-      case "bloomingSeason":
-        if (options.length === 0) break;
-        const bloomingSeasonParams = options.map(
-          option => bloomingSeasonObject[option],
-        );
-        translated.push({ bloomingSeason: { $in: bloomingSeasonParams } });
-        break;
-      case "growthHeight":
-        if (options.length === 0) break;
-        const heightParams = options.map(option => {
-          if (option === 15) {
-            return {
-              growthHeight: { $gt: option * 10 },
-            };
-          }
+    if (!options && key !== "search") break;
+
+    if (key === "search") {
+      const keyword = options;
+      translated.push({ plantName: { $regex: new RegExp(keyword) } });
+      break;
+    }
+
+    if (key === "brightness") {
+      const brightnessParams = options.map(option => brightnessObject[option]);
+      translated.push({ brightness: { $in: brightnessParams } });
+      break;
+    }
+
+    if (key === "smell") {
+      const smellParams = options.map(option => smellObject[option]);
+      translated.push({ smell: { $in: smellParams } });
+      break;
+    }
+
+    if (key === "bloomingSeason") {
+      const bloomingSeasonParams = options.map(
+        option => bloomingSeasonObject[option],
+      );
+      translated.push({ bloomingSeason: { $in: bloomingSeasonParams } });
+      break;
+    }
+
+    if (key === "growthHeight") {
+      const heightParams = options.map(option => {
+        if (option === 15) {
           return {
-            growthHeight: { $gt: option * 10, $lte: (option + 5) * 10 },
+            growthHeight: { $gt: option * 10 },
           };
-        });
-        translated.push({ $or: heightParams });
-        break;
-      default:
-        break;
+        }
+        return {
+          growthHeight: { $gt: option * 10, $lte: (option + 5) * 10 },
+        };
+      });
+      translated.push({ $or: heightParams });
+      break;
     }
   }
-  console.log(translated);
   return [
     {
       $match: { $and: translated },

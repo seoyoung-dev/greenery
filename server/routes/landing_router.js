@@ -22,13 +22,13 @@ router.post("/todays/article", auth, async (req, res) => {
     res.status(201).json({ isOk: true, message: "성공" });
   } catch (err) {
     console.log(err);
-    switch (err.message) {
-      case "Admin Error":
-        return res.status(401).json({ isOk: false });
+    const message = err.message;
 
-      default:
-        return res.status(500).json({ isOk: false });
+    if (message === "Admin Error") {
+      return res.status(401).json({ isOk: false });
     }
+
+    return res.status(500).json({ isOk: false });
   }
 });
 
@@ -47,7 +47,7 @@ router.get("/todays/article", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ isOk: false });
+    return res.status(500).json({ isOk: false });
   }
 });
 

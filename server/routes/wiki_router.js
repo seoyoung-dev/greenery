@@ -5,10 +5,11 @@ const translateOptionToText = require("../util/translateSearchOption");
 
 router.get("/search", async (req, res) => {
   try {
-    const { page, ...filterOption } = req.query;
-    const plantCount = 20;
+    const { page, count, ...filterOption } = req.query;
+    const plantCount = count || 20;
 
     const translated = translateOptionToText(filterOption);
+    console.log(translated);
     const plants = await Plant.aggregate(translated)
       .sort({ plantName: 1 })
       .skip(plantCount * (page - 1))
@@ -18,10 +19,10 @@ router.get("/search", async (req, res) => {
       return res.status(205).json({ isOk: false, message: "empty" });
     }
 
-    res.status(200).json({ isOk: true, plants });
+    return res.status(200).json({ isOk: true, plants });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ isOk: false });
+    return res.status(500).json({ isOk: false });
   }
 });
 

@@ -26,11 +26,11 @@ app.use(morgan("dev"));
 app.use(helmet());
 dotenv.config();
 
-app.use("/", landingRouter);
-app.use("/users", userRouter);
-app.use("/posts", postRouter);
-app.use("/wiki", wikiRouter);
-app.use("/images", express.static(path.join(__dirname, "/public/images")));
+app.use("/api/", landingRouter);
+app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
+app.use("/api/wiki", wikiRouter);
+app.use("/api/images", express.static(path.join(__dirname, "/public/images")));
 
 app.listen(port, () => {
   console.log(`server on, port ${port}`);
