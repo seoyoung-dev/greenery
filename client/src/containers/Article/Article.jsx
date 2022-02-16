@@ -29,12 +29,31 @@ const dummy = {
 
 export default function Article(props) {
   const [article, setArticle] = useState({});
-  console.log(props.postId);
+  // console.log(props.postId);
+
+  const handleLikeClick = async () => {
+    await axios.put("");
+    console.log("Like");
+  };
+
+  const handleCommentClick = async () => {
+    console.log("Comment");
+  };
+
+  const handleEditClick = async () => {
+    console.log("Edit");
+  };
+
+  const handleTrashClick = async () => {
+    // await axios.put("")
+    console.log("Trash");
+  };
+
   const getPost = postId => {
     axios
       .get("/api/posts", { params: { postId } })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         setArticle(res.data.post);
       })
       .catch(err => {
@@ -53,8 +72,8 @@ export default function Article(props) {
       {/* {console.log(article)} */}
 
       <PostArticleWrapper>
-        {console.log(Boolean(article))}
-        {console.log(article.author)}
+        {/* {console.log(Boolean(article))}
+        {console.log(article.author)} */}
         {article.author && (
           <PostArticle
             title={article.title || dummy.title}
@@ -65,7 +84,13 @@ export default function Article(props) {
             contents={article.contents || dummy.contents}
           />
         )}
-        <SideBar />
+        <SideBar
+          likeHandler={handleLikeClick}
+          editHandler={handleEditClick}
+          commentHandler={handleCommentClick}
+          trashHandler={handleTrashClick}
+          postId={props.postId}
+        />
       </PostArticleWrapper>
       <Comment />
     </Main>
