@@ -74,3 +74,7 @@ export const Nav = styled.nav`
     color: var(--lighter-text);
   }
 `;
+
+export const ButtonCotainer = styled.div`
+  margin: 30px auto 0;
+`;

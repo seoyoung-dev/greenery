@@ -4,7 +4,8 @@ import Survey from "../../components/Survey/Survey";
 import PlantGrid from "../../components/PlantGrid";
 import Loading from "../../components/Loading";
 import Button from "../../components/Button";
-import fetchPlant from "../../api/plant";
+import { dummyFetchPlant } from "../../api/plant";
+import { WideContainer } from "style/ContainerStyle";
 import {
   Modal,
   CenterContainer,
@@ -12,37 +13,37 @@ import {
   IntroContainer,
   CloseButton,
   Nav,
+  ButtonCotainer,
 } from "./Recommendation.style";
-import { WideContainer } from "style/ContainerStyle";
 
 export default function Recommendation() {
   const [progress, setProgress] = useState(0);
   const [plantData, setPlantData] = useState(null);
   const [filter, setFilter] = useState({
-    brightness: "",
-    smell: "",
-    bloomingSeason: "",
-    growthHeight: "",
+    brightness: [],
+    smell: [],
+    bloomingSeason: [],
+    growthHeight: [],
   });
 
   useEffect(() => {
     if (isDataFilled(filter)) {
-      fetchPlant(2).then(data => {
+      dummyFetchPlant(2, filter).then(data => {
         setPlantData(data);
       });
     }
   }, [filter]);
 
-  function saveAnswer(type, answer) {
+  function addAnswerToFilter(type, answer) {
     const newData = { ...filter };
-    newData[type] = answer;
+    newData[type][0] = answer;
     setFilter(newData);
   }
 
   function isDataFilled(filter_data) {
     const data = Object.entries(filter_data);
     for (let i = 0; i < data.length; i++) {
-      if (data[i][1] === "") {
+      if (data[i][1].length === 0) {
         return false;
       }
     }
@@ -56,10 +57,10 @@ export default function Recommendation() {
   function reset() {
     setProgress(0);
     setFilter({
-      brightness: "",
-      smell: "",
-      bloomingSeason: "",
-      growthHeight: "",
+      brightness: [],
+      smell: [],
+      bloomingSeason: [],
+      growthHeight: [],
     });
   }
   let element;
@@ -77,7 +78,9 @@ export default function Recommendation() {
             <span className="small"> (*약 2분 소요)</span>
           </h1>
         </Header>
-        <Button handleClick={increaseProgress}>시작하기</Button>
+        <ButtonCotainer>
+          <Button handleClick={increaseProgress}>시작하기</Button>
+        </ButtonCotainer>
       </IntroContainer>
     );
 
@@ -88,7 +91,7 @@ export default function Recommendation() {
         progress={progress}
         setProgress={setProgress}
         answers={filter}
-        saveAnswer={saveAnswer}
+        addAnswerToFilter={addAnswerToFilter}
       />
     );
 
@@ -104,7 +107,9 @@ export default function Recommendation() {
           <Link to="/wiki">더 많은 초록이들 보기</Link>
         </Nav>
         {plantData ? <PlantGrid data={plantData} /> : <Loading />}
-        <Button handleClick={reset}>다시하기</Button>
+        <ButtonCotainer>
+          <Button handleClick={reset}>다시하기</Button>
+        </ButtonCotainer>
       </>
     );
   }
