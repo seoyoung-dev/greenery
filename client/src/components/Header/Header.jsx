@@ -51,7 +51,7 @@ export default function Header(props) {
         <S.LayoutNavigationRight>
           <S.UserNavigationWrap onBlur={e => blurHandler(e)}>
             {props.id === "PostPage" ? (
-              <S.PostButton form="test">올리기</S.PostButton>
+              <S.PostButton form="PostFormSubmit">올리기</S.PostButton>
             ) : (
               <S.UserNavButton onClick={focusHandler}>
                 <S.HambergIconWrap>
