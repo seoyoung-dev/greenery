@@ -8,4 +8,11 @@ export const Main = styled.div`
 
 export const PostArticleWrapper = styled.div`
   width: 720px;
+
+  @media screen and (max-width: 1024px) {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;

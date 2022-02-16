@@ -5,6 +5,10 @@ export const ArticleWrapper = styled.article`
   width: 720px;
   flex-direction: column;
   margin-top: 180px;
+
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  } ;
 `;
 
 export const ArticleTitle = styled.span`
@@ -65,13 +69,14 @@ export const Like = styled.div`
 export const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const Content = styled.div`
   margin-top: 40px;
 
   img {
-    width: 720px;
+    width: 100%;
   }
 
   p {

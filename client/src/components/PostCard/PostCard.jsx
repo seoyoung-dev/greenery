@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 import React from "react";
+>>>>>>> 00b57de03b6e8e39192df7a05e869f23defc8e17
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -17,6 +20,29 @@ const dummy = {
   likeNum: 4876,
 };
 
+<<<<<<< HEAD
+export function PostCard({
+  postImgUrl,
+  title,
+  profileImgUrl,
+  author,
+  likeNum,
+}) {
+  return (
+    <PostCardArticle>
+      <ImgWrapper>
+        <img src={postImgUrl || dummy.postImgUrl} alt="포스트 이미지" />
+      </ImgWrapper>
+      <h3>{title || dummy.title}</h3>
+      <ContentBox>
+        <Profile>
+          <img src={profileImgUrl || dummy.profileImgUrl} alt="프로필 이미지" />
+          <span>{author || dummy.author}</span>
+        </Profile>
+        <Like>
+          <FontAwesomeIcon icon={faThumbsUp} />
+          <span>{likeNum || dummy.likeNum}</span>
+=======
 export default function PostCard({
   id,
   title,
@@ -42,6 +68,7 @@ export default function PostCard({
         <Like>
           <FontAwesomeIcon icon={faThumbsUp} />
           <span>{likeNum}</span>
+>>>>>>> 00b57de03b6e8e39192df7a05e869f23defc8e17
         </Like>
       </ContentBox>
     </PostCardArticle>

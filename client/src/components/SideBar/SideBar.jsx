@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { SideBarWrapper, Icon, IconBox } from "./SideBar.style";
 
 export default function SideBar() {
