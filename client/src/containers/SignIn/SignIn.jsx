@@ -30,8 +30,6 @@ export function SignIn() {
     },
   ];
 
-  // setTimeout을 이용하여 엑세스 토큰의 유효기간이 일정시간 이하가 될 경우 엑세스 토큰을 다시받기 (x)
-
   const onLoginRequest = async data => {
     const url = "api/users/login";
     const response = await axios.post(url, data);
@@ -42,7 +40,7 @@ export function SignIn() {
     return response;
   };
 
-  // 로그인 성공시 access token을 axios의 headers 의 deafult 처리해준다.
+  // 로그인 성공시 access token을 axios의 headers의 deafult로 설정
   const setAxiosDefaultAccessToken = response => {
     const { access_token } = response.data;
 
