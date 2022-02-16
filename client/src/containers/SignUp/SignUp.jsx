@@ -36,7 +36,7 @@ export function SignUp() {
       autoComplete: "on",
       minLength: 12,
       maxLength: 32,
-      onChange: setEmail,
+      onBlur: setEmail,
     },
     {
       title: "비밀번호",
@@ -45,7 +45,7 @@ export function SignUp() {
       minLength: 8,
       maxLength: 12,
       autoComplete: "on",
-      onChange: setPassword,
+      onBlur: setPassword,
     },
     {
       title: "비밀번호 확인",
@@ -54,7 +54,7 @@ export function SignUp() {
       minLength: 8,
       maxLength: 12,
       autoComplete: "on",
-      onChange: setCheckPassword,
+      onBlur: setCheckPassword,
     },
     {
       title: "닉네임",
@@ -63,7 +63,7 @@ export function SignUp() {
       autoComplete: "on",
       minLength: 4,
       maxLength: 12,
-      onChange: setName,
+      onBlur: setName,
     },
   ];
   // 이미지 업로드시 미리보기
@@ -90,9 +90,17 @@ export function SignUp() {
     return data;
   }
 
-  function validateFormInput(list, string) {
-    const compareTwoString = ([str1, str2]) => {
-      return str1 === str2;
+  function validateFormInput(list) {
+    const [email, name, password, checkPassword] = list;
+
+    function checkLength(list) {
+      const result = list.every(ele => ele.length > 0);
+
+      return result;
+    }
+
+    const compareTwoString = (originString, checkString) => {
+      return originString === checkString;
     };
 
     const checkNotSpecialString = string => {
@@ -104,11 +112,16 @@ export function SignUp() {
       return true;
     };
 
-    if (!compareTwoString(list)) {
-      alert("비밀번호가 일치하지 않습니다.");
+    if (!checkLength(list)) {
+      console.log(checkLength(list));
+      alert("비어있는 값을 채워주세요");
       return false;
     }
-    if (!checkNotSpecialString(string)) {
+    if (!compareTwoString(password, checkPassword)) {
+      alert("비밀번호가 일치하지 않습니다");
+      return false;
+    }
+    if (!checkNotSpecialString(name)) {
       alert("한글, 알파벳 대소문자, 숫자만 입력하세요");
       return false;
     }
@@ -119,11 +132,11 @@ export function SignUp() {
   function submitHandler(event) {
     event.preventDefault();
 
-    if (!validateFormInput([password, checkPassword], name)) {
+    if (!validateFormInput([email, password, checkPassword, name])) {
       return;
     }
 
-    const url = "/users/register";
+    const url = "api/users/register";
     const data = handleFormData();
 
     // 서버에서 상태코드를 추가해주어야 할 것 같다. catch(err)
@@ -151,7 +164,7 @@ export function SignUp() {
                 autoComplete,
                 minLength,
                 maxLength,
-                onChange,
+                onBlur,
               },
               index,
             ) => {
@@ -164,7 +177,7 @@ export function SignUp() {
                   autoComplete={autoComplete}
                   minLength={minLength}
                   maxLength={maxLength}
-                  onChange={onChange}
+                  onBlur={onBlur}
                 />
               );
             },

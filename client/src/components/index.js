@@ -1,7 +1,6 @@
 import HeaderDropDown from "./HeaderDropDown";
 import Header from "./Header";
 import Button from "./Button";
-import PostCard from "./PostCard";
 import HomeLogo from "./HomeLogo";
 import Footer from "./Footer";
 import ImgCard from "./ImgCard";
@@ -9,6 +8,7 @@ import Loading from "./Loading/Loading";
 import PlantDetail from "./PlantDetail";
 import PlantGrid from "./PlantGrid";
 import PostArticle from "./PostArticle";
+import PostCard from "./PostCard";
 import Progress from "./Progress";
 import SearchBar from "./SearchBar";
 import SideBar from "./SideBar";

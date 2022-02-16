@@ -18,11 +18,11 @@ import Wiki from "./pages/Wiki";
 
 function App() {
   const setUserProfile = useSetRecoilState(userProfileState);
-  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [cookies, setCookie] = useCookies([]);
 
   // 페이지 리로드시 access_token을 재발급받기
   const refreshAccessToken = async () => {
-    const url = "/users/refresh";
+    const url = "api/users/refresh";
     try {
       const response = await axios.post(url);
       setAxiosDefaultAccessToken(response);
@@ -52,7 +52,7 @@ function App() {
   };
   //
   const handleUserProfile = async () => {
-    const url = "users/auth";
+    const url = "/api/users/auth";
     try {
       const response = await axios.get(url);
       const { email, id, name } = response.data;
@@ -74,7 +74,6 @@ function App() {
 
   // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
-    refreshAccessToken();
     reloadHandler();
   });
 
