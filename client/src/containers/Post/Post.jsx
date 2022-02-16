@@ -134,7 +134,9 @@ export function Post(props) {
                     style={{ display: "none" }}
                   />
                   <DisplayImg
-                    src={x.fileImage ? `${x.fileImage}` : "/img/upload.png"}
+                    src={
+                      x.fileImage ? `/api/${x.fileImage}` : "/img/upload.png"
+                    }
                     alt="upload.png"
                   />
                 </label>

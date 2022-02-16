@@ -3,6 +3,8 @@ import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import PostArticle from "../../components/PostArticle";
 import Comment from "../../components/Comment";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const dummy = {
   postId: 54321,
@@ -25,19 +27,44 @@ const dummy = {
   ],
 };
 
-export default function Article() {
+export default function Article(props) {
+  const [article, setArticle] = useState({});
+  console.log(props.postId);
+  const getPost = postId => {
+    axios
+      .get("/api/posts", { params: { postId } })
+      .then(res => {
+        console.log(res);
+        setArticle(res.data.post);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(props.postId);
+    props.postId && getPost(props.postId);
+  }, []);
+
   return (
     <Main>
       <Header />
+      {/* {console.log(article)} */}
+
       <PostArticleWrapper>
-        <PostArticle
-          title={dummy.title}
-          profileImgUrl={dummy.profileImgUrl}
-          author={dummy.author}
-          date={dummy.date}
-          likeNum={dummy.likeNum}
-          contents={dummy.contents}
-        />
+        {console.log(Boolean(article))}
+        {console.log(article.author)}
+        {article.author && (
+          <PostArticle
+            title={article.title || dummy.title}
+            profileImgUrl={article.author.profileImg || dummy.profileImgUrl}
+            author={article.author.name || dummy.author}
+            date={article.createdAt || dummy.date}
+            likeNum={article.likes || 0}
+            contents={article.contents || dummy.contents}
+          />
+        )}
         <SideBar />
       </PostArticleWrapper>
       <Comment />
