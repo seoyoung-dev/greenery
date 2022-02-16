@@ -11,11 +11,6 @@ const commentSchema = new Schema.Schema(
       type: String,
       require: true,
     },
-    level: {
-      type: Number,
-      ref: "User",
-      required: true,
-    },
   },
   {
     timestamps: true,

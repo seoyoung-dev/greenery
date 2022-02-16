@@ -42,7 +42,7 @@ const uploadImage = (req, res, next) => {
         err: "extension",
       });
     }
-    next();
+    return next();
   });
 };
 
