@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Header from "components/Header";
 import axios from "axios";
 import {
@@ -16,18 +16,33 @@ import { useRecoilValue } from "recoil";
 export function MyPage() {
   const userProfile = useRecoilValue(userProfileState);
   const [currentClick, setCurrentClick] = useState("MyPosts");
-  const [prevClick, setPrevClick] = React.useState(null);
+  const [prevClick, setPrevClick] = useState(null);
+  const [posts, setPosts] = useState("");
+  const [page, setPageNum] = useState(1);
+  const intersectionRef = useRef(null);
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
     // console.log(e.target.id);
   };
 
+  const getMyPost = async page => {
+    const url = "/api/users/post/";
+    const response = await axios.get(url, {
+      params: {
+        page: page,
+        userId: userProfile.id,
+      },
+    });
+    setPosts(prev => {
+      const newPosts = [...prev, ...response.data.posts];
+      return newPosts;
+    });
+  };
+
   useEffect(
     e => {
-      currentClick === "MyPosts"
-        ? console.log("MyPosts")
-        : console.log("LikedPosts");
+      currentClick === "MyPosts" ? getMyPost() : console.log("LikedPosts");
       if (currentClick !== null) {
         let current = document.getElementById(currentClick);
         console.log(current);
@@ -45,9 +60,36 @@ export function MyPage() {
     [currentClick],
   );
 
+  const options = {
+    root: null, // 관찰대상의 부모요소
+    rootMargin: "300px", // 뷰포트의 마진
+    threshold: 1, // 0 ~ 1 겹치는 정도
+  };
+
+  const handleObserver = useCallback(async entires => {
+    const target = entires[0];
+    if (target.isIntersecting) {
+      setPageNum(prev => prev + 1);
+    }
+    return;
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (intersectionRef.current) {
+      observer.observe(intersectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, [handleObserver]);
+
+  useEffect(() => {
+    getMyPost(page);
+  }, [page]);
+
   return (
     <ProfileWrapper>
       <Header />
+
       <ProfileImg>
         <img src="/img/profile2.png" />
       </ProfileImg>
@@ -69,12 +111,21 @@ export function MyPage() {
       <PostCardborder />
 
       <PostCardsWrapper>
-        <PostCard />
-        <PostCard />
-        <PostCard id="123" />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        {console.log(posts.author)}
+        {posts &&
+          posts.map(({ id, title, imgUrl, likes, author }, index) => {
+            return (
+              <PostCard
+                key={index}
+                id={id}
+                imgUrl={imgUrl}
+                title={title}
+                author={author}
+                likes={likes}
+              />
+            );
+          })}
+        <div ref={intersectionRef} style={{ position: "hidden" }}></div>
       </PostCardsWrapper>
     </ProfileWrapper>
   );
