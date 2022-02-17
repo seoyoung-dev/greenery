@@ -65,7 +65,7 @@ export function SignIn() {
   // refresh_token을 이용하여 access_token 재발급
   const refreshAccessToken = () => {
     axios
-      .post("api/users/refresh")
+      .post("/api/users/refresh")
       .then(response => setAxiosDefaultAccessToken(response));
   };
 
