@@ -20,6 +20,7 @@ router.get("/auth", auth, (req, res) => {
     email: req.user.email,
     id: req.user.id,
     name: req.user.name,
+    profileImg: req.user.profileImg,
   });
 });
 
@@ -35,7 +36,7 @@ router.post("/register", uploadProfileImage, async (req, res) => {
       name,
       password: hashedPassword,
     };
-    if (picture) userData.profileImg = picture.replace("public", "/api");
+    if (picture) userData.profileImg = picture.path.replace("public", "/api");
 
     const user = new User(userData);
     await user.save();
