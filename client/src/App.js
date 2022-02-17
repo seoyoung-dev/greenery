@@ -65,10 +65,13 @@ function App() {
       console.error(err);
     }
   };
-  const reloadHandler = async () => {
+
+  const handleReload = async () => {
     try {
-      await refreshAccessToken();
-      await handleUserProfile();
+      const result = await refreshAccessToken();
+      if (result) {
+        handleUserProfile();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -76,8 +79,7 @@ function App() {
 
   // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
-    refreshAccessToken();
-    reloadHandler();
+    handleReload();
   });
 
   return (

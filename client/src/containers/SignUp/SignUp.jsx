@@ -91,7 +91,10 @@ export function SignUp() {
   }
 
   function validateFormInput(list) {
-    const [email, name, password, checkPassword] = list;
+    const email = list[0];
+    const password = list[1];
+    const checkPassword = list[2];
+    const name = list[3];
 
     function checkLength(list) {
       const result = list.every(ele => ele.length > 0);
@@ -112,15 +115,14 @@ export function SignUp() {
       return true;
     };
     if (!checkLength(list)) {
-      console.log(checkLength(list));
       alert("비어있는 값을 채워주세요");
       return false;
     }
-    if (!compareTwoString(password, checkPassword)) {
+    if (checkPassword && !compareTwoString(password, checkPassword)) {
       alert("비밀번호가 일치하지 않습니다");
       return false;
     }
-    if (!checkNotSpecialString(name)) {
+    if (name && !checkNotSpecialString(name)) {
       alert("한글, 알파벳 대소문자, 숫자만 입력하세요");
       return false;
     }
