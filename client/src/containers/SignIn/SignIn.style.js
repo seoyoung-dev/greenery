@@ -26,12 +26,6 @@ export const Section = styled.section`
 export const SignUpLinkWrap = styled.div`
   margin: 7px 0 0 0;
   text-align: center;
-
-  /* & a {
-    font-size: 14px;
-    font-weight: 500;
-    color: #767676;
-  } */
 `;
 export const SignOptionWrap = styled.div`
   width: 100%;

@@ -54,12 +54,8 @@ export default function Header(props) {
               <S.PostButton form="PostFormSubmit">올리기</S.PostButton>
             ) : (
               <S.UserNavButton onClick={focusHandler}>
-                <S.HambergIconWrap>
-                  <img src="/icon/hamburger.svg" alt="hamburger" />
-                </S.HambergIconWrap>
-                <S.UserIconWrap>
-                  <img src="/icon/user.svg" alt="usericon" />
-                </S.UserIconWrap>
+                <img src="/icon/hamburger.svg" alt="hamburger" />
+                <img src="/icon/user.svg" alt="usericon" />
               </S.UserNavButton>
             )}
             {isDropDown && <HeaderDropDown />}
