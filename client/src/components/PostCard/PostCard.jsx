@@ -20,7 +20,7 @@ const dummy = {
 };
 
 export default function PostCard({ id, imgUrl, title, author, likeNum }) {
-  const { profileImg, name } = author;
+  const { name, profileImg } = author;
 
   return (
     <Link to={`/article/?postId=${id}`}>

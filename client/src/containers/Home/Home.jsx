@@ -54,14 +54,14 @@ export default function Home() {
         </Title>
         <PostCardBox>
           {cardData &&
-            cardData.posts.map(card => (
+            cardData.posts.map(({ id, imgUrl, title, author, likeNum }) => (
               <PostCard
-                key={card.id}
-                postImgUrl={card.postImgUrl}
-                title={card.title}
-                profileImgUrl={card.author.profileImg}
-                author={card.author.name}
-                likeNum={card.likes}
+                key={id}
+                id={id}
+                imgUrl={imgUrl}
+                title={title}
+                author={author}
+                likeNum={likeNum}
               />
             ))}
         </PostCardBox>
