@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "components/Header";
 import axios from "axios";
 import {
@@ -16,18 +16,32 @@ import { useRecoilValue } from "recoil";
 export function MyPage() {
   const userProfile = useRecoilValue(userProfileState);
   const [currentClick, setCurrentClick] = useState("MyPosts");
-  const [prevClick, setPrevClick] = React.useState(null);
+  const [prevClick, setPrevClick] = useState(null);
+  const [posts, setPosts] = useState("");
+  const [pageNum, setPageNum] = useState(1);
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
     // console.log(e.target.id);
   };
 
+  const getMyPost = async () => {
+    const url = "/api/users/post/";
+    const response = await axios.get(url, {
+      params: {
+        page: pageNum,
+        userId: userProfile.id,
+      },
+    });
+    setPosts(prev => {
+      const newPosts = [...prev, ...response.data.posts];
+      return newPosts;
+    });
+  };
+
   useEffect(
     e => {
-      currentClick === "MyPosts"
-        ? console.log("MyPosts")
-        : console.log("LikedPosts");
+      currentClick === "MyPosts" ? getMyPost() : console.log("LikedPosts");
       if (currentClick !== null) {
         let current = document.getElementById(currentClick);
         console.log(current);
@@ -69,12 +83,18 @@ export function MyPage() {
       <PostCardborder />
 
       <PostCardsWrapper>
-        <PostCard />
-        <PostCard />
-        <PostCard id="123" />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        {console.log(posts)}
+        {posts &&
+          posts.map(({ id, title, contents }, index) => {
+            return (
+              <PostCard
+                key={index}
+                title={title}
+                // author={author}
+                contents={contents}
+              />
+            );
+          })}
       </PostCardsWrapper>
     </ProfileWrapper>
   );

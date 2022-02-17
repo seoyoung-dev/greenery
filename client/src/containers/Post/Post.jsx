@@ -23,8 +23,8 @@ export function Post(props) {
     },
   ]);
 
-  const Read = async postId => {
-    await axios
+  const Read = postId => {
+    axios
       .get("/api/posts", { params: { postId: postId } })
       .then(res => {
         console.log(res.data);

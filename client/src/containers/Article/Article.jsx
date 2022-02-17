@@ -29,10 +29,9 @@ const dummy = {
 
 export default function Article(props) {
   const [article, setArticle] = useState({});
-  // console.log(props.postId);
+  console.log(props.postId);
 
   const handleLikeClick = async () => {
-    await axios.put("");
     console.log("Like");
   };
 
