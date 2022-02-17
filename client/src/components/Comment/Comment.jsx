@@ -11,7 +11,7 @@ export function Comment() {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [commentsPerPage, setCommentsPerPage] = useState(2);
+  const [commentsPerPage, setCommentsPerPage] = useState(5);
   const [content, setContent] = useState("");
 
   const { postId } = useParams();
@@ -22,8 +22,7 @@ export function Comment() {
     async function fetchData() {
       setLoading(true);
       const response = await axios.get("/api/posts/" + postId + "/comment");
-      console.log(response.data);
-      setComments(response.data.comments);
+      setComments(response.data.comments.reverse());
       setLoading(false);
     }
     fetchData();
@@ -46,10 +45,10 @@ export function Comment() {
     obj.style.height = obj.scrollHeight + "px";
   }
 
-  async function postData() {
-    const response = await axios.post("/api/posts/" + postId + "/comment", content);
-    console.log(response.data);
-    setComments([...comments, response.data.comments]);
+  async function postData(e) {
+    await axios.post("/api/posts/" + postId + "/comment", { content });
+    const response = await axios.get("/api/posts/" + postId + "/comment");
+    setComments(response.data.comments.reverse());
     setContent("");
   }
 
@@ -59,8 +58,8 @@ export function Comment() {
       <CommentForm>
         <img src={userInfo.profileImg || "/icon/user.svg"} alt="프로필 이미지" />
         <CommentInput>
-          <textarea placeholder='댓글을 입력해주세요:)' onChange={(e) => setContent(e.target.value)} ref={textRef} onKeyUp={textResize} onKeyDown={textResize}></textarea>
-          <button onClick={() => postData() }>등록</button>
+          <textarea placeholder='댓글을 입력해주세요:)' onChange={(e) => setContent(e.target.value)} value={content} ref={textRef} onKeyUp={textResize} onKeyDown={textResize}></textarea>
+          <button onClick={(e) => postData(e) }>등록</button>
         </CommentInput>
       </CommentForm>
       <Comments
