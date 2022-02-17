@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../components/Header";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import {
   PostTextarea,
@@ -12,9 +13,10 @@ import {
   PostWrapper,
 } from "./Post.style";
 
-export function Post(props) {
+export function Post() {
   const [title, setTitle] = useState("");
   const inputRef = useRef([]);
+  const { postId } = useParams();
   const [inputList, setInputList] = useState([
     {
       content: "",
@@ -23,9 +25,9 @@ export function Post(props) {
     },
   ]);
 
-  const Read = async postId => {
-    await axios
-      .get("/api/posts", { params: { postId: postId } })
+  const Read = () => {
+    axios
+      .get(`/api/posts?postId=${postId}`)
       .then(res => {
         console.log(res.data);
         const { title, contents } = res.data.post;
@@ -47,8 +49,8 @@ export function Post(props) {
 
   useEffect(() => {
     // 첫 렌더링시
-    console.log(props.postId);
-    props.postId && Read(props.postId);
+    console.log(postId);
+    postId && Read(postId);
   }, []);
 
   // handle input change
@@ -89,8 +91,8 @@ export function Post(props) {
     });
 
     console.log(data);
-    const url = `/api/posts/${props.postId}`;
-    props.postId
+    const url = `/api/posts/${postId}`;
+    postId
       ? axios
           .put(url, data)
           .then(res => console.log(res.data))
