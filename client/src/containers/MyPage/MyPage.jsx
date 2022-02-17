@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Header from "components/Header";
 import axios from "axios";
 import {
@@ -19,6 +19,13 @@ export function MyPage() {
   const [prevClick, setPrevClick] = useState(null);
   const [posts, setPosts] = useState("");
   const [pageNum, setPageNum] = useState(1);
+  const intersectionRef = useRef(null);
+
+  const options = {
+    root: null, // 관찰대상의 부모요소
+    rootMargin: "300px", // 뷰포트의 마진
+    threshold: 1, // 0 ~ 1 겹치는 정도
+  };
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
@@ -59,6 +66,22 @@ export function MyPage() {
     [currentClick],
   );
 
+  const handleObserver = useCallback(async entires => {
+    const target = entires[0];
+    if (target.isIntersecting) {
+      setPageNum(prev => prev + 1);
+    }
+    return;
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (intersectionRef.current) {
+      observer.observe(intersectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, [handleObserver]);
+
   return (
     <ProfileWrapper>
       <Header />
@@ -83,18 +106,19 @@ export function MyPage() {
       <PostCardborder />
 
       <PostCardsWrapper>
-        {console.log(posts)}
+        {console.log(posts.author)}
         {posts &&
-          posts.map(({ id, title, contents }, index) => {
+          posts.map(({ id, title, author, contents }, index) => {
             return (
               <PostCard
                 key={index}
                 title={title}
-                // author={author}
+                author={author}
                 contents={contents}
               />
             );
           })}
+        <div ref={intersectionRef} style={{ position: "hidden" }}></div>
       </PostCardsWrapper>
     </ProfileWrapper>
   );
