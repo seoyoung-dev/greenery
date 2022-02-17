@@ -94,11 +94,7 @@ function App() {
             element={<Post postId="620d091db133f690ba9d2781" />}
           />
           <Route path="/article" element={<Article />} />
-          {/* <Route path="/article/:postId" element={<Article />} /> */}
-          <Route
-            path="/article/:postId"
-            element={<Article postId="620c99b0db9d947bf6355ce5" />}
-          />
+          <Route path="/article/:postId" element={<Article />} />
           <Route path="/recommendation" element={<Recommendation />} />
           <Route path="/wiki" element={<Wiki />} />
         </Routes>
