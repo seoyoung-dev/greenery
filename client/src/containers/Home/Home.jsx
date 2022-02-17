@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../../components/Header";
 import TodaysPlant from "../../components/TodaysPlant";
 import PostCard from "../../components/PostCard";
@@ -12,34 +13,19 @@ import {
   StyledLink,
 } from "./Home.style";
 
-const dummy = [
-  {
-    postId: 1,
-    postImgUrl: "img/post.png",
-    title: "안녕 나는 첫번째 데이터야",
-    profileImgUrl: "img/profile.png",
-    author: "first-elice",
-    likeNum: 11111,
-  },
-  {
-    postId: 2,
-    postImgUrl: "img/post.png",
-    title: "안녕 나는 두번째 데이터야",
-    profileImgUrl: "img/profile.png",
-    author: "second-elice",
-    likeNum: 22222,
-  },
-  {
-    postId: 3,
-    postImgUrl: "img/post.png",
-    title: "안녕 나는 세번째 데이터야",
-    profileImgUrl: "img/profile.png",
-    author: "third-elice",
-    likeNum: 33333,
-  },
-];
-
 export default function Home() {
+  const [postsData, setPostsData] = useState();
+
+  useEffect(() => {
+    async function fetchPostData() {
+      const response = await axios
+        .get("/api/posts/popularity")
+        .catch(err => console.log("Err ", err));
+      setPostsData(response.data);
+    }
+    fetchPostData();
+  }, []);
+
   return (
     <Main>
       <Header />
@@ -50,16 +36,17 @@ export default function Home() {
           <StyledLink to="/community">더 많은 초록이들 보기</StyledLink>
         </Title>
         <PostCardBox>
-          {dummy.map(card => (
-            <PostCard
-              key={card.postId}
-              postImgUrl={card.postImgUrl}
-              title={card.title}
-              profileImgUrl={card.profileImgUrl}
-              author={card.author}
-              likeNum={card.likeNum}
-            />
-          ))}
+          {postsData &&
+            postsData.posts.map(card => (
+              <PostCard
+                key={card.id}
+                postImgUrl={card.postImgUrl}
+                title={card.title}
+                profileImgUrl={card.author.profileImg}
+                author={card.author.name}
+                likeNum={card.likes}
+              />
+            ))}
         </PostCardBox>
       </PostContentsWrapper>
       <ImgCard />
