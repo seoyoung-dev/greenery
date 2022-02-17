@@ -324,8 +324,9 @@ router.post("/:postId/comment", auth, async (req, res) => {
 
     const { content } = req.body;
     const author = req.user.id;
+    const createdAt = new Date();
 
-    const comment = await new Comment({ author, content });
+    const comment = await new Comment({ author, content, createdAt });
     comment.save();
     await Post.findOneAndUpdate(
       { _id: postId },
