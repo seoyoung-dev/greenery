@@ -60,10 +60,10 @@ export function SignIn() {
   // set global userProfileState
   const handleUserProfile = async () => {
     const response = await axios.get("/api/users/auth");
-    const { email, id, name } = response.data;
+    const { email, id, name, profileImg } = response.data;
 
     setUserProfile(prev => {
-      const newUserProfile = { ...prev, email, id, name };
+      const newUserProfile = { ...prev, email, id, name, profileImg };
       return newUserProfile;
     });
   };
@@ -130,22 +130,21 @@ export function SignIn() {
 
     onLoginRequest({ email, password })
       .then(response => {
-        const JWT_EXPIRY_TIME = 3600 * 1000;
+        const JWT_EXPIRY_TIME = response.data.exp - Date.now();
         const access_token = response.data.access_token;
 
         setAxiosDefaultAccessToken(response);
         setCookie("access_token", access_token, {
           path: "/",
-          maxAge: 3600,
+          maxAge: JWT_EXPIRY_TIME / 1000,
           secure: true,
+          // httpOnly: true,
         });
-        setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 100 * 6000);
+        // setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
       })
       .then(() => {
-        const complete = handleUserProfile();
-        if (complete) {
-          navigate("/");
-        }
+        handleUserProfile();
+        navigate("/");
       })
       .catch(err => alert("아이디 또는 비밀번호를 확인해주세요"));
   };

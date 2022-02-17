@@ -5,7 +5,6 @@ import { useLayoutEffect } from "react";
 
 export default function AuthRoute({ component, redirect, login }) {
   const userInformation = useRecoilValue(userProfileState);
-  console.log(redirect);
   useLayoutEffect(() => {
     if (login && !userInformation.id) {
       alert("로그인 되어 있지 않습니다. 로그인페이지로 이동합니다.");

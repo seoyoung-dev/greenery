@@ -21,9 +21,7 @@ const NavigationBarContainer = styled.div`
   align-items: center;
 `;
 
-const LayoutNavigationLeft = styled.div`
-  /* flex: none; */
-`;
+const LayoutNavigationLeft = styled.div``;
 const LayoutNavigationMenu = styled.nav`
   flex: none;
 `;
@@ -77,9 +75,28 @@ const PostButton = styled.button`
   border: none;
 `;
 
+const HamburgIconWrap = styled.div`
+  width: 16px;
+  height: 16px;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+const UserIconWrap = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
 const UserNavigationWrap = styled.div``;
-const HambergIconWrap = styled.div``;
-const UserIconWrap = styled.div``;
 export {
   HeaderTag,
   LayoutNavigationLeft,
@@ -87,7 +104,7 @@ export {
   LayoutNavigationRight,
   NavigationBarContainer,
   UserNavigationWrap,
-  HambergIconWrap,
+  HamburgIconWrap,
   UserIconWrap,
   MenuItems,
   UserNavButton,
