@@ -7,19 +7,23 @@ router.get("/search", async (req, res) => {
   try {
     const { page, count, ...filterOption } = req.query;
     const pageNumber = page || 1;
-    const plantCount = count || 20;
+    const plantCount = Number(count) || 20;
 
     const translated = translateOptionToText(filterOption);
-    const plants = await Plant.aggregate(translated)
-      .sort({ plantName: 1 })
-      .skip(plantCount * (pageNumber - 1))
-      .limit(plantCount);
+
+    const [total, plants] = await Promise.all([
+      Plant.aggregate(translated).sort({ plantName: 1 }),
+      Plant.aggregate(translated)
+        .sort({ plantName: 1 })
+        .skip(plantCount * (pageNumber - 1))
+        .limit(plantCount),
+    ]);
 
     if (!plants) {
       return res.status(205).json({ isOk: false, message: "empty" });
     }
 
-    return res.status(200).json({ isOk: true, plants });
+    return res.status(200).json({ isOk: true, total: total.length, plants });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ isOk: false });
