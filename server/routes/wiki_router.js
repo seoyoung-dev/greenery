@@ -6,13 +6,13 @@ const translateOptionToText = require("../util/translateSearchOption");
 router.get("/search", async (req, res) => {
   try {
     const { page, count, ...filterOption } = req.query;
+    const pageNumber = page || 1;
     const plantCount = count || 20;
 
     const translated = translateOptionToText(filterOption);
-    console.log(translated);
     const plants = await Plant.aggregate(translated)
       .sort({ plantName: 1 })
-      .skip(plantCount * (page - 1))
+      .skip(plantCount * (pageNumber - 1))
       .limit(plantCount);
 
     if (!plants) {
