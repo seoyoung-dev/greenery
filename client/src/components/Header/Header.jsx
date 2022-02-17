@@ -51,15 +51,11 @@ export default function Header(props) {
         <S.LayoutNavigationRight>
           <S.UserNavigationWrap onBlur={e => blurHandler(e)}>
             {props.id === "PostPage" ? (
-              <S.PostButton form="test">올리기</S.PostButton>
+              <S.PostButton form="PostFormSubmit">올리기</S.PostButton>
             ) : (
               <S.UserNavButton onClick={focusHandler}>
-                <S.HambergIconWrap>
-                  <img src="/icon/hamburger.svg" alt="hamburger" />
-                </S.HambergIconWrap>
-                <S.UserIconWrap>
-                  <img src="/icon/user.svg" alt="usericon" />
-                </S.UserIconWrap>
+                <img src="/icon/hamburger.svg" alt="hamburger" />
+                <img src="/icon/user.svg" alt="usericon" />
               </S.UserNavButton>
             )}
             {isDropDown && <HeaderDropDown />}

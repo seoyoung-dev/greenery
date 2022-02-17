@@ -5,12 +5,16 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+
   html, body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
   }
 
+  a {
+    color: var(--text);
+  }
   :root {
   --text: #000000;
   --highlight-text: #ffffff;

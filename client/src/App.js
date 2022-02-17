@@ -10,6 +10,7 @@ import GlobalStyle from "style/GlobalStyle";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import MyPage from "./pages/MyPage";
 import Community from "./pages/Community";
 import Post from "./pages/Post";
 import Article from "./pages/Article";
@@ -18,11 +19,11 @@ import Wiki from "./pages/Wiki";
 
 function App() {
   const setUserProfile = useSetRecoilState(userProfileState);
-  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [cookies, setCookie] = useCookies([]);
 
   // 페이지 리로드시 access_token을 재발급받기
   const refreshAccessToken = async () => {
-    const url = "/users/refresh";
+    const url = "api/users/refresh";
     try {
       const response = await axios.post(url);
       setAxiosDefaultAccessToken(response);
@@ -52,7 +53,7 @@ function App() {
   };
   //
   const handleUserProfile = async () => {
-    const url = "users/auth";
+    const url = "/api/users/auth";
     try {
       const response = await axios.get(url);
       const { email, id, name } = response.data;
@@ -74,7 +75,6 @@ function App() {
 
   // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
-    refreshAccessToken();
     reloadHandler();
   });
 
@@ -86,15 +86,19 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<SignIn />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/community" element={<Community />} />
           <Route path="/post" element={<Post />} />
           <Route
             path="/post/:postId"
-            element={<Post postId="620aa3908dd9226e99b57cbc" />}
+            element={<Post postId="620d091db133f690ba9d2781" />}
           />
           <Route path="/article" element={<Article />} />
           {/* <Route path="/article/:postId" element={<Article />} /> */}
-          <Route path="/article/:postId" element={<Article />} />
+          <Route
+            path="/article/:postId"
+            element={<Article postId="620c99b0db9d947bf6355ce5" />}
+          />
           <Route path="/recommendation" element={<Recommendation />} />
           <Route path="/wiki" element={<Wiki />} />
         </Routes>
