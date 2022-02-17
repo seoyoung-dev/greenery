@@ -1,10 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import Header from "components/Header";
-import TodaysPlant from "components/TodaysPlant";
-import PostCard from "components/PostCard";
-import ImgCard from "components/ImgCard";
-import Footer from "components/Footer";
 import {
   Main,
   PostContentsWrapper,
@@ -12,6 +6,9 @@ import {
   PostCardBox,
   StyledLink,
 } from "./Home.style";
+import { Header, TodaysPlant, PostCard, ImgCard, Footer } from "components";
+
+import axios from "axios";
 
 export default function Home() {
   const [plantData, setPlantData] = useState();
@@ -54,14 +51,14 @@ export default function Home() {
         </Title>
         <PostCardBox>
           {cardData &&
-            cardData.posts.map(({ id, imgUrl, title, author, likeNum }) => (
+            cardData.posts.map(({ id, imgUrl, title, author, likes }) => (
               <PostCard
                 key={id}
                 id={id}
                 imgUrl={imgUrl}
                 title={title}
                 author={author}
-                likeNum={likeNum}
+                likes={likes}
               />
             ))}
         </PostCardBox>

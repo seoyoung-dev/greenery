@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import { useResetRecoilState } from "recoil";
 import { userProfileState } from "Atoms";
-import { useCookies } from "react-cookie";
 import {
   LayoutUserTap,
   DropDownMenus,
   LogoutWrap,
 } from "./HeaderDropDown.style";
+import { SimpleItem } from "components";
 
 import axios from "axios";
-import SimpleItem from "components/SimpleItem";
 
 export default function HeaderDropDown() {
   const resetUserState = useResetRecoilState(userProfileState);
@@ -41,7 +41,7 @@ export default function HeaderDropDown() {
   ];
 
   const onLogoutRequest = async () => {
-    const url = "api/users/logout";
+    const url = "/api/users/logout";
     try {
       const response = await axios.get(url);
       return response;

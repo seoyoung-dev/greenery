@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { WideContainer } from "style/ContainerStyle";
 import { Main, ContentsWrapper, PostButtonWrapper } from "./Community.style";
-
 import { Header, Footer, PostCard } from "components";
+
 import axios from "axios";
 
 export function Community() {
@@ -12,7 +12,7 @@ export function Community() {
   const intersectionRef = useRef(null);
 
   const getPosts = useCallback(async page => {
-    const url = `api/posts/page?page=${page}`;
+    const url = `/api/posts/page?page=${page}`;
     const response = await axios.get(url, {
       query: { page },
     });
