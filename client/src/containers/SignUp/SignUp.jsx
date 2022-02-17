@@ -32,7 +32,7 @@ export function SignUp() {
     {
       title: "이메일(아이디)",
       type: "email",
-      placeholder: "example@greenfriend.com",
+      placeholder: "이메일을 입력하세요",
       autoComplete: "on",
       minLength: 12,
       maxLength: 32,
@@ -41,7 +41,7 @@ export function SignUp() {
     {
       title: "비밀번호",
       type: "password",
-      placeholder: "*******",
+      placeholder: "비밀번호를 입력하세요",
       minLength: 8,
       maxLength: 12,
       autoComplete: "on",
@@ -50,7 +50,7 @@ export function SignUp() {
     {
       title: "비밀번호 확인",
       type: "password",
-      placeholder: "*******",
+      placeholder: "동일한 비밀번호를 입력하세요",
       minLength: 8,
       maxLength: 12,
       autoComplete: "on",
@@ -59,7 +59,7 @@ export function SignUp() {
     {
       title: "닉네임",
       type: "text",
-      placeholder: "ex) 초록집사",
+      placeholder: "닉네임을 입력하세요",
       autoComplete: "on",
       minLength: 4,
       maxLength: 12,
@@ -111,7 +111,6 @@ export function SignUp() {
       }
       return true;
     };
-
     if (!checkLength(list)) {
       console.log(checkLength(list));
       alert("비어있는 값을 채워주세요");

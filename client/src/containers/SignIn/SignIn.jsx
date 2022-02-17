@@ -18,14 +18,18 @@ export function SignIn() {
 
   const textInputList = [
     {
-      placeholder: "example@greenfriend.com",
+      placeholder: "이메일",
       autoComplete: "on",
+      minLength: 12,
+      maxLength: 32,
       onBlur: setEmail,
     },
     {
       type: "password",
-      placeholder: "*******",
+      placeholder: "비밀번호",
       autoComplete: "on",
+      minLength: 8,
+      maxLength: 12,
       onBlur: setPassword,
     },
   ];
@@ -65,8 +69,52 @@ export function SignIn() {
       .then(response => setAxiosDefaultAccessToken(response));
   };
 
+  function validateFormInput(list) {
+    const email = list[0];
+    const password = list[1];
+    const checkPassword = list[2];
+    const name = list[3];
+    // const [email, name, password, checkPassword] = list;
+    const checkLength = list => {
+      const result = list.every(ele => ele.length > 0);
+
+      return result;
+    };
+
+    const compareTwoString = (originString, checkString) => {
+      return originString === checkString;
+    };
+
+    const checkNotSpecialString = string => {
+      // a-zA-Z0-9-가-힣 가 아닌 문자열이 있으면 true를 반환한다.
+      const regExp = /[^a-zA-Z0-9-가-힣]+/g;
+      if (regExp.test(string)) {
+        return;
+      }
+      return true;
+    };
+
+    if (!checkLength(list)) {
+      alert("비어있는 값을 채워주세요");
+      return false;
+    }
+    if (checkPassword && !compareTwoString(password, checkPassword)) {
+      alert("비밀번호가 일치하지 않습니다");
+      return false;
+    }
+    if (name && !checkNotSpecialString(name)) {
+      alert("한글, 알파벳 대소문자, 숫자만 입력하세요");
+      return false;
+    }
+
+    return true;
+  }
+
   const submitHandler = event => {
     event.preventDefault();
+    if (!validateFormInput([email, password])) {
+      return;
+    }
 
     onLoginRequest({ email, password })
       .then(response => {
