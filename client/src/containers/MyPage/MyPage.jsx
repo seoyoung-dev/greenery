@@ -40,12 +40,28 @@ export function MyPage() {
     });
   };
 
+  const getMyLikePost = async page => {
+    const url = "/api/users/post/";
+    const response = await axios.get(url, {
+      params: {
+        page: page,
+        userId: userProfile.id,
+      },
+    });
+
+    setPosts(prev => {
+      const newPosts = [...prev, ...response.data.posts];
+      const newLikePosts = newPosts.filter(post => post.liked);
+      console.log(newLikePosts);
+      return newLikePosts;
+    });
+  };
+
   useEffect(
     e => {
-      currentClick === "MyPosts" ? getMyPost() : console.log("LikedPosts");
+      currentClick === "MyPosts" ? getMyPost() : getMyLikePost();
       if (currentClick !== null) {
         let current = document.getElementById(currentClick);
-        console.log(current);
         current.style.color = "var(--primary)";
         current.style.boxShadow = "0px 4px 0px var(--primary)";
       }
@@ -111,7 +127,6 @@ export function MyPage() {
       <PostCardborder />
 
       <PostCardsWrapper>
-        {console.log(posts.author)}
         {posts &&
           posts.map(({ id, title, imgUrl, likes, author }, index) => {
             return (
