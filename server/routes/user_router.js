@@ -6,8 +6,8 @@ const { User, Post } = require("../models");
 const auth = require("../middlewares/auth");
 const uploadProfileImage = require("../middlewares/uploadProfile");
 const {
-  accessTokenExpires,
-  refreshTokenExpires,
+  accessTokenExpireTime,
+  refreshTokenExpireTime,
   accessKey,
   refreshKey,
 } = require("../config");
@@ -74,7 +74,8 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       throw new Error("wrong password");
     }
-
+    const accessTokenExpires = Date.now() + accessTokenExpireTime * 3600000;
+    console.log(new Date(accessTokenExpires));
     const access_token = jwt.sign(
       {
         id: user.id,
@@ -85,6 +86,7 @@ router.post("/login", async (req, res) => {
       accessKey,
     );
 
+    const refreshTokenExpires = Date.now() + refreshTokenExpireTime * 3600000;
     const refresh_token = jwt.sign(
       { id: user.id, exp: refreshTokenExpires },
       refreshKey,
@@ -158,6 +160,8 @@ router.post("/refresh", async (req, res) => {
 
       if (user.token !== refresh_token) throw new Error("wrong access");
 
+      const accessTokenExpires = Date.now() + accessTokenExpireTime * 3600000;
+      console.log(new Date(accessTokenExpires));
       const access_token = jwt.sign(
         {
           id: user.id,
