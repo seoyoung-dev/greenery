@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { userProfileState } from "Atoms";
-
+import { HomeLogo, HeaderDropDown, SimpleItem } from "components";
 import * as S from "./Header.style";
-
-import HomeLogo from "components/HomeLogo";
-import HeaderDropDown from "components/HeaderDropDown";
-import SimpleItem from "components/SimpleItem";
 
 export default function Header(props) {
   const userProfile = useRecoilValue(userProfileState);

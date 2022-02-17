@@ -57,9 +57,9 @@ function App() {
     const url = "/api/users/auth";
     try {
       const response = await axios.get(url);
-      const { email, id, name } = response.data;
+      const { email, id, name, profileImg } = response.data;
       setUserProfile(oldUserProfile => {
-        return { ...oldUserProfile, email, id, name };
+        return { ...oldUserProfile, email, id, name, profileImg };
       });
     } catch (err) {
       console.error(err);
