@@ -65,7 +65,7 @@ export function SignIn() {
   // refresh_token을 이용하여 access_token 재발급
   const refreshAccessToken = () => {
     axios
-      .post("api/users/refresh")
+      .post("/api/users/refresh")
       .then(response => setAxiosDefaultAccessToken(response));
   };
 
@@ -74,7 +74,7 @@ export function SignIn() {
     const password = list[1];
     const checkPassword = list[2];
     const name = list[3];
-    // const [email, name, password, checkPassword] = list;
+
     const checkLength = list => {
       const result = list.every(ele => ele.length > 0);
 
@@ -135,7 +135,7 @@ export function SignIn() {
           navigate("/");
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => alert("회원정보가 일치하지 않습니다."));
   };
 
   return (
