@@ -143,10 +143,8 @@ export function SignIn() {
         // setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
       })
       .then(() => {
-        const complete = handleUserProfile();
-        if (complete) {
-          navigate("/");
-        }
+        handleUserProfile();
+        navigate("/");
       })
       .catch(err => alert("아이디 또는 비밀번호를 확인해주세요"));
   };
