@@ -3,21 +3,26 @@ import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import PostArticle from "../../components/PostArticle";
 import Comment from "../../components/Comment";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export default function Article() {
   const [article, setArticle] = useState({});
   const { postId } = useParams();
-  console.log(postId);
+  const commentRef = useRef(null);
+
+  const scrollToBottom = () => {
+    commentRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleLikeClick = async () => {
     console.log("Like");
   };
 
   const handleCommentClick = async () => {
-    console.log("Comment");
+    console.log("댓글");
+    scrollToBottom();
   };
 
   const handleTrashClick = async () => {
@@ -66,6 +71,7 @@ export default function Article() {
           postId={postId}
         />
       </PostArticleWrapper>
+      <div ref={commentRef} />
       <Comment />
     </Main>
   );
