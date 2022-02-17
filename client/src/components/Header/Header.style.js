@@ -58,6 +58,7 @@ const UserNavButton = styled.button`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  cursor: pointer;
 `;
 
 const PostButton = styled.button`
