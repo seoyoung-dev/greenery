@@ -15,6 +15,7 @@ module.exports = async (req, res, next) => {
       };
 
       const user = await User.findOne({ _id: req.user.id });
+      req.user.profileImg = user.ProfileImg;
       if (!refresh_token || refresh_token !== user.token) {
         throw new Error("wrong access");
       }

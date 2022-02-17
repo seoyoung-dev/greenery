@@ -23,7 +23,7 @@ const userSchema = new Schema(
     },
     profileImg: {
       type: String,
-      default: "/images/userProfile/default.png",
+      default: "/api/images/userProfile/default.png",
     },
     level: {
       type: Number,

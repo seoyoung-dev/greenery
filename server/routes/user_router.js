@@ -27,6 +27,7 @@ router.get("/auth", auth, (req, res) => {
 router.post("/register", uploadProfileImage, async (req, res) => {
   try {
     const { email, name, password } = req.body;
+    const picture = req.file;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const userData = {
@@ -34,12 +35,11 @@ router.post("/register", uploadProfileImage, async (req, res) => {
       name,
       password: hashedPassword,
     };
-    if (req.file)
-      userData.profileImg = `/images/userProfile/${req.file.filename}`;
+    if (picture) userData.profileImg = picture.replace("public", "/api");
 
     const user = new User(userData);
     await user.save();
-    res
+    return res
       .status(200)
       .json({ isOk: true, isAuthorize: false, message: "회원가입 성공" });
   } catch (err) {
@@ -174,6 +174,7 @@ router.post("/refresh", async (req, res) => {
         message: "access token 재발급",
       });
     }
+    throw new Error("wrong access");
   } catch (err) {
     console.log(err);
     const message = err.message;
