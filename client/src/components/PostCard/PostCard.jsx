@@ -1,5 +1,3 @@
-import React from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -19,24 +17,24 @@ const dummy = {
   likeNum: 4876,
 };
 
-export default function PostCard({ id, imgUrl, title, author, likeNum }) {
+export default function PostCard({ id, imgUrl, title, author, likes }) {
   const { name, profileImg } = author;
 
   return (
     <PostCardArticle>
       <Link to={`/article/${id}`}>
         <ImgWrapper>
-          <img src={imgUrl || dummy.postImgUrl} alt="포스트 이미지" />
+          <img src={imgUrl} alt="포스트 이미지" />
         </ImgWrapper>
-        <h3>{title || dummy.title}</h3>
+        <h3>{title}</h3>
         <ContentBox>
           <Profile>
             <img src={profileImg} alt="프로필 이미지" />
-            <span>{name || dummy.author}</span>
+            <span>{name}</span>
           </Profile>
           <Like>
             <FontAwesomeIcon icon={faThumbsUp} />
-            <span>{likeNum}</span>
+            <span>{likes}</span>
           </Like>
         </ContentBox>
       </Link>

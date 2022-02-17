@@ -1,7 +1,5 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
 import {
   Main,
   Section,
@@ -10,10 +8,9 @@ import {
   Label,
   FormHeader,
 } from "./SignUp.style";
+import { HomeLogo, TextInput, SubmitButton } from "components";
 
-import HomeLogo from "components/HomeLogo";
-import TextInput from "components/TextInput";
-import SubmitButton from "components/SubmitButton";
+import axios from "axios";
 
 export function SignUp() {
   const [name, setName] = useState("");
@@ -130,7 +127,12 @@ export function SignUp() {
     return true;
   }
 
-  function submitHandler(event) {
+  const handleKeyPress = e => {
+    if (e.key === "Enter") {
+      e.target.blur();
+    }
+  };
+  const handleSubmit = event => {
     event.preventDefault();
 
     if (!validateFormInput([email, password, checkPassword, name])) {
@@ -142,20 +144,26 @@ export function SignUp() {
 
     // 서버에서 상태코드를 추가해주어야 할 것 같다. catch(err)
     axios
-      .post(url, data)
+      .post(url, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then(response => {
         alert(response.data.message);
         navigate("/login");
       })
       .catch(err => console.error(err));
-  }
+  };
+
   return (
     <Main>
       <Section>
         <FormHeader>
           <HomeLogo />
         </FormHeader>
-        <form onSubmit={event => submitHandler(event)}>
+        <form
+          onKeyPress={e => handleKeyPress(e)}
+          onSubmit={e => handleSubmit(e)}
+        >
           {textInputList.map(
             (
               {
@@ -183,13 +191,15 @@ export function SignUp() {
               );
             },
           )}
-          <Label>프로필이미지(선택)</Label>
+          <Label htmlFor="image">프로필이미지(선택)</Label>
           <ImagePreviewWrap>
             <Label>
               <UploadImage src={profileImage} alt="uploadImage"></UploadImage>
               <input
+                id="image"
                 ref={fileInput}
                 type="file"
+                accept="image/*"
                 style={{ display: "none" }}
                 onChange={event => renderPreviewImage(event.target)}
               />
