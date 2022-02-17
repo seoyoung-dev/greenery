@@ -6,5 +6,6 @@ export const userProfileState = atom({
     id: 0,
     email: "",
     name: "",
+    profileImg: "",
   },
 });
