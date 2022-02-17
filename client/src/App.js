@@ -98,7 +98,9 @@ function App() {
           />
           <Route
             path="/mypage"
-            element={<AuthRoute redirect="/login" component={<MyPage />} />}
+            element={
+              <AuthRoute redirect="/login" login component={<MyPage />} />
+            }
           />
           <Route path="/community" element={<Community />} />
           <Route
