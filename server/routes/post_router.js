@@ -3,6 +3,7 @@ const router = express.Router();
 const { auth, verifyToken, uploadImage } = require("../middlewares/");
 const { Post, Comment, User } = require("../models/index");
 const changeTimeFormat = require("../util/changeTimeFormat");
+const timeFormatForComment = require("../util/timeFormatForComment");
 
 router.get("/", verifyToken, async function (req, res) {
   try {
@@ -251,15 +252,19 @@ router.put("/:postId/like", auth, async (req, res) => {
     if (!post) {
       throw new Error("no exist");
     }
-
+    let count = post.likes.length;
     if (post.likes.includes(id)) {
       await post.updateOne({ $pull: { likes: id } });
+      count -= 1;
     } else {
       await post.updateOne({ $push: { likes: id } });
+      count += 1;
     }
 
-    return res.status(200).json({ isOk: true, message: "요청 성공" });
-  } catch {
+    return res
+      .status(200)
+      .json({ isOk: true, likse: count, message: "요청 성공" });
+  } catch (err) {
     console.log(err);
     const message = err.message;
 
@@ -276,14 +281,8 @@ router.put("/:postId/like", auth, async (req, res) => {
 // 댓글 조회
 router.get("/:postId/comment", async (req, res) => {
   try {
-    const page = req.query.page || 1;
-    const commentCount = 5;
-    const skip = (page - 1) * commentCount;
     const { postId } = req.params;
-    const post = await Post.findOne({ _id: postId }).slice("comments", [
-      skip,
-      commentCount,
-    ]);
+    const post = await Post.findOne({ _id: postId });
     const comments = await User.populate(post.comments, {
       path: "author",
       select: "name profileImg _id",
@@ -293,9 +292,17 @@ router.get("/:postId/comment", async (req, res) => {
       throw new Error("no content");
     }
 
-    return res
-      .status(200)
-      .json({ isok: true, total: comments.length, comments });
+    const translatedComment = comments.map(comment => {
+      const timeFormat = timeFormatForComment(comment.createdAt);
+      return {
+        author: comment.author,
+        content: comment.content,
+        id: comment.id,
+        createdAt: timeFormat,
+      };
+    });
+
+    return res.status(200).json({ isok: true, comments: translatedComment });
   } catch (err) {
     console.log(err);
     const message = err.message;
@@ -317,8 +324,9 @@ router.post("/:postId/comment", auth, async (req, res) => {
 
     const { content } = req.body;
     const author = req.user.id;
+    const createdAt = new Date();
 
-    const comment = await new Comment({ author, content });
+    const comment = await new Comment({ author, content, createdAt });
     comment.save();
     await Post.findOneAndUpdate(
       { _id: postId },
