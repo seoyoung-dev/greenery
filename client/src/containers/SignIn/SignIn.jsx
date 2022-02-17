@@ -60,10 +60,10 @@ export function SignIn() {
   // set global userProfileState
   const handleUserProfile = async () => {
     const response = await axios.get("/api/users/auth");
-    const { email, id, name } = response.data;
+    const { email, id, name, profileImg } = response.data;
 
     setUserProfile(prev => {
-      const newUserProfile = { ...prev, email, id, name };
+      const newUserProfile = { ...prev, email, id, name, profileImg };
       return newUserProfile;
     });
   };

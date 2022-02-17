@@ -68,10 +68,8 @@ function App() {
 
   const handleReload = async () => {
     try {
-      const result = await refreshAccessToken();
-      if (result) {
-        handleUserProfile();
-      }
+      await refreshAccessToken();
+      await handleUserProfile();
     } catch (err) {
       console.error(err);
     }

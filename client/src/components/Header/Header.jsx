@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { userProfileState } from "Atoms";
 import { HomeLogo, HeaderDropDown, SimpleItem } from "components";
 import * as S from "./Header.style";
@@ -50,8 +50,15 @@ export default function Header(props) {
               <S.PostButton form="PostFormSubmit">올리기</S.PostButton>
             ) : (
               <S.UserNavButton onClick={focusHandler}>
-                <img src="/icon/hamburger.svg" alt="hamburger" />
-                <img src="/icon/user.svg" alt="usericon" />
+                <S.HamburgIconWrap>
+                  <img src="/icon/hamburger.svg" alt="hamburger" />
+                </S.HamburgIconWrap>
+                <S.UserIconWrap>
+                  <img
+                    src={userProfile.profileImg || "icon/user.svg"}
+                    alt="usericon"
+                  />
+                </S.UserIconWrap>
               </S.UserNavButton>
             )}
             {isDropDown && <HeaderDropDown />}
