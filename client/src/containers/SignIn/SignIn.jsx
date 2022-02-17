@@ -3,7 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { userProfileState } from "Atoms";
 import { useSetRecoilState } from "recoil";
 import { useCookies } from "react-cookie";
-import { Main, Section, SignUpLinkWrap, FormHeader } from "./SignIn.style";
+import {
+  Main,
+  Section,
+  FormInputWrap,
+  SignUpLinkWrap,
+  FormHeader,
+} from "./SignIn.style";
 import { Header, HomeLogo, TextInput, SubmitButton } from "components";
 
 import axios from "axios";
@@ -95,7 +101,7 @@ export function SignIn() {
     };
 
     if (!checkLength(list)) {
-      alert("비어있는 값을 채워주세요");
+      alert("아이디 또는 비밀번호를 확인해주세요");
       return false;
     }
     if (checkPassword && !compareTwoString(password, checkPassword)) {
@@ -110,8 +116,14 @@ export function SignIn() {
     return true;
   }
 
-  const submitHandler = event => {
-    event.preventDefault();
+  const handleKeyPress = e => {
+    if (e.key === "Enter") {
+      e.target.blur();
+    }
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
     if (!validateFormInput([email, password])) {
       return;
     }
@@ -135,7 +147,7 @@ export function SignIn() {
           navigate("/");
         }
       })
-      .catch(err => alert("회원정보가 일치하지 않습니다."));
+      .catch(err => alert("아이디 또는 비밀번호를 확인해주세요"));
   };
 
   return (
@@ -147,24 +159,26 @@ export function SignIn() {
             <HomeLogo />
           </FormHeader>
           <form
-            onSubmit={event => {
-              submitHandler(event);
-            }}
+            onKeyPress={e => handleKeyPress(e)}
+            onSubmit={e => handleSubmit(e)}
           >
-            {textInputList.map(
-              ({ title, type, placeholder, autoComplete, onBlur }, index) => {
-                return (
-                  <TextInput
-                    key={index}
-                    title={title}
-                    type={type}
-                    placeholder={placeholder}
-                    autoComplete={autoComplete}
-                    onBlur={onBlur}
-                  />
-                );
-              },
-            )}
+            <FormInputWrap>
+              {textInputList.map(
+                ({ title, type, placeholder, autoComplete, onBlur }, index) => {
+                  return (
+                    <TextInput
+                      key={index}
+                      title={title}
+                      type={type}
+                      placeholder={placeholder}
+                      autoComplete={autoComplete}
+                      onBlur={onBlur}
+                    />
+                  );
+                },
+              )}
+            </FormInputWrap>
+
             {/* <SignOptionWrap>
             <Label>
               <input type="checkbox" />

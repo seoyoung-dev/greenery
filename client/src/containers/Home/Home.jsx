@@ -13,7 +13,7 @@ import axios from "axios";
 export default function Home() {
   const [plantData, setPlantData] = useState();
   const [cardData, setCardData] = useState();
-  console.log(cardData);
+
   async function getPlantData() {
     const response = await axios.get("/api/todays/article");
     setPlantData(response.data);

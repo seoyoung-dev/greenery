@@ -23,6 +23,10 @@ export const Section = styled.section`
   }
 `;
 
+export const FormInputWrap = styled.div`
+  margin-bottom: 20px;
+`;
+
 export const SignUpLinkWrap = styled.div`
   margin: 7px 0 0 0;
   text-align: center;
