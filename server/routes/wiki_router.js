@@ -6,7 +6,7 @@ const translateOptionToText = require("../util/translateSearchOption");
 router.get("/search", async (req, res) => {
   try {
     const { page, count, ...filterOption } = req.query;
-    const pageNumber = page || 1;
+    const pageNumber = Number(page) || 1;
     const plantCount = Number(count) || 20;
 
     const translated = translateOptionToText(filterOption);
@@ -24,6 +24,31 @@ router.get("/search", async (req, res) => {
     }
 
     return res.status(200).json({ isOk: true, total: total.length, plants });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ isOk: false });
+  }
+});
+
+router.get("/recommend", async (req, res) => {
+  try {
+    const { ...filterOption } = req.query;
+    // const plantCount = 2;
+
+    const translated = translateOptionToText(filterOption);
+
+    const plants = await Plant.aggregate(translated).sort({ plantName: 1 });
+
+    if (!plants) {
+      return res.status(205).json({ isOk: false, message: "empty" });
+    }
+    const range = plants.length;
+    const selectedPlant = [
+      plants[Math.floor(Math.random() * range)],
+      plants[Math.floor(Math.random() * range)],
+    ];
+
+    return res.status(200).json({ isOk: true, plants: selectedPlant });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ isOk: false });
