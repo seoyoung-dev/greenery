@@ -174,6 +174,7 @@ router.post("/refresh", async (req, res) => {
         message: "access token 재발급",
       });
     }
+    throw new Error("wrong access");
   } catch (err) {
     console.log(err);
     const message = err.message;
