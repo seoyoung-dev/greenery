@@ -44,7 +44,7 @@ export default function Home() {
         <TodaysPlant
           imgUrl={plantData.imgUrl}
           content={plantData.content}
-          postId={plantData.pot}
+          postId={plantData.postId}
         />
       )}
       <PostContentsWrapper>
