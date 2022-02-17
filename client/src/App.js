@@ -6,6 +6,7 @@ import { CookiesProvider, useCookies } from "react-cookie";
 
 import axios from "axios";
 import GlobalStyle from "style/GlobalStyle";
+import AuthRoute from "./components/AuthRoute";
 
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
@@ -84,16 +85,24 @@ function App() {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<SignIn />} />
+          <Route
+            path="/login"
+            element={<AuthRoute redirect="/" component={<SignIn />} />}
+          />
+          <Route
+            path="/signup"
+            element={<AuthRoute redirect="/" component={<SignUp />} />}
+          />
           <Route path="/community" element={<Community />} />
-          <Route path="/post" element={<Post />} />
+          <Route
+            path="/post"
+            element={<AuthRoute redirect="/login" login component={<Post />} />}
+          />
           <Route
             path="/post/:postId"
-            element={<Post postId="620aa3908dd9226e99b57cbc" />}
+            element={<AuthRoute redirect="/login" login component={<Post />} />}
           />
           <Route path="/article" element={<Article />} />
-          {/* <Route path="/article/:postId" element={<Article />} /> */}
           <Route path="/article/:postId" element={<Article />} />
           <Route path="/recommendation" element={<Recommendation />} />
           <Route path="/wiki" element={<Wiki />} />
