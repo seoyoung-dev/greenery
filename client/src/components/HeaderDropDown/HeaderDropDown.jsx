@@ -41,7 +41,7 @@ export default function HeaderDropDown() {
   ];
 
   const onLogoutRequest = async () => {
-    const url = "api/users/logout";
+    const url = "/api/users/logout";
     try {
       const response = await axios.get(url);
       return response;

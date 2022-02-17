@@ -35,7 +35,7 @@ export function SignIn() {
   ];
 
   const onLoginRequest = async data => {
-    const url = "api/users/login";
+    const url = "/api/users/login";
     const response = await axios.post(url, data);
 
     if (!response.data.isOk) {
@@ -53,7 +53,7 @@ export function SignIn() {
 
   // set global userProfileState
   const handleUserProfile = async () => {
-    const response = await axios.get("api/users/auth");
+    const response = await axios.get("/api/users/auth");
     const { email, id, name } = response.data;
 
     setUserProfile(prev => {

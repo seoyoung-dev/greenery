@@ -12,7 +12,7 @@ export function Community() {
   const intersectionRef = useRef(null);
 
   const getPosts = useCallback(async page => {
-    const url = `api/posts/page?page=${page}`;
+    const url = `/api/posts/page?page=${page}`;
     const response = await axios.get(url, {
       query: { page },
     });
