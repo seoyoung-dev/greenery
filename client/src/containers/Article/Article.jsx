@@ -20,13 +20,10 @@ export default function Article() {
     console.log("Comment");
   };
 
-  const handleEditClick = async () => {
-    console.log("Edit");
-  };
-
   const handleTrashClick = async () => {
-    // await axios.put("")
-    console.log("Trash");
+    await axios.delete(`/api/posts/${postId}`);
+    console.log("삭제");
+    window.location.reload();
   };
 
   const getPost = () => {
