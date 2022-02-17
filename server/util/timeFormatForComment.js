@@ -12,8 +12,8 @@ module.exports = timeFormatForComment = time => {
   const createdAt = new Date(time);
   const distance = current - createdAt;
 
-  if (timeObj.seconds <= distance && distance < timeObj.minute) {
-    return `${Math.floor(distance / timeObj.seconds)}초 전`;
+  if (distance < timeObj.minute) {
+    return `${Math.floor(distance / timeObj.seconds) || 1}초 전`;
   }
 
   if (timeObj.minute <= distance && distance < timeObj.hour) {
