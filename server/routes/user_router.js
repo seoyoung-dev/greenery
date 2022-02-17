@@ -75,7 +75,6 @@ router.post("/login", async (req, res) => {
       throw new Error("wrong password");
     }
     const accessTokenExpires = Date.now() + accessTokenExpireTime * 3600000;
-    console.log(new Date(accessTokenExpires));
     const access_token = jwt.sign(
       {
         id: user.id,
