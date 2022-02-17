@@ -4,9 +4,9 @@ import { userProfileState } from "Atoms";
 import { useSetRecoilState } from "recoil";
 import { useCookies } from "react-cookie";
 import { Main, Section, SignUpLinkWrap, FormHeader } from "./SignIn.style";
+import { Header, HomeLogo, TextInput, SubmitButton } from "components";
 
 import axios from "axios";
-import { Header, HomeLogo, TextInput, SubmitButton } from "components";
 
 export function SignIn() {
   const [email, setEmail] = useState("");

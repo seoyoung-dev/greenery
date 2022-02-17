@@ -1,7 +1,5 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
 import {
   Main,
   Section,
@@ -10,10 +8,9 @@ import {
   Label,
   FormHeader,
 } from "./SignUp.style";
+import { HomeLogo, TextInput, SubmitButton } from "components";
 
-import HomeLogo from "components/HomeLogo";
-import TextInput from "components/TextInput";
-import SubmitButton from "components/SubmitButton";
+import axios from "axios";
 
 export function SignUp() {
   const [name, setName] = useState("");
