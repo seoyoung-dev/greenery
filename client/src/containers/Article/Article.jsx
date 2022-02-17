@@ -5,6 +5,7 @@ import PostArticle from "../../components/PostArticle";
 import Comment from "../../components/Comment";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const dummy = {
   postId: 54321,
@@ -27,9 +28,10 @@ const dummy = {
   ],
 };
 
-export default function Article(props) {
+export default function Article() {
   const [article, setArticle] = useState({});
-  console.log(props.postId);
+  const { postId } = useParams();
+  console.log(postId);
 
   const handleLikeClick = async () => {
     console.log("Like");
@@ -48,11 +50,11 @@ export default function Article(props) {
     console.log("Trash");
   };
 
-  const getPost = postId => {
+  const getPost = () => {
     axios
-      .get("/api/posts", { params: { postId } })
+      .get(`/api/posts?postId=${postId}`)
       .then(res => {
-        // console.log(res);
+        console.log(res);
         setArticle(res.data.post);
       })
       .catch(err => {
@@ -61,8 +63,7 @@ export default function Article(props) {
   };
 
   useEffect(() => {
-    console.log(props.postId);
-    props.postId && getPost(props.postId);
+    getPost();
   }, []);
 
   return (
@@ -88,7 +89,7 @@ export default function Article(props) {
           editHandler={handleEditClick}
           commentHandler={handleCommentClick}
           trashHandler={handleTrashClick}
-          postId={props.postId}
+          postId={postId}
         />
       </PostArticleWrapper>
       <Comment />
