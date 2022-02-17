@@ -6,6 +6,7 @@ import { CookiesProvider, useCookies } from "react-cookie";
 
 import axios from "axios";
 import GlobalStyle from "style/GlobalStyle";
+import AuthRoute from "./components/AuthRoute";
 
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
@@ -75,6 +76,7 @@ function App() {
 
   // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
+    refreshAccessToken();
     reloadHandler();
   });
 
@@ -84,16 +86,27 @@ function App() {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/mypage" element={<MyPage />} />
+          <Route
+            path="/login"
+            element={<AuthRoute redirect="/" component={<SignIn />} />}
+          />
+          <Route
+            path="/signup"
+            element={<AuthRoute redirect="/" component={<SignUp />} />}
+          />
+          <Route
+            path="/mypage"
+            element={<AuthRoute redirect="/login" component={<MyPage />} />}
+          />
           <Route path="/community" element={<Community />} />
-          <Route path="/post" element={<Post />} />
+          <Route
+            path="/post"
+            element={<AuthRoute redirect="/login" login component={<Post />} />}
+          />
           <Route
             path="/post/:postId"
-            element={<Post postId="620d091db133f690ba9d2781" />}
+            element={<AuthRoute redirect="/login" login component={<Post />} />}
           />
-          <Route path="/article" element={<Article />} />
           <Route path="/article/:postId" element={<Article />} />
           <Route path="/recommendation" element={<Recommendation />} />
           <Route path="/wiki" element={<Wiki />} />
