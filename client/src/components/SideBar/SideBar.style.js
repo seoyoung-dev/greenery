@@ -24,6 +24,11 @@ export const IconBox = styled.div`
   display: flex;
   flex-direction: column;
 
+  button {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
   @media screen and (max-width: 1024px) {
     position: static;
     display: flex;
