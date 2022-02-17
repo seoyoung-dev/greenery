@@ -15,9 +15,9 @@ module.exports = async (req, res, next) => {
       };
 
       const user = await User.findOne({ _id: req.user.id });
-      req.user.profileImg = user.ProfileImg;
+      req.user.profileImg = user.profileImg;
       if (!refresh_token || refresh_token !== user.token) {
-        throw new Error("wrong access");
+        throw new Error("unauthorize");
       }
       return next();
     }
@@ -34,11 +34,11 @@ module.exports = async (req, res, next) => {
       });
     }
 
-    if (message === "wrong access") {
+    if (message === "unauthorize") {
       return res.status(401).json({
         isOk: false,
         isAuthorize: false,
-        message: "잘못된 접근입니다.",
+        message: "인증이 만료되었습니다.",
       });
     }
 
