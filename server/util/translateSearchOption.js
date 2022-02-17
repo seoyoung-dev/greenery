@@ -20,7 +20,7 @@ const brightnessObject = {
 
 const translateOptionToText = optionObj => {
   const translated = [];
-  if (Boolean(optionObj)) {
+  if (JSON.stringify(optionObj) === "{}") {
     return translated;
   }
 
