@@ -13,8 +13,8 @@ export const PostCardArticle = styled.article`
     white-space: nowrap;
   }
 
-  &:hover {
-    cursor: pointer;
+  & a {
+    text-decoration: none;
   }
 `;
 
@@ -25,6 +25,10 @@ export const ImgWrapper = styled.div`
   overflow: hidden;
 
   & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);

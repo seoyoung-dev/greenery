@@ -23,8 +23,8 @@ export default function PostCard({ id, imgUrl, title, author, likeNum }) {
   const { name, profileImg } = author;
 
   return (
-    <Link to={`/article/${id}`}>
-      <PostCardArticle>
+    <PostCardArticle>
+      <Link to={`/article/${id}`}>
         <ImgWrapper>
           <img src={imgUrl || dummy.postImgUrl} alt="포스트 이미지" />
         </ImgWrapper>
@@ -39,7 +39,7 @@ export default function PostCard({ id, imgUrl, title, author, likeNum }) {
             <span>{likeNum}</span>
           </Like>
         </ContentBox>
-      </PostCardArticle>
-    </Link>
+      </Link>
+    </PostCardArticle>
   );
 }
