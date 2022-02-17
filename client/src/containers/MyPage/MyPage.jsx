@@ -18,25 +18,19 @@ export function MyPage() {
   const [currentClick, setCurrentClick] = useState("MyPosts");
   const [prevClick, setPrevClick] = useState(null);
   const [posts, setPosts] = useState("");
-  const [pageNum, setPageNum] = useState(1);
+  const [page, setPageNum] = useState(1);
   const intersectionRef = useRef(null);
-
-  const options = {
-    root: null, // 관찰대상의 부모요소
-    rootMargin: "300px", // 뷰포트의 마진
-    threshold: 1, // 0 ~ 1 겹치는 정도
-  };
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
     // console.log(e.target.id);
   };
 
-  const getMyPost = async () => {
+  const getMyPost = async page => {
     const url = "/api/users/post/";
     const response = await axios.get(url, {
       params: {
-        page: pageNum,
+        page: page,
         userId: userProfile.id,
       },
     });
@@ -66,6 +60,12 @@ export function MyPage() {
     [currentClick],
   );
 
+  const options = {
+    root: null, // 관찰대상의 부모요소
+    rootMargin: "300px", // 뷰포트의 마진
+    threshold: 1, // 0 ~ 1 겹치는 정도
+  };
+
   const handleObserver = useCallback(async entires => {
     const target = entires[0];
     if (target.isIntersecting) {
@@ -82,9 +82,14 @@ export function MyPage() {
     return () => observer.disconnect();
   }, [handleObserver]);
 
+  useEffect(() => {
+    getMyPost(page);
+  }, [page]);
+
   return (
     <ProfileWrapper>
       <Header />
+
       <ProfileImg>
         <img src="/img/profile2.png" />
       </ProfileImg>
@@ -108,13 +113,15 @@ export function MyPage() {
       <PostCardsWrapper>
         {console.log(posts.author)}
         {posts &&
-          posts.map(({ id, title, author, contents }, index) => {
+          posts.map(({ id, title, imgUrl, likes, author }, index) => {
             return (
               <PostCard
                 key={index}
+                id={id}
+                imgUrl={imgUrl}
                 title={title}
                 author={author}
-                contents={contents}
+                likes={likes}
               />
             );
           })}
