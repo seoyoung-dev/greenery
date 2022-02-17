@@ -23,7 +23,6 @@ export function MyPage() {
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
-    // console.log(e.target.id);
   };
 
   const getMyPost = async page => {
@@ -34,6 +33,7 @@ export function MyPage() {
         userId: userProfile.id,
       },
     });
+
     setPosts(prev => {
       const newPosts = [...prev, ...response.data.posts];
       return newPosts;
@@ -59,6 +59,7 @@ export function MyPage() {
 
   useEffect(
     e => {
+      console.log(userProfile);
       currentClick === "MyPosts" ? getMyPost() : getMyLikePost();
       if (currentClick !== null) {
         let current = document.getElementById(currentClick);

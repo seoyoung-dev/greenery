@@ -6,23 +6,30 @@ import Comment from "../../components/Comment";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { userProfileState } from "Atoms";
+import { useRecoilValue } from "recoil";
 
 export default function Article() {
   const [article, setArticle] = useState({});
+  const [liked, setLiked] = useState(false);
   const { postId } = useParams();
   const commentRef = useRef(null);
+  const userProfile = useRecoilValue(userProfileState);
 
-  const scrollToBottom = () => {
+  const scrollToComment = () => {
     commentRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleLikeClick = async () => {
-    console.log("Like");
+    const res = await axios.put(`/api/posts/${postId}/like`, {
+      userId: userProfile.id,
+    });
+    if (res.status === 200) setLiked(!liked);
   };
 
   const handleCommentClick = async () => {
     console.log("댓글");
-    scrollToBottom();
+    scrollToComment();
   };
 
   const handleTrashClick = async () => {
@@ -37,6 +44,7 @@ export default function Article() {
       .then(res => {
         console.log(res);
         setArticle(res.data.post);
+        setLiked(res.data.post.liked);
       })
       .catch(err => {
         console.log(err);
