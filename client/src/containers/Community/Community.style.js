@@ -6,6 +6,7 @@ export const Main = styled.main`
   flex-direction: column;
   width: 1136px;
   margin: 40px auto 0 auto;
+  padding: 90px 0 0 0;
 
   & input {
     width: 330px;
@@ -29,4 +30,16 @@ export const ContentsWrapper = styled.section`
   grid-template-columns: 360px 360px 360px;
   grid-gap: 80px 28px;
   margin-top: 40px;
+`;
+
+export const PostButtonWrapper = styled.div`
+  max-width: 80px;
+  position: fixed;
+  z-index: 50;
+  right: 15vw;
+  bottom: 5vh;
+
+  & img {
+    border-radius: 50%;
+  }
 `;

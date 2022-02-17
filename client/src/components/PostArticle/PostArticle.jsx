@@ -23,13 +23,13 @@ export default function PostArticle({
     <ArticleWrapper>
       <ArticleTitle>{title}</ArticleTitle>
       <PostInfo>
-        <img src={`/${profileImgUrl}`} alt="프로필 이미지"></img>
+        <img src={`${profileImgUrl}`} alt="프로필 이미지"></img>
         <DetailedInfo>
           <p>{author}</p>
           <div>
             <p>{date}</p>
             <Like>
-              <img src="icon/thumbs-up.svg" alt="좋아요 수" />
+              <img src="/icon/thumbs-up.svg" alt="좋아요 수" />
               <div>{likeNum}</div>
             </Like>
           </div>
@@ -38,7 +38,7 @@ export default function PostArticle({
       <ContentBox>
         {contents.map((card, index) => (
           <Content key={`content-${index}`}>
-            <img src={card.imgUrl} alt="포스트 이미지"></img>
+            <img src={`${card.imgUrl}`} alt="포스트 이미지"></img>
             <p>{card.content}</p>
           </Content>
         ))}

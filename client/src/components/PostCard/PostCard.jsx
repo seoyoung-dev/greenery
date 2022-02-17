@@ -1,7 +1,15 @@
-import React from 'react';
+import React from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import { PostCardArticle, ImgWrapper, ContentBox, Profile, Like } from './PostCard.style'
+import { Link } from "react-router-dom";
+import {
+  PostCardArticle,
+  ImgWrapper,
+  ContentBox,
+  Profile,
+  Like,
+} from "./PostCard.style";
 
 const dummy = {
   postImgUrl: "img/post.png",
@@ -11,23 +19,27 @@ const dummy = {
   likeNum: 4876,
 };
 
-export function PostCard({ postImgUrl, title, profileImgUrl, author, likeNum }) {
+export default function PostCard({ id, imgUrl, title, author, likeNum }) {
+  const { name, profileImg } = author;
+
   return (
     <PostCardArticle>
-      <ImgWrapper>
-        <img src={ postImgUrl || dummy.postImgUrl } alt="포스트 이미지" />
-      </ImgWrapper>
-      <h3>{ title || dummy.title }</h3>
-      <ContentBox>
-        <Profile>
-          <img src={ profileImgUrl || dummy.profileImgUrl } alt="프로필 이미지" />
-          <span>{ author || dummy.author }</span>
-        </Profile>
-        <Like>
-          <FontAwesomeIcon icon={faThumbsUp} />
-          <span>{ likeNum || dummy.likeNum }</span>
-        </Like>
-      </ContentBox>
+      <Link to={`/article/${id}`}>
+        <ImgWrapper>
+          <img src={imgUrl || dummy.postImgUrl} alt="포스트 이미지" />
+        </ImgWrapper>
+        <h3>{title || dummy.title}</h3>
+        <ContentBox>
+          <Profile>
+            <img src={profileImg} alt="프로필 이미지" />
+            <span>{name || dummy.author}</span>
+          </Profile>
+          <Like>
+            <FontAwesomeIcon icon={faThumbsUp} />
+            <span>{likeNum}</span>
+          </Like>
+        </ContentBox>
+      </Link>
     </PostCardArticle>
   );
 }

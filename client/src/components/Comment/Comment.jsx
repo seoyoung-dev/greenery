@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Comments from "./Comments";
 import Pagination from "./Pagination";
-import { CommentSection, CommentForm, CommentInput } from './Comment.style'
+import { CommentSection, CommentForm, CommentInput } from "./Comment.style";
 
 export function Comment() {
   const [comments, setComments] = useState([]);
@@ -37,8 +37,8 @@ export function Comment() {
 
   function textResize() {
     const obj = textRef.current;
-    obj.style.height = 'auto';
-    obj.style.height = obj.scrollHeight + 'px';
+    obj.style.height = "auto";
+    obj.style.height = obj.scrollHeight + "px";
   }
 
   return (
@@ -58,8 +58,16 @@ export function Comment() {
           }}>등록</button>
         </CommentInput>
       </CommentForm>
-      <Comments comments={currentComments(comments)} loading={loading} setComments={setComments}></Comments>
-      <Pagination commentsPerPage={commentsPerPage} totalComments={comments.length} paginate={setCurrentPage}></Pagination>
+      <Comments
+        comments={currentComments(comments)}
+        loading={loading}
+        setComments={setComments}
+      ></Comments>
+      <Pagination
+        commentsPerPage={commentsPerPage}
+        totalComments={comments.length}
+        paginate={setCurrentPage}
+      ></Pagination>
     </CommentSection>
   );
 }

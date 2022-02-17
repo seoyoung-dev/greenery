@@ -5,16 +5,21 @@ export default function TextInput({
   type,
   placeholder,
   autoComplete,
-  setState,
+  minLength,
+  maxLength,
+  onBlur,
 }) {
   return (
     <InputWrap>
-      {title && <Label>{title}</Label>}
+      {title && <Label htmlFor={title}>{title}</Label>}
       <Input
+        id={title}
         type={type}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        onChange={event => setState(event.target.value)}
+        minLength={minLength}
+        maxLength={maxLength}
+        onBlur={event => onBlur(event.target.value)}
       ></Input>
     </InputWrap>
   );

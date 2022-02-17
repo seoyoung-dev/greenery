@@ -9,7 +9,7 @@ import {
 } from "./HeaderDropDown.style";
 
 import axios from "axios";
-import SimpleItem from "components/SimpleItem/SimpleItem";
+import SimpleItem from "components/SimpleItem";
 
 export default function HeaderDropDown() {
   const resetUserState = useResetRecoilState(userProfileState);
@@ -41,7 +41,7 @@ export default function HeaderDropDown() {
   ];
 
   const onLogoutRequest = async () => {
-    const url = "/users/logout";
+    const url = "api/users/logout";
     try {
       const response = await axios.get(url);
       return response;

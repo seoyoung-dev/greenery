@@ -32,33 +32,40 @@ export function SignUp() {
     {
       title: "이메일(아이디)",
       type: "email",
-      placeholder: "example@greenfriend.com",
+      placeholder: "이메일을 입력하세요",
       autoComplete: "on",
-      setState: setEmail,
+      minLength: 12,
+      maxLength: 32,
+      onBlur: setEmail,
     },
     {
       title: "비밀번호",
       type: "password",
-      placeholder: "*******",
+      placeholder: "비밀번호를 입력하세요",
+      minLength: 8,
+      maxLength: 12,
       autoComplete: "on",
-      setState: setPassword,
+      onBlur: setPassword,
     },
     {
       title: "비밀번호 확인",
       type: "password",
-      placeholder: "*******",
+      placeholder: "동일한 비밀번호를 입력하세요",
+      minLength: 8,
+      maxLength: 12,
       autoComplete: "on",
-      setState: setCheckPassword,
+      onBlur: setCheckPassword,
     },
     {
       title: "닉네임",
       type: "text",
-      placeholder: "ex) 초록집사",
+      placeholder: "닉네임을 입력하세요",
       autoComplete: "on",
-      setState: setName,
+      minLength: 4,
+      maxLength: 12,
+      onBlur: setName,
     },
   ];
-
   // 이미지 업로드시 미리보기
   function renderPreviewImage(target) {
     const reader = new FileReader();
@@ -83,10 +90,54 @@ export function SignUp() {
     return data;
   }
 
+  function validateFormInput(list) {
+    const email = list[0];
+    const password = list[1];
+    const checkPassword = list[2];
+    const name = list[3];
+
+    function checkLength(list) {
+      const result = list.every(ele => ele.length > 0);
+
+      return result;
+    }
+
+    const compareTwoString = (originString, checkString) => {
+      return originString === checkString;
+    };
+
+    const checkNotSpecialString = string => {
+      // a-zA-Z0-9-가-힣 가 아닌 문자열이 있으면 true를 반환한다.
+      const regExp = /[^a-zA-Z0-9-가-힣]+/g;
+      if (regExp.test(string)) {
+        return false;
+      }
+      return true;
+    };
+    if (!checkLength(list)) {
+      alert("비어있는 값을 채워주세요");
+      return false;
+    }
+    if (checkPassword && !compareTwoString(password, checkPassword)) {
+      alert("비밀번호가 일치하지 않습니다");
+      return false;
+    }
+    if (name && !checkNotSpecialString(name)) {
+      alert("한글, 알파벳 대소문자, 숫자만 입력하세요");
+      return false;
+    }
+
+    return true;
+  }
+
   function submitHandler(event) {
     event.preventDefault();
 
-    const url = "/users/register";
+    if (!validateFormInput([email, password, checkPassword, name])) {
+      return;
+    }
+
+    const url = "api/users/register";
     const data = handleFormData();
 
     // 서버에서 상태코드를 추가해주어야 할 것 같다. catch(err)
@@ -106,7 +157,18 @@ export function SignUp() {
         </FormHeader>
         <form onSubmit={event => submitHandler(event)}>
           {textInputList.map(
-            ({ title, type, placeholder, autoComplete, setState }, index) => {
+            (
+              {
+                title,
+                type,
+                placeholder,
+                autoComplete,
+                minLength,
+                maxLength,
+                onBlur,
+              },
+              index,
+            ) => {
               return (
                 <TextInput
                   key={index}
@@ -114,7 +176,9 @@ export function SignUp() {
                   type={type}
                   placeholder={placeholder}
                   autoComplete={autoComplete}
-                  setState={setState}
+                  minLength={minLength}
+                  maxLength={maxLength}
+                  onBlur={onBlur}
                 />
               );
             },
@@ -131,7 +195,7 @@ export function SignUp() {
               />
             </Label>
           </ImagePreviewWrap>
-          <SubmitButton type={"submit"} text={"회원가입"}></SubmitButton>
+          <SubmitButton type="submit" text="회원가입"></SubmitButton>
         </form>
       </Section>
     </Main>

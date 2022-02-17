@@ -23,12 +23,13 @@ export function Post(props) {
     },
   ]);
 
-  const Read = postId => {
-    axios
-      .get("/posts", { params: { postId: postId } })
+  const Read = async postId => {
+    await axios
+      .get("/api/posts", { params: { postId: postId } })
       .then(res => {
-        const { title, contents } = res.data.posts;
-        console.log(res.data.posts);
+        console.log(res.data);
+        const { title, contents } = res.data.post;
+
         const newContent = contents.map(article => {
           return {
             content: article.content,
@@ -46,6 +47,7 @@ export function Post(props) {
 
   useEffect(() => {
     // 첫 렌더링시
+    console.log(props.postId);
     props.postId && Read(props.postId);
   }, []);
 
@@ -87,14 +89,14 @@ export function Post(props) {
     });
 
     console.log(data);
-    const url = `/posts/${props.postId}`;
+    const url = `/api/posts/${props.postId}`;
     props.postId
       ? axios
           .put(url, data)
           .then(res => console.log(res.data))
           .catch(err => console.log(err))
       : axios
-          .post("/posts", data, {
+          .post("/api/posts", data, {
             headers: { "Content-Type": "multipart/form-data" },
           })
           .then(res => console.log(res.data))
