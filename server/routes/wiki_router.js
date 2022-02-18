@@ -9,8 +9,15 @@ router.get("/search", async (req, res) => {
     const pageNumber = Number(page) || 1;
     const plantCount = Number(count) || 20;
 
-    const translated = translateOptionToText(filterOption);
-
+    const dummy = {
+      search: "",
+      brightness: [1, 2],
+      smell: [2],
+      bloomingSeason: [2, 3],
+    };
+    const translated = translateOptionToText(dummy);
+    console.log(translated);
+    console.log(translated["$match"]);
     const [total, plants] = await Promise.all([
       Plant.aggregate(translated).sort({ plantName: 1 }),
       Plant.aggregate(translated)
@@ -33,7 +40,6 @@ router.get("/search", async (req, res) => {
 router.get("/recommend", async (req, res) => {
   try {
     const { ...filterOption } = req.query;
-    // const plantCount = 2;
 
     const translated = translateOptionToText(filterOption);
 
@@ -43,10 +49,14 @@ router.get("/recommend", async (req, res) => {
       return res.status(205).json({ isOk: false, message: "empty" });
     }
     const range = plants.length;
-    const selectedPlant = [
-      plants[Math.floor(Math.random() * range)],
-      plants[Math.floor(Math.random() * range)],
-    ];
+    let selectedPlant;
+    if (range > 2) {
+      const target = Math.floor(Math.random() * range);
+      const second = target === range - 1 ? target - 1 : target + 1;
+      selectedPlant = [plants[target], plants[second]];
+    } else {
+      selectedPlant = [...plants];
+    }
 
     return res.status(200).json({ isOk: true, plants: selectedPlant });
   } catch (err) {

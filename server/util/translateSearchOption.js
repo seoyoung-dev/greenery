@@ -29,28 +29,35 @@ const translateOptionToText = optionObj => {
 
     if (key === "search") {
       const keyword = options;
-      translated.push({ plantName: { $regex: new RegExp(keyword) } });
-      break;
+      translated.push({
+        $match: { plantName: { $regex: new RegExp(keyword) } },
+      });
     }
 
     if (key === "brightness") {
       const brightnessParams = options.map(option => brightnessObject[option]);
-      translated.push({ brightness: { $in: brightnessParams } });
-      break;
+      translated.push({ $match: { brightness: { $all: brightnessParams } } });
     }
 
     if (key === "smell") {
       const smellParams = options.map(option => smellObject[option]);
-      translated.push({ smell: { $in: smellParams } });
-      break;
+      translated.push({ $match: { smell: { $in: smellParams } } });
     }
 
     if (key === "bloomingSeason") {
       const bloomingSeasonParams = options.map(
         option => bloomingSeasonObject[option],
       );
-      translated.push({ bloomingSeason: { $in: bloomingSeasonParams } });
-      break;
+      translated.push({
+        $match: { bloomingSeason: { $in: bloomingSeasonParams } },
+      });
+    }
+
+    if (key === "growthTemperature") {
+      const growthTemperatureParams = options.map(option => Number(option));
+      translated.push({
+        $match: { growthTemperature: { $in: growthTemperatureParams } },
+      });
     }
 
     if (key === "growthHeight") {
@@ -64,15 +71,10 @@ const translateOptionToText = optionObj => {
           growthHeight: { $gt: option * 10, $lte: (option + 5) * 10 },
         };
       });
-      translated.push({ $or: heightParams });
-      break;
+      translated.push({ $match: { $or: heightParams } });
     }
   }
-  return [
-    {
-      $match: { $and: translated },
-    },
-  ];
+  return translated;
 };
 
 module.exports = translateOptionToText;
