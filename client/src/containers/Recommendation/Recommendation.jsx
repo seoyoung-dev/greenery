@@ -29,7 +29,6 @@ export default function Recommendation() {
   useEffect(() => {
     if (isDataFilled(filter)) {
       fetchPlant({ count: 2, filter: filter }).then(res => {
-        console.log(res);
         setPlantData(res.data.plants);
       });
     }

@@ -7,9 +7,9 @@ export default function WikiSearch({ searchRef, handleSearch }) {
   }
 
   return (
-    <SearchContainer>
+    <SearchContainer onSubmit={handleSearch}>
       <SearchBar handleChange={getInput} placeholder="검색어를 입력하세요" />
-      <SearchButton handleClick={handleSearch}>검색</SearchButton>
+      <SearchButton type="submit">검색</SearchButton>
     </SearchContainer>
   );
 }

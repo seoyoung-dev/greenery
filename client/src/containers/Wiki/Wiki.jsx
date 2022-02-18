@@ -32,8 +32,8 @@ export default function Wiki() {
       data: { total, plants },
     } = await fetchPlant({
       count: 6,
-      search: searchRef.current === "" ? undefined : searchRef.current,
-      // search: searchRef.current,
+      // search: searchRef.current === "" ? undefined : searchRef.current,
+      search: searchRef.current,
       filter: filterRef.current,
       currentPage,
     });
@@ -42,7 +42,8 @@ export default function Wiki() {
     setPlantData(plants);
   }
 
-  function handleSearch() {
+  function handleSearch(evt) {
+    evt.preventDefault();
     resetCurrentPage();
     fetchPlantData();
   }
