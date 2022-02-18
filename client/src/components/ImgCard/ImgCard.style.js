@@ -2,11 +2,29 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 1136px;
+
+  @media screen and (min-width: 768px) and (max-width: 1140px) {
+    width: 100%;
+    padding: 5%;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    padding: 3%;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const Nav = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 export const Button = styled.button`
@@ -33,6 +51,14 @@ const Content = styled.div`
   height: 704px;
   padding: 60px 50px;
   border-radius: 10px;
+
+  @media screen and (min-width: 768px) and (max-width: 1140px) {
+    height: 500px;
+  }
+
+  @media screen and (max-width: 767px) {
+    height: 400px;
+  }
 `;
 
 export const Detail = styled.p`
@@ -40,12 +66,22 @@ export const Detail = styled.p`
   font-weight: bold;
   color: white;
   margin: 0;
+
+  @media screen and (min-width: 768px) and (max-width: 1140px) {
+    font-size: 35px;
+  }
 `;
 
-export const PlantRecommedNav = styled(Content)`
-  background-image: url(img/plant.png);
-`;
+export const NavCard = styled(Content)`
+  background-image: url(${props => props.imgUrl});
 
-export const CommunityNav = styled(Content)`
-  background-image: url(img/community.png);
+  & + & {
+    @media screen and (min-width: 768px) and (max-width: 1140px) {
+      margin-left: 20px;
+    }
+
+    @media screen and (max-width: 767px) {
+      margin-top: 30px;
+    }
+  }
 `;
