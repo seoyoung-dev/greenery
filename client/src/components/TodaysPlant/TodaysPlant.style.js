@@ -63,7 +63,7 @@ export const ContentBox = styled.div`
     }
 
     @media screen and (max-width: 767px) {
-      font-size: 3vw;
+      font-size: 2.5vw;
     }
   }
 
