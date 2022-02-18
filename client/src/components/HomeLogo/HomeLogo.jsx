@@ -5,7 +5,7 @@ export default function HomeLogo() {
   return (
     <LogoWrap>
       <Link to="/">
-        <LogoImage src="/icon/homelogo.svg" alt="홈 로고" />
+        <LogoImage />
       </Link>
     </LogoWrap>
   );

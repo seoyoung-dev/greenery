@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { WideContainer } from "style/ContainerStyle";
-import { Main, ContentsWrapper, PostButtonWrapper } from "./Community.style";
+import {
+  Main,
+  ContentsWrapper,
+  PostButtonWrapper,
+  SearchInput,
+} from "./Community.style";
 import { Header, Footer, PostCard } from "components";
 
 import axios from "axios";
@@ -11,15 +16,16 @@ export function Community() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const pageEnd = useRef(null);
+  const searchRef = useRef();
 
   const getPosts = async page => {
-    const url = `/api/posts/page?page=${page}`;
-    const response = await axios.get(url, {
-      qeury: { page },
+    const url = `/api/posts/page`;
+    const { data } = await axios.get(url, {
+      params: { page, keyword: searchRef.current.value },
     });
-
+    // lastPage = Math.ceil(data.total / 12);
     setPosts(prev => {
-      const newPosts = [...prev, ...response.data.posts];
+      const newPosts = [...prev, ...data.posts];
       return newPosts;
     });
     setLoading(true);
@@ -37,22 +43,38 @@ export function Community() {
     if (entires[0].isIntersecting) {
       increasePage();
     }
-  });
+  }, []);
+
+  const searchSubmitHandler = e => {
+    e.preventDefault();
+    // setLoading(false);
+    // setPosts([]);
+    // setPage(1);
+    // getPosts(1);
+  };
+
   useEffect(() => {
-    if (loading) {
-      const observer = new IntersectionObserver(ovserveHandler, {
-        threshold: 1,
-      });
-      observer.observe(pageEnd.current);
-    }
-  }, [loading]);
+    // if (true) {
+    const observer = new IntersectionObserver(ovserveHandler, {
+      threshold: 1,
+    });
+    observer.observe(pageEnd.current);
+    // }
+  }, []);
 
   return (
     <>
       <Header />
       <Main>
         <WideContainer>
-          <input type="text" placeholder="&#xF002; 검색어를 입력하세요" />
+          <SearchInput onSubmit={searchSubmitHandler}>
+            <input
+              ref={searchRef}
+              type="text"
+              placeholder="검색어를 입력하세요"
+            />
+            <img src="/icon/search.svg" alt="" />
+          </SearchInput>
           <ContentsWrapper>
             {posts &&
               posts.map(({ id, title, imgUrl, likes, author }, index) => {
