@@ -48,7 +48,7 @@ export const Header = styled.div`
   }
 
   ${props =>
-    props.result &&
+    props.isFinalPage &&
     `
     text-align: center;
   `}
