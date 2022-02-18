@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../components/Header";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   PostTextarea,
@@ -14,6 +14,7 @@ import {
 } from "./Post.style";
 
 export function Post() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const inputRef = useRef([]);
   const { postId } = useParams();
@@ -29,7 +30,6 @@ export function Post() {
     axios
       .get(`/api/posts?postId=${postId}`)
       .then(res => {
-        console.log(res.data);
         const { title, contents } = res.data.post;
 
         const newContent = contents.map(article => {
@@ -49,7 +49,6 @@ export function Post() {
 
   useEffect(() => {
     // 첫 렌더링시
-    console.log(postId);
     postId && Read(postId);
   }, []);
 
@@ -82,32 +81,34 @@ export function Post() {
     const data = new FormData();
     data.append("title", title);
 
-    console.log(inputList);
-
     inputList.forEach((content, i) => {
       data.append("userfiles", inputRef.current[i].files[0]);
       data.append(`contents[${i}]`, content.content);
       data.append(`img[${i}]`, content.imgUrl);
     });
 
-    console.log(data);
     const url = `/api/posts/${postId}`;
     postId
       ? axios
           .put(url, data)
-          .then(res => console.log(res.data))
+          .then(res => {
+            navigate(`/article/${postId}`);
+          })
           .catch(err => console.log(err))
       : axios
           .post("/api/posts", data, {
             headers: { "Content-Type": "multipart/form-data" },
           })
-          .then(res => console.log(res.data))
+          .then(res => {
+            // backend에서 글생성후 postId 받아야함
+            navigate(`/article/${res.data.postId}`);
+          })
           .catch(err => console.log(err));
 
-    console.log(data.getAll("title"));
-    console.log(data.getAll("userfiles"));
-    console.log(data.getAll("contents"));
-    console.log(data.getAll("imgUrl"));
+    // console.log(data.getAll("title"));
+    // console.log(data.getAll("userfiles"));
+    // console.log(data.getAll("contents"));
+    // console.log(data.getAll("imgUrl"));
   };
 
   return (
@@ -131,7 +132,7 @@ export function Post() {
                     }}
                     type="file"
                     name="fileImage"
-                    accept="image/*"
+                    accept=".gif, .jpeg, .heic, .png"
                     onChange={e => handleInputChange(e, i)}
                     style={{ display: "none" }}
                   />

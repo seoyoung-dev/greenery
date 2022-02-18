@@ -8,21 +8,28 @@ export const BlurBackground = styled.section`
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
   z-index: 20000;
+
+  @media screen and (min-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 export const Modal = styled.div`
   background: #fefefe;
   width: clamp(0px, 100%, 600px);
-  margin: 50px auto 0;
+  height: 100%;
   z-index: 30000;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   position: relative;
+  margin: 0 auto;
+  overflow-y: auto;
 `;
 
 export const DetailContainer = styled.article`
   width: clamp(0px, 100%, 500px);
-  padding: 20px 20px;
+  height: 100%;
+  padding: 20px;
   display: flex;
   margin: 0 auto;
   flex-direction: column;
@@ -54,16 +61,7 @@ export const Main = styled.main`
   color: var(--primary-dark);
   font-weight: bolder;
   line-height: 1.6;
-`;
-export const Footer = styled.footer`
-  margin-top: 20px;
-  width: 100%;
-  color: var(--primary);
-  font-weight: bold;
-
-  p {
-    margin: 5px;
-  }
+  font-size: 0.9rem;
 `;
 
 export const CloseButton = styled.span`
@@ -76,3 +74,20 @@ export const CloseButton = styled.span`
     width: 15px;
   }
 `;
+
+export const Footer = styled.footer`
+  width: 100%;
+  margin-top: 25px;
+  color: var(--primary-light);
+  font-weight: bold;
+
+  p {
+    margin: 5px;
+    font-size: 0.85rem;
+  }
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const MetaLeft = styled.div``;
+export const MetaRight = styled.div``;

@@ -4,7 +4,7 @@ import Survey from "../../components/Survey/Survey";
 import PlantGrid from "../../components/PlantGrid";
 import Loading from "../../components/Loading";
 import Button from "../../components/Button";
-import { dummyFetchPlant } from "../../api/plant";
+import { fetchPlant } from "../../api/plant";
 import { WideContainer } from "style/ContainerStyle";
 import {
   Modal,
@@ -21,15 +21,15 @@ export default function Recommendation() {
   const [plantData, setPlantData] = useState(null);
   const [filter, setFilter] = useState({
     brightness: [],
-    smell: [],
+    growthTemperature: [],
     bloomingSeason: [],
-    growthHeight: [],
+    smell: [],
   });
 
   useEffect(() => {
     if (isDataFilled(filter)) {
-      dummyFetchPlant(2, filter).then(data => {
-        setPlantData(data);
+      fetchPlant({ count: 2, filter: filter }).then(res => {
+        setPlantData(res.data.plants);
       });
     }
   }, [filter]);
@@ -58,9 +58,9 @@ export default function Recommendation() {
     setProgress(0);
     setFilter({
       brightness: [],
-      smell: [],
+      growthTemperature: [],
       bloomingSeason: [],
-      growthHeight: [],
+      smell: [],
     });
   }
   let element;

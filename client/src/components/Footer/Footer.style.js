@@ -13,4 +13,14 @@ export const FooterWrapper = styled.footer`
     width: 1140px;
     color: rgba(118, 118, 118, 0.8);
   }
+
+  @media screen and (min-width: 768px) and (max-width: 1140px) {
+    width: 100%;
+    padding: 5%;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    padding: 3%;
+  }
 `;

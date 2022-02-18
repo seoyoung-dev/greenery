@@ -1,14 +1,15 @@
 ﻿import SearchBar from "../SearchBar";
 import { SearchContainer, SearchButton } from "./WikiSearch.style";
 
-export default function WikiSearch({ setSearchQuery, onclick }) {
+export default function WikiSearch({ searchRef, handleSearch }) {
   function getInput(evt) {
-    setSearchQuery(evt.target.value);
+    searchRef.current = evt.target.value;
   }
+
   return (
-    <SearchContainer>
+    <SearchContainer onSubmit={handleSearch}>
       <SearchBar handleChange={getInput} placeholder="검색어를 입력하세요" />
-      <SearchButton handleClick={onclick}>검색</SearchButton>
+      <SearchButton type="submit">검색</SearchButton>
     </SearchContainer>
   );
 }

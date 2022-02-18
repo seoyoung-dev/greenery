@@ -17,12 +17,9 @@ export default function SideBar(props) {
           </button>
         </Icon>
         <Icon width={22}>
-          {/* {console.log(props.postId)} */}
-          <Link to={`/post/${props.postId}`}>
-            <button>
-              <img src="/icon/edit.svg" alt="edit" />
-            </button>
-          </Link>
+          <button onClick={props.updateHandler}>
+            <img src="/icon/edit.svg" alt="edit" />
+          </button>
         </Icon>
         <Icon width={19.25}>
           <button onClick={props.trashHandler}>

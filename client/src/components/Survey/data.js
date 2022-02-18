@@ -8,17 +8,17 @@ export const survey_data = [
     type: "brightness",
     questions: [
       {
-        id: "055001",
+        id: "1",
         text: "눈이 불편하지 않은 정도에요~ (300 ~ 800 Lux)",
         icon: icon_route + "sunglasses.svg",
       },
       {
-        id: "055002",
+        id: "2",
         text: "햇살 좋은 날 눈 뜨기 힘든 정도에요~ (800 ~ 1500 Lux)",
         icon: icon_route + "sunny.svg",
       },
       {
-        id: "055003",
+        id: "3",
         text: "카메라 플래시 라이트를 보는 정도로 눈을 뜨기 힘들어요~ (1500 ~ 10000 Lux)",
         icon: icon_route + "flash.svg",
       },
@@ -26,72 +26,58 @@ export const survey_data = [
   },
   {
     num: 2,
-    title: "초록이 향기는 얼마나 강했으면 좋겠나요?",
+    title: "초록이가 살게 될 장소는 따뜻한가요?",
     subtitle: null,
-    type: "smell",
+    type: "growthTemperature",
     questions: [
       {
-        id: "79001",
-        text: "강했으면 좋겠어요!",
-        icon: icon_route + "water.svg",
+        id: "82002",
+        text: "조금 선선하지만 춥지 않아요! (16~20℃)",
+        icon: icon_route + "wind.svg",
       },
       {
-        id: "79002",
-        text: "적당한 향기가 나면 좋겠어요!",
-        icon: icon_route + "splash.svg",
-      },
-      {
-        id: "79003",
-        text: "은은하게 향이 느껴지면 좋겠어요!",
-        icon: icon_route + "drops.svg",
-      },
-      {
-        id: "79004",
-        text: "향이 없었으면 좋겠어요!",
-        icon: icon_route + "drop.svg",
+        id: "82003",
+        text: "네! 따뜻한 장소에 있을 거에요! (21~25℃)",
+        icon: icon_route + "warm.svg",
       },
     ],
   },
   {
     num: 3,
-    title: "초록이가 언제 꽃(열매)을 피우기 원하시나요?",
+    title: "초록이가 언제 꽃을 피우기 원하시나요?",
     subtitle: null,
     type: "bloomingSeason",
 
     questions: [
       {
-        id: "073001",
-        text: "봄에 피면 좋겠어요!",
+        id: "1",
+        text: "봄에 피었으면 좋겠어요!",
         icon: icon_route + "sakura.svg",
       },
       {
-        id: "073002",
-        text: "여름에 피면 좋겠어요!",
+        id: "2",
+        text: "여름에 피었으면 좋겠어요!",
         icon: icon_route + "watermelon.svg",
-      },
-      {
-        id: "073003",
-        text: "가을에 피면 좋겠어요!",
-        icon: icon_route + "leaves.svg",
-      },
-      {
-        id: "073004",
-        text: "겨울에 피면 좋겠어요!",
-        icon: icon_route + "snowman.svg",
       },
     ],
   },
   {
     num: 4,
-    title: "초록이가 어느 정도로 자라길 원하시나요? (높이)",
+    title: "초록이 향기가 나길 원하시나요?",
     subtitle: null,
-    type: "growthHeight",
+    type: "smell",
 
     questions: [
-      { id: "000000", text: "50 이하", icon: icon_route + "50.svg" },
-      { id: "000050", text: "50 ~ 100", icon: icon_route + "100.svg" },
-      { id: "000100", text: "100 ~ 150", icon: icon_route + "150.svg" },
-      { id: "000150", text: "150 이상", icon: icon_route + "over.svg" },
+      {
+        id: "1",
+        text: "향이 없었으면 좋겠어요!",
+        icon: icon_route + "nose.svg",
+      },
+      {
+        id: "2",
+        text: "은은하게 향이 느껴지면 좋겠어요!",
+        icon: icon_route + "nose_scent.svg",
+      },
     ],
   },
 ];
