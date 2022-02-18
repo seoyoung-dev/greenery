@@ -12,6 +12,7 @@ import { useRecoilValue } from "recoil";
 export default function Article() {
   const [article, setArticle] = useState({});
   const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
   const { postId } = useParams();
   const commentRef = useRef(null);
   const userProfile = useRecoilValue(userProfileState);
@@ -24,17 +25,16 @@ export default function Article() {
     const res = await axios.put(`/api/posts/${postId}/like`, {
       userId: userProfile.id,
     });
+    setLikes(res.data.likse);
     if (res.status === 200) setLiked(!liked);
   };
 
   const handleCommentClick = async () => {
-    console.log("댓글");
     scrollToComment();
   };
 
   const handleTrashClick = async () => {
     await axios.delete(`/api/posts/${postId}`);
-    console.log("삭제");
     window.location.reload();
   };
 
@@ -42,7 +42,6 @@ export default function Article() {
     axios
       .get(`/api/posts?postId=${postId}`)
       .then(res => {
-        console.log(res);
         setArticle(res.data.post);
         setLiked(res.data.post.liked);
       })
@@ -60,15 +59,13 @@ export default function Article() {
       <Header />
 
       <PostArticleWrapper>
-        {/* {console.log(Boolean(article))}
-        {console.log(article.author)} */}
         {article.author && (
           <PostArticle
             title={article.title}
             profileImgUrl={article.author.profileImg}
             author={article.author.name}
             date={article.createdAt}
-            likeNum={article.likes || 0}
+            likeNum={likes || 0}
             contents={article.contents}
           />
         )}

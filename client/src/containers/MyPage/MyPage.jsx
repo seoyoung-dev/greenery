@@ -15,22 +15,20 @@ import { useRecoilValue } from "recoil";
 
 export function MyPage() {
   const userProfile = useRecoilValue(userProfileState);
+
   const [currentClick, setCurrentClick] = useState("MyPosts");
   const [prevClick, setPrevClick] = useState(null);
 
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-
   const [likePosts, setLikePosts] = useState([]);
   const [likePageNumber, setLikePageNumber] = useState(1);
 
   const [loading, setLoading] = useState(false);
-
   const pageEnd = useRef();
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
-    console.log(e.target.id);
   };
 
   const getMyPost = async page => {
@@ -101,25 +99,20 @@ export function MyPage() {
     }
   }, [loading]);
 
-  useEffect(
-    e => {
-      // console.log(userProfile);
-      console.log("useEffect[currentClick]");
-      if (currentClick !== null) {
-        let current = document.getElementById(currentClick);
-        current.style.color = "var(--primary)";
-        current.style.boxShadow = "0px 4px 0px var(--primary)";
-      }
+  useEffect(() => {
+    if (currentClick !== null) {
+      let current = document.getElementById(currentClick);
+      current.style.color = "var(--primary)";
+      current.style.boxShadow = "0px 4px 0px var(--primary)";
+    }
 
-      if (prevClick !== null) {
-        let prev = document.getElementById(prevClick);
-        prev.style.color = "#000000";
-        prev.style.boxShadow = "none";
-      }
-      setPrevClick(currentClick);
-    },
-    [currentClick],
-  );
+    if (prevClick !== null) {
+      let prev = document.getElementById(prevClick);
+      prev.style.color = "#000000";
+      prev.style.boxShadow = "none";
+    }
+    setPrevClick(currentClick);
+  }, [currentClick]);
 
   return (
     <ProfileWrapper>

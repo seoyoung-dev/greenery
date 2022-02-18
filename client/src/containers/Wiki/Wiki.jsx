@@ -8,14 +8,13 @@ import Loading from "components/Loading";
 import Pagination from "components/Pagination";
 
 import { WideContainer } from "style/ContainerStyle";
-import { dummyFetchPlant } from "api/plant";
+import { fetchPlant } from "api/plant";
 import { WikiConatiner, PaginationContainer } from "./Wiki.style";
 
 export default function Wiki() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [plantData, setPlantData] = useState(null);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPlantCount, setTotalPlantCount] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPlantCount, setTotalPlantCount] = useState(0);
   const filterRef = useRef({
     brightness: [],
     smell: [],
@@ -23,25 +22,34 @@ export default function Wiki() {
     growthHeight: [],
   });
 
+  const searchRef = useRef("");
   useEffect(() => {
     fetchPlantData();
-  }, []);
+  }, [currentPage]);
 
-  function fetchPlantData(filter) {
-    dummyFetchPlant(6, filter).then(data => {
-      setPlantData(data);
+  async function fetchPlantData(search) {
+    const {
+      data: { total, plants },
+    } = await fetchPlant({
+      count: 6,
+      // search: searchRef.current === "" ? undefined : searchRef.current,
+      search: searchRef.current,
+      filter: filterRef.current,
+      currentPage,
     });
 
-    // 서버 연결 준비
-    // fetchPlantData(6, filter).then(({total, plants}) => {
-    //   setTotalPlantCount(total)
-    //   setPlantData(plants)
-    // })
+    setTotalPlantCount(Number(total));
+    setPlantData(plants);
   }
 
-  function handleSearch() {
-    const filter = { search: searchQuery, ...filterRef.current };
-    fetchPlantData(filter);
+  function handleSearch(evt) {
+    evt.preventDefault();
+    resetCurrentPage();
+    fetchPlantData();
+  }
+
+  function resetCurrentPage() {
+    setCurrentPage(1);
   }
 
   return (
@@ -49,18 +57,22 @@ export default function Wiki() {
       <WideContainer>
         <WikiConatiner>
           <Header />
-          <WikiSearch setSearchQuery={setSearchQuery} onclick={handleSearch} />
+          <WikiSearch searchRef={searchRef} handleSearch={handleSearch} />
           <WikiFilter filterRef={filterRef} />
-          {plantData ? <PlantGrid data={plantData} /> : <Loading />}
-
-          <PaginationContainer>
-            <Pagination
-              currentPage={currentPage}
-              onClickPage={setCurrentPage}
-              pageCount={20}
-              // pageCount={Math.ceil(totalPlantCount / 6)}
-            />
-          </PaginationContainer>
+          {plantData ? (
+            <>
+              <PlantGrid data={plantData} />
+              <PaginationContainer>
+                <Pagination
+                  currentPage={currentPage}
+                  onClickPage={setCurrentPage}
+                  pageCount={Math.ceil(totalPlantCount / 6)}
+                />
+              </PaginationContainer>
+            </>
+          ) : (
+            <Loading />
+          )}
         </WikiConatiner>
       </WideContainer>
     </>

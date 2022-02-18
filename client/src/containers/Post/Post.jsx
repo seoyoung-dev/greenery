@@ -138,7 +138,7 @@ export function Post() {
                     }}
                     type="file"
                     name="fileImage"
-                    accept="image/*"
+                    accept=".gif, .jpeg, .heic, .png"
                     onChange={e => handleInputChange(e, i)}
                     style={{ display: "none" }}
                   />
