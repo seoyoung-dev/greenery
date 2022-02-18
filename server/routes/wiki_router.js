@@ -9,15 +9,7 @@ router.get("/search", async (req, res) => {
     const pageNumber = Number(page) || 1;
     const plantCount = Number(count) || 20;
 
-    const dummy = {
-      search: "",
-      brightness: [1, 2],
-      smell: [2],
-      bloomingSeason: [2, 3],
-    };
-    const translated = translateOptionToText(dummy);
-    console.log(translated);
-    console.log(translated["$match"]);
+    const translated = translateOptionToText(filterOption);
     const [total, plants] = await Promise.all([
       Plant.aggregate(translated).sort({ plantName: 1 }),
       Plant.aggregate(translated)
