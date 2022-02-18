@@ -22,6 +22,17 @@ export const TodaysPlantSection = styled.section`
     padding: 0 40px 30px;
     font-size: 28px;
   }
+
+  @media screen and (min-width: 768px) and (max-width: 1140px) {
+    width: 100%;
+    padding: 5%;
+  }
+
+  @media screen and (max-width: 767px) {
+    align-items: center;
+    width: 100%;
+    padding: 3%;
+  }
 `;
 
 export const ContentBox = styled.div`
@@ -40,6 +51,20 @@ export const ContentBox = styled.div`
     border-left: 1px solid #dbdbdb;
     font-size: 20px;
     line-height: 36px;
+    white-space: nowrap;
+
+    @media screen and (min-width: 768px) and (max-width: 1140px) {
+      font-size: 17px;
+    }
+
+    @media screen and (max-width: 767px) {
+      font-size: 15px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
