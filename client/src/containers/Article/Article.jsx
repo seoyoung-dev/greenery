@@ -5,11 +5,12 @@ import PostArticle from "../../components/PostArticle";
 import Comment from "../../components/Comment";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { userProfileState } from "Atoms";
 import { useRecoilValue } from "recoil";
 
 export default function Article() {
+  const navigate = useNavigate();
   const [article, setArticle] = useState({});
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(0);
@@ -33,9 +34,24 @@ export default function Article() {
     scrollToComment();
   };
 
+  const handleUpdateClick = async () => {
+    const response = await axios.get(`/api/posts?postId=${postId}`);
+    if (response.data.post.author._id !== userProfile.id) {
+      alert("게시글의 작성자가 아닙니다.");
+    }
+    if (response.data.post.author._id === userProfile.id) {
+      navigate(`/post/${postId}`);
+    }
+  };
   const handleTrashClick = async () => {
-    await axios.delete(`/api/posts/${postId}`);
-    window.location.reload();
+    const response = await axios.get(`/api/posts?postId=${postId}`);
+    if (response.data.post.author._id !== userProfile.id) {
+      alert("게시글의 작성자가 아닙니다.");
+    }
+    if (response.data.post.author._id === userProfile.id) {
+      await axios.delete(`/api/posts/${postId}`);
+      navigate("/community");
+    }
   };
 
   const getPost = () => {
@@ -75,6 +91,7 @@ export default function Article() {
           commentHandler={handleCommentClick}
           trashHandler={handleTrashClick}
           postId={postId}
+          updateHandler={handleUpdateClick}
         />
       </PostArticleWrapper>
       <div ref={commentRef} />
