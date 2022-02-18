@@ -119,7 +119,7 @@ export function SignUp() {
     <Main>
       <Section>
         <FormHeader>
-          <HomeLogo />
+          <HomeLogo id="form" />
         </FormHeader>
         <form
           onKeyPress={e => handleKeyPress(e)}
