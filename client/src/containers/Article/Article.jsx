@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 export default function Article() {
   const [article, setArticle] = useState({});
   const { postId } = useParams();
-  console.log(postId);
 
   const handleLikeClick = async () => {
     console.log("Like");
@@ -33,7 +32,6 @@ export default function Article() {
     axios
       .get(`/api/posts?postId=${postId}`)
       .then(res => {
-        console.log(res);
         setArticle(res.data.post);
       })
       .catch(err => {

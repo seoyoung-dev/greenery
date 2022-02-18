@@ -58,8 +58,8 @@ export function SignUp() {
       type: "text",
       placeholder: "닉네임을 입력하세요",
       autoComplete: "on",
-      minLength: 4,
-      maxLength: 12,
+      minLength: 2,
+      maxLength: 8,
       onBlur: setName,
     },
   ];
