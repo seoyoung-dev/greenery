@@ -8,17 +8,17 @@ export const survey_data = [
     type: "brightness",
     questions: [
       {
-        id: "055001",
+        id: "1",
         text: "눈이 불편하지 않은 정도에요~ (300 ~ 800 Lux)",
         icon: icon_route + "sunglasses.svg",
       },
       {
-        id: "055002",
+        id: "2",
         text: "햇살 좋은 날 눈 뜨기 힘든 정도에요~ (800 ~ 1500 Lux)",
         icon: icon_route + "sunny.svg",
       },
       {
-        id: "055003",
+        id: "3",
         text: "카메라 플래시 라이트를 보는 정도로 눈을 뜨기 힘들어요~ (1500 ~ 10000 Lux)",
         icon: icon_route + "flash.svg",
       },
@@ -31,22 +31,22 @@ export const survey_data = [
     type: "smell",
     questions: [
       {
-        id: "79001",
+        id: "1",
         text: "강했으면 좋겠어요!",
         icon: icon_route + "water.svg",
       },
       {
-        id: "79002",
+        id: "2",
         text: "적당한 향기가 나면 좋겠어요!",
         icon: icon_route + "splash.svg",
       },
       {
-        id: "79003",
+        id: "3",
         text: "은은하게 향이 느껴지면 좋겠어요!",
         icon: icon_route + "drops.svg",
       },
       {
-        id: "79004",
+        id: "4",
         text: "향이 없었으면 좋겠어요!",
         icon: icon_route + "drop.svg",
       },
@@ -60,22 +60,22 @@ export const survey_data = [
 
     questions: [
       {
-        id: "073001",
+        id: "1",
         text: "봄에 피면 좋겠어요!",
         icon: icon_route + "sakura.svg",
       },
       {
-        id: "073002",
+        id: "2",
         text: "여름에 피면 좋겠어요!",
         icon: icon_route + "watermelon.svg",
       },
       {
-        id: "073003",
+        id: "3",
         text: "가을에 피면 좋겠어요!",
         icon: icon_route + "leaves.svg",
       },
       {
-        id: "073004",
+        id: "4",
         text: "겨울에 피면 좋겠어요!",
         icon: icon_route + "snowman.svg",
       },
@@ -88,10 +88,10 @@ export const survey_data = [
     type: "growthHeight",
 
     questions: [
-      { id: "000000", text: "50 이하", icon: icon_route + "50.svg" },
-      { id: "000050", text: "50 ~ 100", icon: icon_route + "100.svg" },
-      { id: "000100", text: "100 ~ 150", icon: icon_route + "150.svg" },
-      { id: "000150", text: "150 이상", icon: icon_route + "over.svg" },
+      { id: "0", text: "50 이하", icon: icon_route + "50.svg" },
+      { id: "5", text: "50 ~ 100", icon: icon_route + "100.svg" },
+      { id: "10", text: "100 ~ 150", icon: icon_route + "150.svg" },
+      { id: "15", text: "150 이상", icon: icon_route + "over.svg" },
     ],
   },
 ];

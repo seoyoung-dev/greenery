@@ -24,12 +24,19 @@ export default function PlantGrid({ data }) {
             }}
           >
             <ImageContainer>
-              <img src={plant.photo} alt={plant.name_kor} />
+              <img
+                src={`http://www.nongsaro.go.kr/${plant.fileRoute}/${plant.thumbnailFileName[0]}`}
+                alt={plant.plantName}
+              />
             </ImageContainer>
             <Description>
-              <h3>{plant.name_kor}</h3>
-              <p className="description">{plant.description}</p>
-              <p className="origin">원산지: {plant.origin}</p>
+              <h3>{plant.plantName}</h3>
+              <p className="description">
+                {plant.functionalInfo
+                  ? plant.functionalInfo
+                  : plant.specialManage}
+              </p>
+              <p className="origin">원산지: {plant.originInfo}</p>
             </Description>
           </PlantCard>
         );
