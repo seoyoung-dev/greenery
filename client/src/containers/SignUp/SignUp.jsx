@@ -9,6 +9,7 @@ import {
   FormHeader,
 } from "./SignUp.style";
 import { HomeLogo, TextInput, SubmitButton } from "components";
+import { validateForm } from "containers/SignIn/validation";
 
 import axios from "axios";
 
@@ -87,46 +88,6 @@ export function SignUp() {
     return data;
   }
 
-  function validateFormInput(list) {
-    const email = list[0];
-    const password = list[1];
-    const checkPassword = list[2];
-    const name = list[3];
-
-    function checkLength(list) {
-      const result = list.every(ele => ele.length > 0);
-
-      return result;
-    }
-
-    const compareTwoString = (originString, checkString) => {
-      return originString === checkString;
-    };
-
-    const checkNotSpecialString = string => {
-      // a-zA-Z0-9-가-힣 가 아닌 문자열이 있으면 true를 반환한다.
-      const regExp = /[^a-zA-Z0-9-가-힣]+/g;
-      if (regExp.test(string)) {
-        return false;
-      }
-      return true;
-    };
-    if (!checkLength(list)) {
-      alert("비어있는 값을 채워주세요");
-      return false;
-    }
-    if (checkPassword && !compareTwoString(password, checkPassword)) {
-      alert("비밀번호가 일치하지 않습니다");
-      return false;
-    }
-    if (name && !checkNotSpecialString(name)) {
-      alert("한글, 알파벳 대소문자, 숫자만 입력하세요");
-      return false;
-    }
-
-    return true;
-  }
-
   const handleKeyPress = e => {
     if (e.key === "Enter") {
       e.target.blur();
@@ -135,7 +96,7 @@ export function SignUp() {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (!validateFormInput([email, password, checkPassword, name])) {
+    if (!validateForm([email, password, checkPassword, name])) {
       return;
     }
 

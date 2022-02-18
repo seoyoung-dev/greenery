@@ -47,43 +47,6 @@ export function Community() {
     }
   }, [loading]);
 
-  // const getPosts = useCallback(async page => {
-  //   const url = `/api/posts/page?page=${page}`;
-  //   const response = await axios.get(url, {
-  //     query: { page },
-  //   });
-  //   setPosts(prev => {
-  //     const newPosts = [...prev, ...response.data.posts];
-  //     return newPosts;
-  //   });
-  // }, []);
-
-  // const options = {
-  //   root: null, // 관찰대상의 부모요소
-  //   rootMargin: "300px", // 뷰포트의 마진
-  //   threshold: 1, // 0 ~ 1 겹치는 정도
-  // };
-
-  // const handleObserver = useCallback(async entires => {
-  //   const target = entires[0];
-  //   if (target.isIntersecting) {
-  //     setPageNum(prev => prev + 1);
-  //   }
-  //   return;
-  // }, []);
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(handleObserver, options);
-  //   if (intersectionRef.current) {
-  //     observer.observe(intersectionRef.current);
-  //   }
-  //   return () => observer.disconnect();
-  // }, [handleObserver]);
-
-  // useEffect(() => {
-  //   getPosts(page);
-  // }, [page]);
-  console.log(posts, page);
   return (
     <>
       <Header />
