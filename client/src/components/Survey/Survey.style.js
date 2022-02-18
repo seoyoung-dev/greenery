@@ -17,11 +17,22 @@ export const Header = styled.div`
   }
 
   h1 {
+    font-size: 1.1rem;
     margin-bottom: 5px;
   }
 
   h5 {
+    font-size: 0.7rem;
     margin-top: 0;
+  }
+  @media screen and (min-width: 768px) {
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    h5 {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -34,6 +45,10 @@ export const QuestionBar = styled.li`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   font-weight: bolder;
+
+  span {
+    font-size: 0.9rem;
+  }
 
   ${props =>
     props.active &&

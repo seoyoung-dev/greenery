@@ -15,7 +15,7 @@ import {
 export default function PlantDetail({ onClose, plant_info }) {
   useEffect(() => {
     document.body.style.cssText = `
-      position: fixed; 
+      position: fixed;
       top: -${window.scrollY}px;
       overflow-y: scroll;
       width: 100%;`;

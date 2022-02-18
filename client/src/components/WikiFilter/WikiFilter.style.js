@@ -11,8 +11,14 @@ export const Filter = styled.div`
   width: 100%;
   display: flex;
   height: 100%;
+  flex-direction: column;
+
   & + div {
     border-top: 1px solid #e5e5e5;
+  }
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
   }
 `;
 
