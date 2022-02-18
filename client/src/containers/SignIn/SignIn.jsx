@@ -97,7 +97,7 @@ export function SignIn() {
         setCookie("access_token", access_token, {
           path: "/",
           maxAge: JWT_EXPIRY_TIME / 1000,
-          secure: true,
+          // secure: true,
           // httpOnly: true,
         });
         // setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
