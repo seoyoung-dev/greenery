@@ -12,15 +12,21 @@ export const FooterWrapper = styled.footer`
   div {
     width: 1140px;
     color: rgba(118, 118, 118, 0.8);
+
+    @media screen and (max-width: 1140px) {
+      font-size: 2vw;
+    }
   }
 
   @media screen and (min-width: 768px) and (max-width: 1140px) {
     width: 100%;
+    height: 20vh;
     padding: 5%;
   }
 
   @media screen and (max-width: 767px) {
     width: 100%;
+    height: 10vh;
     padding: 3%;
   }
 `;

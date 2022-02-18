@@ -1,4 +1,4 @@
-﻿import { useEffect } from "react";
+﻿import { useEffect, useRef } from "react";
 import {
   Modal,
   BlurBackground,
@@ -13,6 +13,8 @@ import {
 } from "./PlantDetail.style";
 
 export default function PlantDetail({ onClose, plant_info }) {
+  const modalRef = useRef();
+
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed;
@@ -29,8 +31,14 @@ export default function PlantDetail({ onClose, plant_info }) {
   function closeModal() {
     onClose(false);
   }
+
+  function closeModalByClickOutside(evt) {
+    if (modalRef.current === evt.target) {
+      onClose(false);
+    }
+  }
   return (
-    <BlurBackground>
+    <BlurBackground ref={modalRef} onClick={closeModalByClickOutside}>
       <Modal>
         <CloseButton onClick={closeModal}>
           <img src="icon/close.svg" alt="Close icon" />

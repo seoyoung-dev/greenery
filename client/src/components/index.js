@@ -19,6 +19,7 @@ import TextInput from "./TextInput";
 import TodaysPlant from "./TodaysPlant";
 import WikiSearch from "./WikiSearch";
 import WikiFilter from "./WikiFilter";
+import Pagination from "./Pagination";
 
 export {
   HeaderDropDown,
@@ -42,4 +43,5 @@ export {
   TodaysPlant,
   WikiFilter,
   WikiSearch,
+  Pagination,
 };

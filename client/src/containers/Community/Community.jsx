@@ -1,59 +1,82 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { WideContainer } from "style/ContainerStyle";
-import { Main, ContentsWrapper, PostButtonWrapper } from "./Community.style";
+import {
+  Main,
+  ContentsWrapper,
+  PostButtonWrapper,
+  SearchInput,
+} from "./Community.style";
 import { Header, Footer, PostCard } from "components";
 
 import axios from "axios";
 
 export function Community() {
   const [posts, setPosts] = useState([]);
-  const [page, setPageNum] = useState(1);
-  const intersectionRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const pageEnd = useRef(null);
+  const searchRef = useRef();
 
-  const getPosts = useCallback(async page => {
-    const url = `/api/posts/page?page=${page}`;
-    const response = await axios.get(url, {
-      query: { page },
+  const getPosts = async page => {
+    const url = `/api/posts/page`;
+    const { data } = await axios.get(url, {
+      params: { page, keyword: searchRef.current.value },
     });
+    // lastPage = Math.ceil(data.total / 12);
     setPosts(prev => {
-      const newPosts = [...prev, ...response.data.posts];
+      const newPosts = [...prev, ...data.posts];
       return newPosts;
     });
-  }, []);
-
-  const options = {
-    root: null, // 관찰대상의 부모요소
-    rootMargin: "300px", // 뷰포트의 마진
-    threshold: 1, // 0 ~ 1 겹치는 정도
+    setLoading(true);
   };
-
-  const handleObserver = useCallback(async entires => {
-    const target = entires[0];
-    if (target.isIntersecting) {
-      setPageNum(prev => prev + 1);
-    }
-    return;
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleObserver, options);
-    if (intersectionRef.current) {
-      observer.observe(intersectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, [handleObserver]);
 
   useEffect(() => {
     getPosts(page);
   }, [page]);
+
+  const increasePage = () => {
+    setPage(prev => prev + 1);
+  };
+
+  const ovserveHandler = useCallback(entires => {
+    if (entires[0].isIntersecting) {
+      increasePage();
+    }
+  }, []);
+
+  const searchSubmitHandler = e => {
+    e.preventDefault();
+    // setLoading(false);
+    // setPosts([]);
+    // setPage(1);
+    // getPosts(1);
+  };
+
+  useEffect(() => {
+    // if (true) {
+    const observer = new IntersectionObserver(ovserveHandler, {
+      threshold: 1,
+    });
+    observer.observe(pageEnd.current);
+    // }
+  }, []);
+
+  console.log(page);
 
   return (
     <>
       <Header />
       <Main>
         <WideContainer>
-          <input type="text" placeholder="&#xF002; 검색어를 입력하세요" />
+          <SearchInput onSubmit={searchSubmitHandler}>
+            <input
+              ref={searchRef}
+              type="text"
+              placeholder="검색어를 입력하세요"
+            />
+            <img src="/icon/search.svg" alt="" />
+          </SearchInput>
           <ContentsWrapper>
             {posts &&
               posts.map(({ id, title, imgUrl, likes, author }, index) => {
@@ -68,7 +91,7 @@ export function Community() {
                   />
                 );
               })}
-            <div ref={intersectionRef} style={{ position: "hidden" }}></div>
+            <div ref={pageEnd} style={{ position: "hidden" }}></div>
           </ContentsWrapper>
           <PostButtonWrapper>
             <Link to="/post">

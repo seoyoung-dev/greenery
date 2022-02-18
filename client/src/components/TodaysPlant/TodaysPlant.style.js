@@ -43,22 +43,27 @@ export const ContentBox = styled.div`
     width: 30%;
     margin-right: 40px;
     border-radius: 10px;
+
+    @media screen and (max-width: 767px) {
+      width: 50%;
+    }
   }
 
   & > p {
+    align-self: start;
     width: 70%;
     padding: 0 40px;
     border-left: 1px solid #dbdbdb;
     font-size: 20px;
     line-height: 36px;
-    white-space: nowrap;
+    white-space: wrap;
 
     @media screen and (min-width: 768px) and (max-width: 1140px) {
       font-size: 17px;
     }
 
     @media screen and (max-width: 767px) {
-      font-size: 15px;
+      font-size: 2.5vw;
     }
   }
 

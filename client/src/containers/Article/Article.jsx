@@ -10,10 +10,10 @@ import { userProfileState } from "Atoms";
 import { useRecoilValue } from "recoil";
 
 export default function Article() {
-  const navigate = useNavigate();
   const [article, setArticle] = useState({});
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(0);
+  const navigate = useNavigate();
   const { postId } = useParams();
   const commentRef = useRef(null);
   const userProfile = useRecoilValue(userProfileState);
@@ -86,13 +86,17 @@ export default function Article() {
             contents={article.contents}
           />
         )}
-        <SideBar
-          likeHandler={handleLikeClick}
-          commentHandler={handleCommentClick}
-          trashHandler={handleTrashClick}
-          postId={postId}
-          updateHandler={handleUpdateClick}
-        />
+        {article.author && (
+          <SideBar
+            likeHandler={handleLikeClick}
+            commentHandler={handleCommentClick}
+            trashHandler={handleTrashClick}
+            postId={postId}
+            updateHandler={handleUpdateClick}
+            userId={userProfile.id}
+            PostUserId={article.author}
+          />
+        )}
       </PostArticleWrapper>
       <div ref={commentRef} />
       <Comment />
