@@ -21,6 +21,8 @@ export const LayoutUserTap = styled.div`
     text-decoration: none;
     color: black;
     padding: 15px 25px;
+
+    transition: all 0.2s;
   }
   & a:hover {
     background-color: var(--gray-light);
