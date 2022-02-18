@@ -47,11 +47,10 @@ export function MyPage() {
   };
 
   const getMyLikePost = async page => {
-    const url = "/api/users/post/";
+    const url = "/api/posts/page";
     const response = await axios.get(url, {
       params: {
         page: page,
-        userId: userProfile.id,
       },
     });
     const resPosts = response.data.posts;
