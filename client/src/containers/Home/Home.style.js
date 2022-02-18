@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Main = styled.main`
+  white-space: nowrap;
   width: 100vw;
   display: flex;
   flex-direction: column;
