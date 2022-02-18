@@ -25,9 +25,11 @@ export default function SideBar(props) {
           </Link>
         </Icon>
         <Icon width={19.25}>
-          <button onClick={props.trashHandler}>
-            <img src="/icon/trash.svg" alt="delete" />
-          </button>
+          <Link to={`/community`}>
+            <button onClick={props.trashHandler}>
+              <img src="/icon/trash.svg" alt="delete" />
+            </button>
+          </Link>
         </Icon>
       </IconBox>
     </SideBarWrapper>

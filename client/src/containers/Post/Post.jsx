@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../components/Header";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   PostTextarea,
@@ -14,6 +14,7 @@ import {
 } from "./Post.style";
 
 export function Post() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const inputRef = useRef([]);
   const { postId } = useParams();
@@ -95,13 +96,19 @@ export function Post() {
     postId
       ? axios
           .put(url, data)
-          .then(res => console.log(res.data))
+          .then(res => {
+            console.log(res.data);
+            navigate("/community");
+          })
           .catch(err => console.log(err))
       : axios
           .post("/api/posts", data, {
             headers: { "Content-Type": "multipart/form-data" },
           })
-          .then(res => console.log(res.data))
+          .then(res => {
+            console.log(res.data);
+            navigate("/community");
+          })
           .catch(err => console.log(err));
 
     console.log(data.getAll("title"));
@@ -131,7 +138,7 @@ export function Post() {
                     }}
                     type="file"
                     name="fileImage"
-                    accept="image/*"
+                    accept=".gif, .jpeg, .heic, .png"
                     onChange={e => handleInputChange(e, i)}
                     style={{ display: "none" }}
                   />
