@@ -3,29 +3,55 @@ import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import PostArticle from "../../components/PostArticle";
 import Comment from "../../components/Comment";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { userProfileState } from "Atoms";
+import { useRecoilValue } from "recoil";
 
 export default function Article() {
   const [article, setArticle] = useState({});
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
+  const navigate = useNavigate();
   const { postId } = useParams();
+  const commentRef = useRef(null);
+  const userProfile = useRecoilValue(userProfileState);
+
+  const scrollToComment = () => {
+    commentRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleLikeClick = async () => {
-    console.log("Like");
+    const res = await axios.put(`/api/posts/${postId}/like`, {
+      userId: userProfile.id,
+    });
+    setLikes(res.data.likse);
+    if (res.status === 200) setLiked(!liked);
   };
 
   const handleCommentClick = async () => {
-    console.log("Comment");
+    scrollToComment();
   };
 
-  const handleEditClick = async () => {
-    console.log("Edit");
+  const handleUpdateClick = async () => {
+    const response = await axios.get(`/api/posts?postId=${postId}`);
+    if (response.data.post.author._id !== userProfile.id) {
+      alert("게시글의 작성자가 아닙니다.");
+    }
+    if (response.data.post.author._id === userProfile.id) {
+      navigate(`/post/${postId}`);
+    }
   };
-
   const handleTrashClick = async () => {
-    // await axios.put("")
-    console.log("Trash");
+    const response = await axios.get(`/api/posts?postId=${postId}`);
+    if (response.data.post.author._id !== userProfile.id) {
+      alert("게시글의 작성자가 아닙니다.");
+    }
+    if (response.data.post.author._id === userProfile.id) {
+      await axios.delete(`/api/posts/${postId}`);
+      navigate("/community");
+    }
   };
 
   const getPost = () => {
@@ -33,6 +59,8 @@ export default function Article() {
       .get(`/api/posts?postId=${postId}`)
       .then(res => {
         setArticle(res.data.post);
+        setLiked(res.data.post.liked);
+        setLikes(res.data.post.likes);
       })
       .catch(err => {
         console.log(err);
@@ -48,25 +76,29 @@ export default function Article() {
       <Header />
 
       <PostArticleWrapper>
-        {/* {console.log(Boolean(article))}
-        {console.log(article.author)} */}
         {article.author && (
           <PostArticle
             title={article.title}
             profileImgUrl={article.author.profileImg}
             author={article.author.name}
             date={article.createdAt}
-            likeNum={article.likes || 0}
+            likeNum={likes}
             contents={article.contents}
           />
         )}
-        <SideBar
-          likeHandler={handleLikeClick}
-          commentHandler={handleCommentClick}
-          trashHandler={handleTrashClick}
-          postId={postId}
-        />
+        {article.author && (
+          <SideBar
+            likeHandler={handleLikeClick}
+            commentHandler={handleCommentClick}
+            trashHandler={handleTrashClick}
+            postId={postId}
+            updateHandler={handleUpdateClick}
+            userId={userProfile.id}
+            PostUserId={article.author}
+          />
+        )}
       </PostArticleWrapper>
+      <div ref={commentRef} />
       <Comment />
     </Main>
   );

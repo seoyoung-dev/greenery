@@ -1,9 +1,10 @@
 ﻿import styled from "styled-components";
 
-export const WikiConatiner = styled.section`
+export const WikiConatiner = styled.main`
   width: 100%;
   margin: 0 auto;
   margin-top: 100px;
+  padding: 0 10px;
 `;
 
 export const PaginationContainer = styled.section`

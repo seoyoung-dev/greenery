@@ -1,6 +1,6 @@
 ﻿import styled from "styled-components";
 
-export const GridContainer = styled.main`
+export const GridContainer = styled.section`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -9,7 +9,7 @@ export const GridContainer = styled.main`
 
 export const PlantCard = styled.div`
   background: #fefefe;
-  width: clamp(0px, 555px, 100%);
+  flex: 1 1 450px;
   padding: 25px;
   display: flex;
   border-radius: 10px;

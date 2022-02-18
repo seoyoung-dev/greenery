@@ -1,10 +1,8 @@
 ﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Survey from "../../components/Survey/Survey";
-import PlantGrid from "../../components/PlantGrid";
-import Loading from "../../components/Loading";
-import Button from "../../components/Button";
-import { fetchPlant } from "../../api/plant";
+
+import { Survey, PlantGrid, Loading, Button } from "components";
+import { fetchPlant } from "api/plant";
 import { WideContainer } from "style/ContainerStyle";
 import {
   Modal,
@@ -21,9 +19,9 @@ export default function Recommendation() {
   const [plantData, setPlantData] = useState(null);
   const [filter, setFilter] = useState({
     brightness: [],
-    smell: [],
+    growthTemperature: [],
     bloomingSeason: [],
-    growthHeight: [],
+    smell: [],
   });
 
   useEffect(() => {
@@ -58,9 +56,9 @@ export default function Recommendation() {
     setProgress(0);
     setFilter({
       brightness: [],
-      smell: [],
+      growthTemperature: [],
       bloomingSeason: [],
-      growthHeight: [],
+      smell: [],
     });
   }
   let element;

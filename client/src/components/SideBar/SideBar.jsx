@@ -1,34 +1,38 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { SideBarWrapper, Icon, IconBox } from "./SideBar.style";
 
 export default function SideBar(props) {
+  const bool = props.userId === props.PostUserId._id;
   return (
     <SideBarWrapper>
       <IconBox>
-        <Icon width={20.62}>
-          <button onClick={props.likeHandler}>
+        <button onClick={props.likeHandler}>
+          <Icon width={20.62}>
             <img src="/icon/thumbs-up.svg" alt="thumbs-up" />
-          </button>
-        </Icon>
-        <Icon width={22}>
-          <button onClick={props.commentHandler}>
+          </Icon>
+        </button>
+
+        <button onClick={props.commentHandler}>
+          <Icon width={22}>
             <img src="/icon/comment.svg" alt="comment" />
-          </button>
-        </Icon>
-        <Icon width={22}>
-          {/* {console.log(props.postId)} */}
-          <Link to={`/post/${props.postId}`}>
-            <button>
+          </Icon>
+        </button>
+
+        {bool && (
+          <button onClick={props.updateHandler}>
+            <Icon width={22}>
               <img src="/icon/edit.svg" alt="edit" />
-            </button>
-          </Link>
-        </Icon>
-        <Icon width={19.25}>
-          <button onClick={props.trashHandler}>
-            <img src="/icon/trash.svg" alt="delete" />
+            </Icon>
           </button>
-        </Icon>
+        )}
+
+        {bool && (
+          <button onClick={props.trashHandler}>
+            <Icon width={19.25}>
+              <img src="/icon/trash.svg" alt="delete" />
+            </Icon>
+          </button>
+        )}
       </IconBox>
     </SideBarWrapper>
   );

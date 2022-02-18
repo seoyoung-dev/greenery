@@ -10,7 +10,7 @@ export default function Survey({
   addAnswerToFilter,
 }) {
   const [{ title, subtitle, questions, type }] = survey_data.filter(
-    d => d.num === progress,
+    data => data.num === progress,
   );
 
   function decreaseProgress() {

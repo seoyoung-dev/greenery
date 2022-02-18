@@ -17,7 +17,7 @@ export default function PlantGrid({ data }) {
       {data.map(plant => {
         return (
           <PlantCard
-            key={plant.id}
+            key={plant._id}
             onClick={() => {
               setDetailOpen(true);
               setSelectedPlant({ ...selectedPlant, ...plant });

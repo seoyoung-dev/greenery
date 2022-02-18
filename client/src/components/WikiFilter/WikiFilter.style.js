@@ -11,13 +11,18 @@ export const Filter = styled.div`
   width: 100%;
   display: flex;
   height: 100%;
+  flex-direction: column;
+
   & + div {
     border-top: 1px solid #e5e5e5;
+  }
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
   }
 `;
 
 export const Title = styled.span`
-  /* width: clamp(200px, 200px, 200px); */
   min-width: 200px;
   display: flex;
   align-items: center;
@@ -40,9 +45,10 @@ export const Items = styled.ul`
   flex-wrap: wrap;
   li {
     list-style-type: none;
-    padding-left: 30px;
+    margin-left: 30px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     input[type="checkbox"] {
       -webkit-appearance: none;
@@ -50,6 +56,8 @@ export const Items = styled.ul`
       appearance: none;
       height: 1rem;
       width: 1rem;
+      cursor: pointer;
+
       border: 2px solid var(--primary);
       &:checked {
         background: var(--primary);
@@ -72,6 +80,8 @@ export const Items = styled.ul`
     }
 
     label {
+      cursor: pointer;
+
       padding-left: 10px;
     }
   }
