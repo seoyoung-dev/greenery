@@ -62,8 +62,6 @@ export function Community() {
     // }
   }, []);
 
-  console.log(page);
-
   return (
     <>
       <Header />
