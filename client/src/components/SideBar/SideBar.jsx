@@ -1,31 +1,38 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { SideBarWrapper, Icon, IconBox } from "./SideBar.style";
 
 export default function SideBar(props) {
+  const bool = props.userId === props.PostUserId._id;
   return (
     <SideBarWrapper>
       <IconBox>
-        <Icon width={20.62}>
-          <button onClick={props.likeHandler}>
+        <button onClick={props.likeHandler}>
+          <Icon width={20.62}>
             <img src="/icon/thumbs-up.svg" alt="thumbs-up" />
-          </button>
-        </Icon>
-        <Icon width={22}>
-          <button onClick={props.commentHandler}>
+          </Icon>
+        </button>
+
+        <button onClick={props.commentHandler}>
+          <Icon width={22}>
             <img src="/icon/comment.svg" alt="comment" />
-          </button>
-        </Icon>
-        <Icon width={22}>
+          </Icon>
+        </button>
+
+        {bool && (
           <button onClick={props.updateHandler}>
-            <img src="/icon/edit.svg" alt="edit" />
+            <Icon width={22}>
+              <img src="/icon/edit.svg" alt="edit" />
+            </Icon>
           </button>
-        </Icon>
-        <Icon width={19.25}>
+        )}
+
+        {bool && (
           <button onClick={props.trashHandler}>
-            <img src="/icon/trash.svg" alt="delete" />
+            <Icon width={19.25}>
+              <img src="/icon/trash.svg" alt="delete" />
+            </Icon>
           </button>
-        </Icon>
+        )}
       </IconBox>
     </SideBarWrapper>
   );
