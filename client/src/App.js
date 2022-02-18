@@ -42,15 +42,16 @@ function App() {
   };
 
   const setAccessTokenIntoCookie = response => {
-    const JWT_EXPIRY_TIME = 3600 * 1000;
+    const JWT_EXPIRY_TIME = response.data.exp - Date.now();
     setCookie("access_token", response.data.access_token, {
       path: "/",
-      maxAge: 3600,
+      maxAge: JWT_EXPIRY_TIME / 1000,
       secure: true,
-      // httpOnly: true 도메인이 달라서 그런것 같다.
+      // httpOnly: true,
     });
     // 10분 전에 로그인 연장
-    setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 100 * 6000);
+    //
+    // setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
   };
   //
   const handleUserProfile = async () => {
@@ -68,10 +69,8 @@ function App() {
 
   const handleReload = async () => {
     try {
-      const result = await refreshAccessToken();
-      if (result) {
-        handleUserProfile();
-      }
+      await refreshAccessToken();
+      await handleUserProfile();
     } catch (err) {
       console.error(err);
     }
