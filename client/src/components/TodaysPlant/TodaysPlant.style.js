@@ -46,23 +46,38 @@ export const ContentBox = styled.div`
   }
 
   & > p {
+    display: block;
     width: 70%;
     padding: 0 40px;
     border-left: 1px solid #dbdbdb;
     font-size: 20px;
     line-height: 36px;
     white-space: nowrap;
+  }
 
-    @media screen and (min-width: 768px) and (max-width: 1140px) {
+  @media (max-width: 1140px) {
+    p {
       font-size: 17px;
-    }
-
-    @media screen and (max-width: 767px) {
-      font-size: 15px;
+      width: 50px;
     }
   }
 
   @media screen and (max-width: 767px) {
+    img {
+      width: 73%;
+      margin: 0 0 30px;
+      /* padding: 20px; */
+    }
+
+    p {
+      font-size: 15px;
+      width: 90%;
+      margin: 0;
+      padding: 0;
+      border-left: none;
+      border-top: 1px solid #dbdbdb;
+    }
+
     flex-direction: column;
     align-items: center;
   }
