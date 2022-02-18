@@ -63,7 +63,10 @@ export const Footer = styled.footer`
 
   p {
     margin: 5px;
+    font-size: 0.8rem;
   }
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export const CloseButton = styled.span`
@@ -76,3 +79,6 @@ export const CloseButton = styled.span`
     width: 15px;
   }
 `;
+
+export const MetaLeft = styled.div``;
+export const MetaRight = styled.div``;
