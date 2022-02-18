@@ -252,4 +252,53 @@ router.get("/post", auth, async function (req, res) {
   }
 });
 
+router.get("/post/like", auth, async function (req, res) {
+  try {
+    const postsCount = 12;
+    const page = req.query.page || 1;
+    const userId = req.user.id;
+    const [total, posts] = await Promise.all([
+      Post.countDocuments({ author: userId }),
+      Post.find({ author: userId })
+        .sort({ createdAt: -1 })
+        .skip(postsCount * (page - 1))
+        .limit(postsCount)
+        .populate("author", "name profileImg _id"),
+    ]);
+
+    if (!posts) {
+      throw new Error("no content");
+    }
+    const newPosts = posts.map(post => {
+      const userInformation = {
+        id: post.id,
+        author: post.author,
+        title: post.title,
+        imgUrl: post.contents[0].imgUrl,
+        likes: post.likes.length,
+        liked: false,
+        createdAt: changeTimeFormat(post.createdAt),
+      };
+
+      if (req.user && post.likes.includes(req.user.id)) {
+        userInformation.liked = true;
+      }
+      return userInformation;
+    });
+    return res.status(200).json({ isOk: true, total, posts: newPosts });
+  } catch (err) {
+    console.log(err);
+    const message = err.message;
+
+    if (message === "no content") {
+      return res.status(204).json({
+        isOk: true,
+        error: "글이 존재하지 않습니다.",
+      });
+    }
+
+    return res.status(500).json({ isOk: false, message: "불러오기 실패" });
+  }
+});
+
 module.exports = router;
