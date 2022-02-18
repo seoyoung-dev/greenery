@@ -4,7 +4,7 @@ export default function Pagination({ currentPage, pageCount, onClickPage }) {
   return (
     <Container>
       <ArrowButton
-        disabled={currentPage === 0}
+        disabled={currentPage <= 1}
         onClick={() => onClickPage(currentPage - 1)}
       >
         <img src="icon/arrow.svg" alt="previous arrow button" />
@@ -16,14 +16,14 @@ export default function Pagination({ currentPage, pageCount, onClickPage }) {
             active={currentPage === page}
             onClick={() => onClickPage(page)}
           >
-            {page + 1}
+            {page}
           </PageButton>
         );
       })}
 
       <ArrowButton
         flip
-        disabled={currentPage === pageCount - 1}
+        disabled={currentPage >= pageCount}
         onClick={() => onClickPage(currentPage + 1)}
       >
         <img src="icon/arrow.svg" alt="next arrow button" />
@@ -37,11 +37,11 @@ function getPageNumbers(currentPage, pageCount) {
   resultPages.push(currentPage);
 
   let index = 1;
-  while (resultPages.length < 9) {
-    if (currentPage + index < pageCount) {
+  while (resultPages.length < Math.min(7, pageCount)) {
+    if (currentPage + index < pageCount + 1) {
       resultPages.push(currentPage + index);
     }
-    if (currentPage - index > -1) {
+    if (currentPage - index > 0) {
       resultPages.unshift(currentPage - index);
     }
     index++;

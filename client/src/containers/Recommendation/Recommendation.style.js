@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 
 export const Modal = styled.section`
-  position: absolute;
+  position: fixed;
   background: var(--bg-linear);
   top: 0;
   left: 0;
