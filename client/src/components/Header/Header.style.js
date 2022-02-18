@@ -8,17 +8,20 @@ const HeaderTag = styled.header`
   left: 0;
   right: 0;
   z-index: 2000;
+  padding: 0 10px;
 `;
 
 const NavigationBarContainer = styled.div`
   box-sizing: border-box;
-  height: 90px;
   max-width: 1150px;
-  padding: 10px 20px 10px 20px;
   margin: 0 auto;
-
   display: flex;
   align-items: center;
+  height: 60px;
+
+  @media (min-width: 768px) {
+    height: 90px;
+  }
 `;
 
 const LayoutNavigationLeft = styled.div``;
@@ -34,54 +37,73 @@ const LayoutNavigationRight = styled.nav`
 const MenuItems = styled.ul`
   list-style: none;
   display: flex;
+  padding-left: 20px;
 
-  & a {
+  a {
     text-decoration: none;
     color: black;
   }
-  & li {
-    margin-right: 20px;
+  li {
+    margin-right: 15px;
+    font-size: 0.85rem;
+  }
+  @media (min-width: 768px) {
+    padding-left: 40px;
+
+    li {
+      margin-right: 20px;
+      font-size: 0.95rem;
+    }
   }
 `;
 
 const UserNavButton = styled.button`
-  width: 80px;
   height: 40px;
   padding: 0;
   background: #ffffff;
-  border: 1px solid #eaeaea;
-  border-radius: 50px;
-
-  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.25);
+  border: 0;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    width: 80px;
+    border: 1px solid #eaeaea;
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 50px;
+  }
 `;
 
 const PostButton = styled.button`
-  width: 126px;
-  height: 45px;
-
-  font-family: Roboto;
-  font-style: normal;
+  min-width: 60px;
   font-weight: bold;
-  font-size: 16px;
-  line-height: 21px;
-  color: #ffffff;
-
-  background: #45ba66;
-  border-radius: 5px;
+  color: var(--highlight-text);
+  background: var(--primary);
   border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+
+  @media (min-width: 768px) {
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 10px 30px;
+  }
 `;
 
 const HamburgIconWrap = styled.div`
-  width: 16px;
-  height: 16px;
+  display: none;
 
-  & img {
-    width: 100%;
-    height: 100%;
+  @media (min-width: 768px) {
+    display: block;
+    width: 16px;
+    height: 16px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 const UserIconWrap = styled.div`
