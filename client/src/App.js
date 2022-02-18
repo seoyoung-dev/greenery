@@ -78,7 +78,7 @@ function App() {
   // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
     handleReload();
-  });
+  }, []);
 
   return (
     <CookiesProvider>
