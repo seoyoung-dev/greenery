@@ -57,6 +57,7 @@ const Content = styled.div`
   }
 
   @media screen and (max-width: 767px) {
+    width: 90%;
     height: 400px;
   }
 `;
@@ -69,6 +70,10 @@ export const Detail = styled.p`
 
   @media screen and (min-width: 768px) and (max-width: 1140px) {
     font-size: 35px;
+  }
+
+  @media screen and (max-width: 767px) {
+    font-size: 5vw;
   }
 `;
 
