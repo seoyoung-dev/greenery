@@ -44,6 +44,7 @@ export default function Article() {
       .then(res => {
         setArticle(res.data.post);
         setLiked(res.data.post.liked);
+        setLikes(res.data.post.likes);
       })
       .catch(err => {
         console.log(err);
@@ -65,7 +66,7 @@ export default function Article() {
             profileImgUrl={article.author.profileImg}
             author={article.author.name}
             date={article.createdAt}
-            likeNum={likes || 0}
+            likeNum={likes}
             contents={article.contents}
           />
         )}
