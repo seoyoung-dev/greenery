@@ -1,11 +1,20 @@
 ﻿import { useEffect, useState, useRef } from "react";
 
-import Header from "components/Header";
-import PlantGrid from "components/PlantGrid";
-import WikiSearch from "components/WikiSearch";
-import WikiFilter from "components/WikiFilter";
-import Loading from "components/Loading";
-import Pagination from "components/Pagination";
+// import Header from "components/Header";
+// import PlantGrid from "components/PlantGrid";
+// import WikiSearch from "components/WikiSearch";
+// import WikiFilter from "components/WikiFilter";
+// import Loading from "components/Loading";
+// import Pagination from "components/Pagination";
+
+import {
+  Header,
+  PlantGrid,
+  WikiSearch,
+  WikiFilter,
+  Loading,
+  Pagination,
+} from "components";
 
 import { WideContainer } from "style/ContainerStyle";
 import { fetchPlant } from "api/plant";
@@ -32,7 +41,6 @@ export default function Wiki() {
       data: { total, plants },
     } = await fetchPlant({
       count: 6,
-      // search: searchRef.current === "" ? undefined : searchRef.current,
       search: searchRef.current,
       filter: filterRef.current,
       currentPage,
