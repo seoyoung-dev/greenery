@@ -8,6 +8,7 @@ export const Modal = styled.section`
   left: 0;
   width: 100%;
   height: 100%;
+  padding: 0 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,7 +22,6 @@ export const CenterContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* padding: 0 30px; */
 `;
 
 export const IntroContainer = styled.div`
@@ -43,11 +43,8 @@ export const Header = styled.div`
   }
 
   h1 {
+    font-size: 1.2rem;
     margin-bottom: 5px;
-  }
-
-  h5 {
-    margin-top: 0;
   }
 
   ${props =>
@@ -55,6 +52,12 @@ export const Header = styled.div`
     `
     text-align: center;
   `}
+
+  @media screen and (min-width: 768px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 export const CloseButton = styled(Link)`

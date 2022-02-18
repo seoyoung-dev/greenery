@@ -26,72 +26,58 @@ export const survey_data = [
   },
   {
     num: 2,
-    title: "초록이 향기는 얼마나 강했으면 좋겠나요?",
+    title: "초록이가 살게 될 장소는 따뜻한가요?",
     subtitle: null,
-    type: "smell",
+    type: "growthTemperature",
     questions: [
       {
-        id: "1",
-        text: "강했으면 좋겠어요!",
-        icon: icon_route + "water.svg",
+        id: "82002",
+        text: "조금 선선하지만 춥지 않아요! (16~20℃)",
+        icon: icon_route + "wind.svg",
       },
       {
-        id: "2",
-        text: "적당한 향기가 나면 좋겠어요!",
-        icon: icon_route + "splash.svg",
-      },
-      {
-        id: "3",
-        text: "은은하게 향이 느껴지면 좋겠어요!",
-        icon: icon_route + "drops.svg",
-      },
-      {
-        id: "4",
-        text: "향이 없었으면 좋겠어요!",
-        icon: icon_route + "drop.svg",
+        id: "82003",
+        text: "네! 따뜻한 장소에 있을 거에요! (21~25℃)",
+        icon: icon_route + "warm.svg",
       },
     ],
   },
   {
     num: 3,
-    title: "초록이가 언제 꽃(열매)을 피우기 원하시나요?",
+    title: "초록이가 언제 꽃을 피우기 원하시나요?",
     subtitle: null,
     type: "bloomingSeason",
 
     questions: [
       {
         id: "1",
-        text: "봄에 피면 좋겠어요!",
+        text: "봄에 피었으면 좋겠어요!",
         icon: icon_route + "sakura.svg",
       },
       {
         id: "2",
-        text: "여름에 피면 좋겠어요!",
+        text: "여름에 피었으면 좋겠어요!",
         icon: icon_route + "watermelon.svg",
-      },
-      {
-        id: "3",
-        text: "가을에 피면 좋겠어요!",
-        icon: icon_route + "leaves.svg",
-      },
-      {
-        id: "4",
-        text: "겨울에 피면 좋겠어요!",
-        icon: icon_route + "snowman.svg",
       },
     ],
   },
   {
     num: 4,
-    title: "초록이가 어느 정도로 자라길 원하시나요? (높이)",
+    title: "초록이 향기가 나길 원하시나요?",
     subtitle: null,
-    type: "growthHeight",
+    type: "smell",
 
     questions: [
-      { id: "0", text: "50 이하", icon: icon_route + "50.svg" },
-      { id: "5", text: "50 ~ 100", icon: icon_route + "100.svg" },
-      { id: "10", text: "100 ~ 150", icon: icon_route + "150.svg" },
-      { id: "15", text: "150 이상", icon: icon_route + "over.svg" },
+      {
+        id: "1",
+        text: "향이 없었으면 좋겠어요!",
+        icon: icon_route + "nose.svg",
+      },
+      {
+        id: "2",
+        text: "은은하게 향이 느껴지면 좋겠어요!",
+        icon: icon_route + "nose_scent.svg",
+      },
     ],
   },
 ];

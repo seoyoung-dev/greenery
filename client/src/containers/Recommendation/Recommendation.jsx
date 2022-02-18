@@ -21,9 +21,9 @@ export default function Recommendation() {
   const [plantData, setPlantData] = useState(null);
   const [filter, setFilter] = useState({
     brightness: [],
-    smell: [],
+    growthTemperature: [],
     bloomingSeason: [],
-    growthHeight: [],
+    smell: [],
   });
 
   useEffect(() => {
@@ -58,9 +58,9 @@ export default function Recommendation() {
     setProgress(0);
     setFilter({
       brightness: [],
-      smell: [],
+      growthTemperature: [],
       bloomingSeason: [],
-      growthHeight: [],
+      smell: [],
     });
   }
   let element;

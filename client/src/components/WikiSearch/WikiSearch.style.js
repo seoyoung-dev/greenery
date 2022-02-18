@@ -6,5 +6,5 @@ export const SearchContainer = styled.form`
 `;
 
 export const SearchButton = styled(Button)`
-  margin-left: 50px;
+  margin-left: 30px;
 `;
