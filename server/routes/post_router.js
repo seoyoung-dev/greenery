@@ -96,7 +96,7 @@ router.get("/popularity", verifyToken, async function (req, res) {
         $gt: new Date(current - monthToSecond),
       },
     })
-      .sort({ likes: -1, createdAt: -1 })
+      .sort({ likes: -1 })
       .limit(3)
       .populate("author", "name profileImg _id");
     const newPosts = posts.map(post => {
@@ -145,10 +145,12 @@ router.post("/", auth, uploadImage, async function (req, res) {
 
     const postData = { author: id, title, contents: contentList };
     const post = new Post(postData);
-    await post.save();
+    const newPost = await post.save();
+    console.log(newPost.id);
     res.status(201).json({
       isOk: true,
       message: "Post 생성 완료",
+      postId: newPost._id,
     });
   } catch (err) {
     const message = err.message;
