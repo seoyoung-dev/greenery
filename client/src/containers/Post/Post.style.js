@@ -7,13 +7,26 @@ export const PostWrapper = styled.article`
   flex-direction: column;
 `;
 
-export const PostFormWrapper = styled.div``;
+export const PostFormWrapper = styled.div`
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  & form {
+    display: block;
+    width: 100%;
+  }
+  @media (max-width: 1140px) {
+    width: 100%;
+    margin-top: 80px;
+  }
+`;
 
 export const PostTitle = styled.input`
-  width: 862px;
   height: 44px;
-  margin: 122px 0px 32px 0px;
-
+  width: 100%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
@@ -25,6 +38,8 @@ export const PostTitle = styled.input`
   border-radius: 5px;
   border: 1px solid #e5e5e5;
 
+  margin-bottom: 10px;
+
   &:focus {
     outline: none;
     border: 1px solid #45ba66;
@@ -32,9 +47,24 @@ export const PostTitle = styled.input`
 `;
 
 export const ContentSection = styled.div`
+  display: flex;
+  gap: 10px;
   position: relative;
-
   margin-bottom: 32px;
+  width: 100%;
+
+  & label {
+    position: relative;
+  }
+
+  @media (max-width: 1140px) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    & label {
+      /* width: 55%; */
+    }
+  }
 `;
 
 export const DisplayImg = styled.img`
@@ -45,12 +75,15 @@ export const DisplayImg = styled.img`
 
   border: 1px solid #dadce0;
   border-radius: 10px;
+
+  @media (max-width: 1140px) {
+  }
+  @media screen and (max-width: 767px) {
+    width: 330px;
+  }
 `;
-
 export const PostTextarea = styled.textarea`
-  position: relative;
-
-  width: 420px;
+  width: 100%;
   height: 350px;
 
   font-family: Roboto;
@@ -59,7 +92,6 @@ export const PostTextarea = styled.textarea`
   font-size: 17px;
 
   line-height: 20px;
-  margin-left: 22px;
   resize: none;
   padding: 15px;
 
@@ -70,25 +102,34 @@ export const PostTextarea = styled.textarea`
     outline: none;
     border: 1px solid #45ba66;
   }
+
+  @media (max-width: 1140px) {
+    margin-left: 0;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 200px;
+  }
 `;
 
 export const RemoveBtn = styled.button`
   position: absolute;
-
+  left: 10px;
+  bottom: 10px;
   background-color: transparent;
   border: none;
 
   img {
     width: 34px;
-    height: auto;
-
     :hover {
       filter: drop-shadow(1px 1px 1px #000);
     }
   }
 
-  left: 10px;
-  bottom: 15px;
+  @media screen and (min-width: 768px) and (max-width: 1140px) {
+  }
+  @media screen and (max-width: 767px) {
+  }
 `;
 
 export const CotentAddButton = styled.button`
@@ -106,8 +147,13 @@ export const CotentAddButton = styled.button`
 
   border-radius: 5px;
   border: 1px solid #e5e5e5;
-
   background: #f5f5f5;
 
   color: #767676;
+  @media (max-width: 1140px) {
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
