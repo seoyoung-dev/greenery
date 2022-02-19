@@ -97,7 +97,7 @@ export default function Recommendation() {
   } else {
     element = (
       <>
-        <Header result>
+        <Header isFinalPage>
           <img src="img/logo.svg" alt="logo" />
           <h1>함께하길 기다리는 초록이</h1>
         </Header>
