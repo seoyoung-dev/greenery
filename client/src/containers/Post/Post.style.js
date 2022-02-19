@@ -41,6 +41,7 @@ export const DisplayImg = styled.img`
   width: 420px;
   height: 350px;
   object-fit: cover;
+  cursor: pointer;
 
   border: 1px solid #dadce0;
   border-radius: 10px;
