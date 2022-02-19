@@ -62,7 +62,7 @@ export function SignUp() {
     },
   ];
   // 이미지 업로드시 미리보기
-  function renderPreviewImage(target) {
+  const renderPreviewImage = target => {
     const reader = new FileReader();
     const file = target.files[0];
 
@@ -70,10 +70,10 @@ export function SignUp() {
     reader.onloadend = () => {
       setProfileImage(reader.result);
     };
-  }
+  };
 
   // input value를 FormData에 담기
-  function handleFormData() {
+  const handleFormData = () => {
     const data = new FormData();
     const file = fileInput.current.files[0];
 
@@ -83,7 +83,7 @@ export function SignUp() {
     data.append("profileImage", file);
 
     return data;
-  }
+  };
 
   const handleKeyPress = e => {
     if (e.key === "Enter") {

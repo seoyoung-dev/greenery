@@ -23,14 +23,14 @@ export default function Header(props) {
   ];
 
   //event handler
-  function focusHandler() {
+  const focusHandler = () => {
     setIsDropDown(!isDropDown);
-  }
-  function blurHandler(e) {
+  };
+  const blurHandler = e => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
       setIsDropDown(false);
     }
-  }
+  };
   return (
     <S.HeaderTag>
       <S.NavigationBarContainer>
