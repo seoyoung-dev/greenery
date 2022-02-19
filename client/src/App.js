@@ -24,12 +24,19 @@ function App() {
   const [cookies, setCookie] = useCookies(["access_token"]);
 
   // 페이지 리로드시 access_token을 재발급받기
-  const refreshAccessToken = async () => {
+  // const refreshAccessToken = async () => {
+
+  // };
+
+  const handleToken = async () => {
     const url = "/api/users/refresh";
     const response = await axios.post(url);
 
+    const JWT_EXPIRY_TIME = response.data.exp - Date.now();
+
     setAxiosDefaultAccessToken(response);
     setAccessTokenIntoCookie(response, setCookie);
+    setTimeout(handleToken, JWT_EXPIRY_TIME - 10 * 6000);
   };
 
   const handleUserProfile = async () => {
@@ -44,7 +51,7 @@ function App() {
 
   const handleReload = async () => {
     try {
-      await refreshAccessToken();
+      await handleToken();
       await handleUserProfile();
     } catch (err) {
       console.error(err);
