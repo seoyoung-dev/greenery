@@ -24,6 +24,10 @@ export const CommentForm = styled.div`
     height: 30px;
     border-radius: 50%;
     object-fit: cover;
+
+    & + div {
+      margin-left: 5px;
+    }
   }
 `;
 
