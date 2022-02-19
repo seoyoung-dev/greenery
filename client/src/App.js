@@ -25,13 +25,10 @@ function App() {
   // 페이지 리로드시 access_token을 재발급받기
   const refreshAccessToken = async () => {
     const url = "/api/users/refresh";
-    try {
-      const response = await axios.post(url);
-      setAxiosDefaultAccessToken(response);
-      setAccessTokenIntoCookie(response);
-    } catch (err) {
-      console.error(err);
-    }
+    const response = await axios.post(url);
+
+    setAxiosDefaultAccessToken(response);
+    setAccessTokenIntoCookie(response);
   };
 
   // response의 access_token을 axios.defaults로 설정하기
@@ -55,15 +52,12 @@ function App() {
   //
   const handleUserProfile = async () => {
     const url = "/api/users/auth";
-    try {
-      const response = await axios.get(url);
-      const { email, id, name, profileImg } = response.data;
-      setUserProfile(oldUserProfile => {
-        return { ...oldUserProfile, email, id, name, profileImg };
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    const response = await axios.get(url);
+
+    const { email, id, name, profileImg } = response.data;
+    setUserProfile(oldUserProfile => {
+      return { ...oldUserProfile, email, id, name, profileImg };
+    });
   };
 
   const handleReload = async () => {

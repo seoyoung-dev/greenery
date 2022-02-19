@@ -20,9 +20,6 @@ export function SignUp() {
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState("img/upload.svg");
 
-  // 추가해야할 부분
-  // 입력값이 올바르지 않은 경우에는 회원가입요청을 보내지 않아야한다.
-  // password 와 checkPassword가 같아야한다.
   const fileInput = useRef("");
   const navigate = useNavigate();
 
@@ -65,7 +62,7 @@ export function SignUp() {
     },
   ];
   // 이미지 업로드시 미리보기
-  function renderPreviewImage(target) {
+  const renderPreviewImage = target => {
     const reader = new FileReader();
     const file = target.files[0];
 
@@ -73,10 +70,10 @@ export function SignUp() {
     reader.onloadend = () => {
       setProfileImage(reader.result);
     };
-  }
+  };
 
   // input value를 FormData에 담기
-  function handleFormData() {
+  const handleFormData = () => {
     const data = new FormData();
     const file = fileInput.current.files[0];
 
@@ -86,7 +83,7 @@ export function SignUp() {
     data.append("profileImage", file);
 
     return data;
-  }
+  };
 
   const handleKeyPress = e => {
     if (e.key === "Enter") {
@@ -103,7 +100,6 @@ export function SignUp() {
     const url = "api/users/register";
     const data = handleFormData();
 
-    // 서버에서 상태코드를 추가해주어야 할 것 같다. catch(err)
     axios
       .post(url, data, {
         headers: { "Content-Type": "multipart/form-data" },

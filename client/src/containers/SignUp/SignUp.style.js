@@ -20,7 +20,6 @@ export const FormHeader = styled.div`
 export const ImagePreviewWrap = styled.div`
   width: 100%;
   margin: 10px 0;
-  /* text-align: center; */
 `;
 
 export const UploadImage = styled.img`

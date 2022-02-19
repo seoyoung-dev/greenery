@@ -26,7 +26,12 @@ const NavigationBarContainer = styled.div`
 
 const LayoutNavigationLeft = styled.div``;
 const LayoutNavigationMenu = styled.nav`
+  margin-left: 70px;
   flex: none;
+
+  @media (max-width: 768px) {
+    margin-left: 20px;
+  }
 `;
 const LayoutNavigationRight = styled.nav`
   position: relative;
@@ -37,22 +42,23 @@ const LayoutNavigationRight = styled.nav`
 const MenuItems = styled.ul`
   list-style: none;
   display: flex;
-  padding-left: 20px;
+  padding-left: 0px;
 
+  li {
+    margin-right: 25px;
+  }
   a {
     text-decoration: none;
-    color: black;
+    color: var(--text);
+    font-size: 1.1rem;
   }
-  li {
-    margin-right: 15px;
-    font-size: 0.85rem;
-  }
-  @media (min-width: 768px) {
-    padding-left: 40px;
 
+  @media (max-width: 768px) {
     li {
-      margin-right: 20px;
-      font-size: 0.95rem;
+      margin-right: 15px;
+    }
+    a {
+      font-size: 0.85rem;
     }
   }
 `;
