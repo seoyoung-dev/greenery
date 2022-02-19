@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "components/Header";
 import axios from "axios";
 import {
@@ -15,20 +15,25 @@ import { useRecoilValue } from "recoil";
 
 export function MyPage() {
   const userProfile = useRecoilValue(userProfileState);
-
   const [currentClick, setCurrentClick] = useState("MyPosts");
   const [prevClick, setPrevClick] = useState(null);
-
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [likePosts, setLikePosts] = useState([]);
   const [likePageNumber, setLikePageNumber] = useState(1);
-
   const [loading, setLoading] = useState(false);
   const pageEnd = useRef();
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
+    if (currentClick === "LikePosts") {
+      setPosts([]);
+      setPageNumber(1);
+    }
+    if (currentClick === "Myposts") {
+      setLikePosts([]);
+      setLikePageNumber(1);
+    }
   };
 
   const getMyPost = async page => {
@@ -36,9 +41,9 @@ export function MyPage() {
     const response = await axios.get(url, {
       params: {
         page: page,
-        userId: userProfile.id,
       },
     });
+
     setPosts(prev => {
       const newPosts = [...prev, ...response.data.posts];
       return newPosts;
@@ -47,17 +52,15 @@ export function MyPage() {
   };
 
   const getMyLikePost = async page => {
-    const url = "/api/posts/page";
+    const url = "/api/users/post/like";
     const response = await axios.get(url, {
       params: {
         page: page,
       },
     });
-    const resPosts = response.data.posts;
-    const newResPosts = resPosts.filter(post => post.liked);
 
     setLikePosts(prev => {
-      const newPosts = [...prev, ...newResPosts];
+      const newPosts = [...prev, ...response.data.posts];
       return newPosts;
     });
     setLoading(true);
@@ -72,7 +75,10 @@ export function MyPage() {
   }, [likePageNumber]);
 
   const loadMore = () => {
-    setPageNumber(prevPageNumber => prevPageNumber + 1);
+    currentClick === "MyPosts" &&
+      setPageNumber(prevPageNumber => prevPageNumber + 1);
+    currentClick === "LikePosts" &&
+      setLikePageNumber(prevPageNumber => prevPageNumber + 1);
   };
 
   useEffect(() => {
@@ -116,7 +122,6 @@ export function MyPage() {
   return (
     <ProfileWrapper>
       <Header />
-
       <ProfileImg>
         <img src={userProfile.profileImg} />
       </ProfileImg>
