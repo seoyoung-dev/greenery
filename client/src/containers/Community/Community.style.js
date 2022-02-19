@@ -52,6 +52,7 @@ export const PostButtonWrapper = styled.div`
 
   @media screen and (max-width: 760px) {
     max-width: 60px;
+    right: 10vw;
   }
 `;
 
