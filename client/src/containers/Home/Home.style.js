@@ -41,13 +41,14 @@ export const PostCardBox = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  overflow-x: scroll;
   white-space: wrap;
 
-  &{PostCard} {
-    & + & {
-      margin-left: 200px;
-    }
+  & + & {
+    margin-left: 200px;
+  }
+
+  @media (max-width: 1140px) {
+    overflow-x: scroll;
   }
 `;
 
