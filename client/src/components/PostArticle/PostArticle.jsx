@@ -17,8 +17,6 @@ export default function PostArticle({
   likeNum,
   contents,
 }) {
-  // postId를 get 요청 url에 사용예정
-  const { postId } = useParams();
   return (
     <ArticleWrapper>
       <ArticleTitle>{title}</ArticleTitle>

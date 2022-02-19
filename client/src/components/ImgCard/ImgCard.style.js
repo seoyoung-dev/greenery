@@ -46,6 +46,7 @@ export const Button = styled.button`
 `;
 
 const Content = styled.div`
+  font-family: Roboto;
   box-sizing: border-box;
   width: 550px;
   height: 704px;
