@@ -23,11 +23,6 @@ function App() {
   const setUserProfile = useSetRecoilState(userProfileState);
   const [cookies, setCookie] = useCookies(["access_token"]);
 
-  // 페이지 리로드시 access_token을 재발급받기
-  // const refreshAccessToken = async () => {
-
-  // };
-
   const handleToken = async () => {
     const url = "/api/users/refresh";
     const response = await axios.post(url);
@@ -58,7 +53,6 @@ function App() {
     }
   };
 
-  // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
     handleReload();
   }, []);

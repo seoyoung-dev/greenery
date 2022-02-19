@@ -5,6 +5,5 @@ export const setAccessTokenIntoCookie = (response, setCookie) => {
   setCookie("access_token", accessToken, {
     path: "/",
     maxAge: JWT_EXPIRY_TIME / 1000,
-    httpOnly: true,
   });
 };
