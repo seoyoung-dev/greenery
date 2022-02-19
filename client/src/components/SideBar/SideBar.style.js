@@ -27,14 +27,26 @@ export const IconBox = styled.div`
   button {
     background-color: transparent;
     border-color: transparent;
+    cursor: pointer;
+  }
+
+  button + button {
+    margin-top: 20px;
   }
 
   @media screen and (max-width: 1024px) {
     width: 100%;
+    height: 54px;
     position: static;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
+
+    button + button {
+      margin-top: 0;
+      margin-left: 20px;
+    }
   }
 `;
 
@@ -52,16 +64,12 @@ export const Icon = styled.div`
     width: ${props => props.width}px;
   }
 
-  & + & {
-    margin-top: 20px;
-  }
-
   &:hover {
     background: var(--gray);
   }
 
   @media screen and (max-width: 1024px) {
-    & + & {
+    button + button {
       margin-top: 0;
       margin-left: 20px;
     }
