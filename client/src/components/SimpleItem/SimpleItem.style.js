@@ -8,4 +8,7 @@ export const Item = styled.li`
       color: var(--primary);
     }
   }
+  a.active {
+    color: var(--primary);
+  }
 `;
