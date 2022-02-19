@@ -11,7 +11,8 @@ import {
   FormHeader,
 } from "./SignIn.style";
 import { HomeLogo, TextInput, SubmitButton } from "components";
-import { validateForm } from "./validation";
+import { setAxiosDefaultAccessToken, setAccessTokenIntoCookie } from "util";
+import { validateForm } from "./validateForm";
 
 import axios from "axios";
 
@@ -41,6 +42,8 @@ export function SignIn() {
     },
   ];
 
+  // set global userProfileState
+
   const onLoginRequest = async data => {
     const url = "/api/users/login";
     const response = await axios.post(url, data);
@@ -50,15 +53,6 @@ export function SignIn() {
     }
     return response;
   };
-
-  // 로그인 성공시 access token을 axios의 headers의 deafult로 설정
-  const setAxiosDefaultAccessToken = response => {
-    const { access_token } = response.data;
-
-    axios.defaults.headers.common["Authorization"] = access_token;
-  };
-
-  // set global userProfileState
   const handleUserProfile = async () => {
     const response = await axios.get("/api/users/auth");
     const { email, id, name, profileImg } = response.data;
@@ -69,44 +63,45 @@ export function SignIn() {
     });
   };
 
-  // refresh_token을 이용하여 access_token 재발급
-  // const refreshAccessToken = () => {
-  //   axios
-  //     .post("/api/users/refresh")
-  //     .then(response => setAxiosDefaultAccessToken(response));
-  // };
+  const handleToken = async () => {
+    try {
+      const url = "/api/users/refresh";
+      const response = await axios.post(url);
+      const JWT_EXPIRY_TIME = response.data.exp - Date.now();
 
+      setAxiosDefaultAccessToken(response);
+      setAccessTokenIntoCookie(response, setCookie);
+      setTimeout(handleToken, JWT_EXPIRY_TIME - 10 * 6000);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    try {
+      if (!validateForm([email, password])) {
+        throw new Error("아이디 또는 비밀번호를 확인해주세요");
+      }
+      const response = await onLoginRequest({ email, password });
+      const JWT_EXPIRY_TIME = response.data.exp - Date.now();
+
+      setAxiosDefaultAccessToken(response);
+      setAccessTokenIntoCookie(response, setCookie);
+      setTimeout(handleToken, JWT_EXPIRY_TIME - 10 * 6000);
+
+      await handleUserProfile();
+      navigate("/");
+    } catch (err) {
+      // alert("아이디 또는 비밀번호를 확인해주세요")
+      console.error(err);
+    }
+  };
   const handleKeyPress = e => {
     if (e.key === "Enter") {
       e.target.blur();
     }
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!validateForm([email, password])) {
-      return;
-    }
-
-    onLoginRequest({ email, password })
-      .then(response => {
-        const JWT_EXPIRY_TIME = response.data.exp - Date.now();
-        const access_token = response.data.access_token;
-
-        setAxiosDefaultAccessToken(response);
-        setCookie("access_token", access_token, {
-          path: "/",
-          maxAge: JWT_EXPIRY_TIME / 1000,
-          // secure: true,
-          // httpOnly: true,
-        });
-        // setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
-      })
-      .then(() => {
-        handleUserProfile();
-        navigate("/");
-      })
-      .catch(err => alert("아이디 또는 비밀번호를 확인해주세요"));
   };
 
   return (

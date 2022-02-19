@@ -13,8 +13,7 @@ import axios from "axios";
 
 export function Community() {
   const [posts, setPosts] = useState([]);
-  // const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const pageInfo = useRef({
     currentPage: 1,
     lastPage: 2,
@@ -35,14 +34,13 @@ export function Community() {
       const newPosts = [...prev, ...data.posts];
       return newPosts;
     });
-    setLoading(true);
+    // setLoading(true);
   };
 
   useEffect(() => {
     getPosts();
   }, []);
   const increasePage = () => {
-    // setPage(prev => prev + 1);
     pageInfo.current.currentPage += 1;
   };
 
@@ -62,12 +60,10 @@ export function Community() {
   };
 
   useEffect(() => {
-    // if (true) {
     const observer = new IntersectionObserver(ovserveHandler, {
       threshold: 1,
     });
     observer.observe(pageEnd.current);
-    // }
   }, []);
 
   return (

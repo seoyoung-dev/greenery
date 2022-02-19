@@ -9,7 +9,7 @@ import {
   FormHeader,
 } from "./SignUp.style";
 import { HomeLogo, TextInput, SubmitButton } from "components";
-import { validateForm } from "containers/SignIn/validation";
+import { validateForm } from "containers/SignIn/validateForm";
 
 import axios from "axios";
 
