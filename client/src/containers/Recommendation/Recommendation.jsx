@@ -24,7 +24,6 @@ export default function Recommendation() {
   });
 
   const navigate = useNavigate();
-  console.log(navigate(-1));
 
   useEffect(() => {
     if (isDataFilled(filter)) {
