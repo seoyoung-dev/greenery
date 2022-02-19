@@ -149,14 +149,10 @@ export const CotentAddButton = styled.button`
   background: #f5f5f5;
 
   color: #767676;
-  @media screen and (min-width: 768px) and (max-width: 1140px) {
-    width: 96%;
-    margin-left: 2%;
-    margin-bottom: 2%;
+  @media (max-width: 1140px) {
+    width: 100%;
   }
   @media (max-width: 767px) {
-    width: 96%;
-    margin-left: 2%;
-    margin-bottom: 2%;
+    width: 100%;
   }
 `;
