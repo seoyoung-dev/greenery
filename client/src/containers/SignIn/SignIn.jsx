@@ -11,7 +11,8 @@ import {
   FormHeader,
 } from "./SignIn.style";
 import { HomeLogo, TextInput, SubmitButton } from "components";
-import { validateForm } from "./validation";
+import { setAxiosDefaultAccessToken, setAccessTokenIntoCookie } from "util";
+import { validateForm } from "./validateForm";
 
 import axios from "axios";
 
@@ -51,13 +52,6 @@ export function SignIn() {
     return response;
   };
 
-  // 로그인 성공시 access token을 axios의 headers의 deafult로 설정
-  const setAxiosDefaultAccessToken = response => {
-    const { access_token } = response.data;
-
-    axios.defaults.headers.common["Authorization"] = access_token;
-  };
-
   // set global userProfileState
   const handleUserProfile = async () => {
     const response = await axios.get("/api/users/auth");
@@ -90,17 +84,8 @@ export function SignIn() {
 
     onLoginRequest({ email, password })
       .then(response => {
-        const JWT_EXPIRY_TIME = response.data.exp - Date.now();
-        const access_token = response.data.access_token;
-
         setAxiosDefaultAccessToken(response);
-        setCookie("access_token", access_token, {
-          path: "/",
-          maxAge: JWT_EXPIRY_TIME / 1000,
-          // secure: true,
-          // httpOnly: true,
-        });
-        // setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
+        setAccessTokenIntoCookie(response, setCookie);
       })
       .then(() => {
         handleUserProfile();
