@@ -1,14 +1,10 @@
 import styled from "styled-components";
 
 export const ArticleWrapper = styled.article`
-  display: flex;
-  width: 720px;
-  flex-direction: column;
+  width: 100%;
   margin-top: 180px;
-
-  @media screen and (max-width: 767px) {
-    width: 100vw;
-  } ;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ArticleTitle = styled.span`
