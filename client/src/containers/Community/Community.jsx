@@ -13,53 +13,57 @@ import axios from "axios";
 
 export function Community() {
   const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const pageInfo = useRef({
+    currentPage: 1,
+    lastPage: 2,
+  });
   const pageEnd = useRef(null);
   const searchRef = useRef();
 
-  const getPosts = async page => {
+  const getPosts = async () => {
     const url = `/api/posts/page`;
     const { data } = await axios.get(url, {
-      params: { page, keyword: searchRef.current.value },
+      params: {
+        page: pageInfo.current.currentPage,
+        keyword: searchRef.current.value,
+      },
     });
-    // lastPage = Math.ceil(data.total / 12);
+    pageInfo.current.lastPage = Math.ceil(data.total / 12);
     setPosts(prev => {
       const newPosts = [...prev, ...data.posts];
       return newPosts;
     });
-    setLoading(true);
+    // setLoading(true);
   };
 
   useEffect(() => {
-    getPosts(page);
-  }, [page]);
-
+    getPosts();
+  }, []);
   const increasePage = () => {
-    setPage(prev => prev + 1);
+    pageInfo.current.currentPage += 1;
   };
 
   const ovserveHandler = useCallback(entires => {
-    if (entires[0].isIntersecting) {
+    const { currentPage, lastPage } = pageInfo.current;
+    if (entires[0].isIntersecting && currentPage < lastPage) {
       increasePage();
+      getPosts();
     }
   }, []);
 
   const searchSubmitHandler = e => {
     e.preventDefault();
-    // setLoading(false);
-    // setPosts([]);
-    // setPage(1);
-    // getPosts(1);
+    pageInfo.current.currentPage = 1;
+    setPosts([]);
+    getPosts();
   };
 
   useEffect(() => {
-    // if (true) {
     const observer = new IntersectionObserver(ovserveHandler, {
       threshold: 1,
     });
     observer.observe(pageEnd.current);
-    // }
   }, []);
 
   return (
