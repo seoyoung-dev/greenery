@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import {Buttons, Pages} from "./Pagination.style"
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { Buttons, Pages, ArrowButton } from "./Pagination.style";
 
 export const Pagination = ({ commentsPerPage, totalComments, paginate }) => {
   const pageNumbers = [];
@@ -13,30 +16,42 @@ export const Pagination = ({ commentsPerPage, totalComments, paginate }) => {
 
   return (
     <Buttons>
-      <button onClick={() => {
-        if (pageNum > 1) {
-          setPageNum(pageNum - 1);
-          paginate(pageNum - 1);
-        }
-      }}>
+      <ArrowButton
+        disabled={pageNum <= 1}
+        onClick={() => {
+          if (pageNum > 1) {
+            setPageNum(pageNum - 1);
+            paginate(pageNum - 1);
+          }
+        }}
+      >
         <FontAwesomeIcon icon={faChevronLeft} />
-      </button>
+      </ArrowButton>
       <Pages>
         {pageNumbers.map(number => (
-          <button key={number} className={pageNum === number ? "active" : ""} onClick={() => {
-            paginate(number);
-            setPageNum(number);
-          }}>{number}</button>
+          <button
+            key={number}
+            className={pageNum === number ? "active" : ""}
+            onClick={() => {
+              paginate(number);
+              setPageNum(number);
+            }}
+          >
+            {number}
+          </button>
         ))}
       </Pages>
-      <button onClick={() => {
-        if (pageNum < pageNumbers.length) {
-          setPageNum(pageNum + 1);
-          paginate(pageNum + 1);
-        }
-      }}>
+      <ArrowButton
+        disabled={pageNum >= pageNumbers[pageNumbers.length - 1]}
+        onClick={() => {
+          if (pageNum < pageNumbers.length) {
+            setPageNum(pageNum + 1);
+            paginate(pageNum + 1);
+          }
+        }}
+      >
         <FontAwesomeIcon icon={faChevronRight} />
-      </button>
+      </ArrowButton>
     </Buttons>
   );
 };

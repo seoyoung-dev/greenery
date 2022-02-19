@@ -56,10 +56,20 @@ export function Comment() {
     <CommentSection>
       <h3>댓글</h3>
       <CommentForm>
-        <img src={userInfo.profileImg || "/icon/user.svg"} alt="프로필 이미지" />
+        <img
+          src={userInfo.profileImg || "/icon/user.svg"}
+          alt="프로필 이미지"
+        />
         <CommentInput>
-          <textarea placeholder='댓글을 입력해주세요:)' onChange={(e) => setContent(e.target.value)} value={content} ref={textRef} onKeyUp={textResize} onKeyDown={textResize}></textarea>
-          <button onClick={(e) => postData(e) }>등록</button>
+          <textarea
+            placeholder="댓글을 입력해주세요:)"
+            onChange={e => setContent(e.target.value)}
+            value={content}
+            ref={textRef}
+            onKeyUp={textResize}
+            onKeyDown={textResize}
+          ></textarea>
+          <button onClick={e => postData(e)}>등록</button>
         </CommentInput>
       </CommentForm>
       <Comments
