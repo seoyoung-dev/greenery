@@ -22,7 +22,6 @@ export const PlantCard = styled.div`
       rgba(69, 186, 102, 0.1),
       rgba(69, 186, 102, 0.1)
     );
-    /* background-image: linear-gradient(rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07)); */
   }
 `;
 

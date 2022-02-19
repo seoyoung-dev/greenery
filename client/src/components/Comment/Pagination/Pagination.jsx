@@ -42,7 +42,10 @@ export const Pagination = ({ commentsPerPage, totalComments, paginate }) => {
         ))}
       </Pages>
       <ArrowButton
-        disabled={pageNum >= pageNumbers[pageNumbers.length - 1]}
+        disabled={
+          pageNumbers.length === 0 ||
+          pageNum >= pageNumbers[pageNumbers.length - 1]
+        }
         onClick={() => {
           if (pageNum < pageNumbers.length) {
             setPageNum(pageNum + 1);
