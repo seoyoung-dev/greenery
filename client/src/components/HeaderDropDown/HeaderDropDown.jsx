@@ -12,11 +12,11 @@ import { SimpleItem } from "components";
 import axios from "axios";
 
 export default function HeaderDropDown() {
-  const resetUserState = useResetRecoilState(userProfileState);
   const navigate = useNavigate();
+  const resetUserState = useResetRecoilState(userProfileState);
   const [cookies, setCookie, removeCookie] = useCookies();
-
   const access_token = cookies["access_token"];
+
   const beforeLoginItems = [
     {
       title: "로그인",
@@ -50,7 +50,7 @@ export default function HeaderDropDown() {
     }
   };
 
-  const removeAccessToken = () => {
+  const removeAxiosDefaultAccessToken = () => {
     delete axios.defaults.headers.common.Authorization;
   };
   const removeAccessTokenByCookie = () => {
@@ -60,7 +60,7 @@ export default function HeaderDropDown() {
   const handleLogout = async () => {
     await onLogoutRequest()
       .then(() => {
-        removeAccessToken();
+        removeAxiosDefaultAccessToken();
         removeAccessTokenByCookie();
         resetUserState();
       })
