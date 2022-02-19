@@ -97,8 +97,12 @@ router.get("/popularity", verifyToken, async function (req, res) {
       },
     })
       .sort({ likes: -1 })
-      .limit(3)
       .populate("author", "name profileImg _id");
+
+    posts.sort((a, b) => {
+      return b.likes.length - a.likes.length;
+    });
+    posts.splice(3);
     const newPosts = posts.map(post => {
       const userInformation = {
         id: post.id,
