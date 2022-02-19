@@ -22,7 +22,6 @@ export default function Article() {
 
   const handleLikeClick = async () => {
     const res = await axios.put(`/api/posts/${postId}/like`);
-    console.log(res.data);
     setLikes(res.data.likes);
     if (res.status === 200) setLiked(!liked);
   };
@@ -55,7 +54,6 @@ export default function Article() {
     const res = await axios.get(`/api/posts/?postId=${postId}`, {
       params: { user: userProfile.id },
     });
-    console.log(res.data.post);
     setArticle(res.data.post);
     setLiked(res.data.post.liked);
     setLikes(res.data.post.likes);
