@@ -16,6 +16,14 @@ export const PlantCard = styled.div`
   align-items: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+
+  &:hover {
+    background-image: linear-gradient(
+      rgba(69, 186, 102, 0.1),
+      rgba(69, 186, 102, 0.1)
+    );
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07)); */
+  }
 `;
 
 export const ImageContainer = styled.figure`
@@ -23,6 +31,7 @@ export const ImageContainer = styled.figure`
   width: clamp(0px, 100%, 200px);
   img {
     width: 100%;
+    border-radius: 3px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 `;
