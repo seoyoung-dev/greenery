@@ -22,7 +22,7 @@ router.get("/", verifyToken, async function (req, res) {
       createdAt: changeTimeFormat(post.createdAt),
     };
 
-    if (req.user && post.comments.includes(req.user.id)) {
+    if (req.user && post.likes.includes(req.user.id)) {
       processedData.liked = true;
     }
 
@@ -269,7 +269,7 @@ router.put("/:postId/like", auth, async (req, res) => {
 
     return res
       .status(200)
-      .json({ isOk: true, likse: count, message: "요청 성공" });
+      .json({ isOk: true, likes: count, message: "요청 성공" });
   } catch (err) {
     console.log(err);
     const message = err.message;
