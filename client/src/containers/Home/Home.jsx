@@ -35,36 +35,38 @@ export default function Home() {
   }, []);
 
   return (
-    <Main>
+    <>
       <Header />
-      {plantData && (
-        <TodaysPlant
-          imgUrl={plantData.imgUrl}
-          content={plantData.content}
-          postId={plantData.postId}
-        />
-      )}
-      <PostContentsWrapper>
-        <Title>
-          <span>인기 있는 초록이</span>
-          <StyledLink to="/community">더 많은 초록이들 보기</StyledLink>
-        </Title>
-        <PostCardBox>
-          {cardData &&
-            cardData.posts.map(({ id, imgUrl, title, author, likes }) => (
-              <PostCard
-                key={id}
-                id={id}
-                imgUrl={imgUrl}
-                title={title}
-                author={author}
-                likes={likes}
-              />
-            ))}
-        </PostCardBox>
-      </PostContentsWrapper>
-      <ImgCard />
+      <Main>
+        {plantData && (
+          <TodaysPlant
+            imgUrl={plantData.imgUrl}
+            content={plantData.content}
+            postId={plantData.postId}
+          />
+        )}
+        <PostContentsWrapper>
+          <Title>
+            <span>인기 있는 초록이</span>
+            <StyledLink to="/community">더 많은 초록이들 보기</StyledLink>
+          </Title>
+          <PostCardBox>
+            {cardData &&
+              cardData.posts.map(({ id, imgUrl, title, author, likes }) => (
+                <PostCard
+                  key={id}
+                  id={id}
+                  imgUrl={imgUrl}
+                  title={title}
+                  author={author}
+                  likes={likes}
+                />
+              ))}
+          </PostCardBox>
+        </PostContentsWrapper>
+        <ImgCard />
+      </Main>
       <Footer />
-    </Main>
+    </>
   );
 }

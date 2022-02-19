@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 export const Main = styled.main`
   white-space: nowrap;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `;
 
-export const PostContentsWrapper = styled.div`
+export const PostContentsWrapper = styled.section`
   width: 1136px;
   margin: 80px 0 100px 0;
 
