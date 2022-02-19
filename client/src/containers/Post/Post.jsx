@@ -146,12 +146,13 @@ export function Post() {
                     src={x.fileImage ? `${x.fileImage}` : "/img/upload.png"}
                     alt="upload.png"
                   />
+                  {inputList.length !== 1 && (
+                    <RemoveBtn onClick={() => handleRemoveClick(i)}>
+                      <img src="/icon/postTrash.svg" alt="postTrash.svg" />
+                    </RemoveBtn>
+                  )}
                 </label>
-                {inputList.length !== 1 && (
-                  <RemoveBtn onClick={() => handleRemoveClick(i)}>
-                    <img src="/icon/postTrash.svg" alt="postTrash.svg" />
-                  </RemoveBtn>
-                )}
+
                 <PostTextarea
                   name="content"
                   placeholder="내용을 입력하세요."
