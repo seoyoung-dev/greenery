@@ -1,5 +1,4 @@
 ﻿import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 export const Modal = styled.section`
   position: fixed;
@@ -48,7 +47,7 @@ export const Header = styled.div`
   }
 
   ${props =>
-    props.result &&
+    props.isFinalPage &&
     `
     text-align: center;
   `}
@@ -60,10 +59,11 @@ export const Header = styled.div`
   }
 `;
 
-export const CloseButton = styled(Link)`
+export const CloseButton = styled.div`
   position: absolute;
   right: 20px;
   top: 20px;
+  cursor: pointer;
 `;
 
 export const Nav = styled.nav`

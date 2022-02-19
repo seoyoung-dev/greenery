@@ -10,7 +10,7 @@ import {
   SignUpLinkWrap,
   FormHeader,
 } from "./SignIn.style";
-import { Header, HomeLogo, TextInput, SubmitButton } from "components";
+import { HomeLogo, TextInput, SubmitButton } from "components";
 import { validateForm } from "./validation";
 
 import axios from "axios";
@@ -110,48 +110,37 @@ export function SignIn() {
   };
 
   return (
-    <>
-      <Header />
-      <Main>
-        <Section>
-          <FormHeader>
-            <HomeLogo />
-          </FormHeader>
-          <form
-            onKeyPress={e => handleKeyPress(e)}
-            onSubmit={e => handleSubmit(e)}
-          >
-            <FormInputWrap>
-              {textInputList.map(
-                ({ title, type, placeholder, autoComplete, onBlur }, index) => {
-                  return (
-                    <TextInput
-                      key={index}
-                      title={title}
-                      type={type}
-                      placeholder={placeholder}
-                      autoComplete={autoComplete}
-                      onBlur={onBlur}
-                    />
-                  );
-                },
-              )}
-            </FormInputWrap>
-
-            {/* <SignOptionWrap>
-            <Label>
-              <input type="checkbox" />
-              로그인유지
-            </Label>
-            <Link to="#">아이디/비밀번호 찾기</Link>
-          </SignOptionWrap> */}
-            <SubmitButton type={"submit"} text={"로그인"}></SubmitButton>
-            <SignUpLinkWrap>
-              <Link to="/signup">처음 방문하셨나요?</Link>
-            </SignUpLinkWrap>
-          </form>
-        </Section>
-      </Main>
-    </>
+    <Main>
+      <Section>
+        <FormHeader>
+          <HomeLogo id="form" />
+        </FormHeader>
+        <form
+          onKeyPress={e => handleKeyPress(e)}
+          onSubmit={e => handleSubmit(e)}
+        >
+          <FormInputWrap>
+            {textInputList.map(
+              ({ title, type, placeholder, autoComplete, onBlur }, index) => {
+                return (
+                  <TextInput
+                    key={index}
+                    title={title}
+                    type={type}
+                    placeholder={placeholder}
+                    autoComplete={autoComplete}
+                    onBlur={onBlur}
+                  />
+                );
+              },
+            )}
+          </FormInputWrap>
+          <SubmitButton type={"submit"} text={"로그인"}></SubmitButton>
+          <SignUpLinkWrap>
+            <Link to="/signup">처음 방문하셨나요?</Link>
+          </SignUpLinkWrap>
+        </form>
+      </Section>
+    </Main>
   );
 }

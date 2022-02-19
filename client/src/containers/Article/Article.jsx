@@ -1,8 +1,6 @@
 import { Main, PostArticleWrapper } from "./Article.style";
-import Header from "../../components/Header";
-import SideBar from "../../components/SideBar";
-import PostArticle from "../../components/PostArticle";
-import Comment from "../../components/Comment";
+import { Header, SideBar, PostArticle, Comment } from "components";
+
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -94,9 +92,9 @@ export default function Article() {
             liked={liked}
           />
         )}
+        <div ref={commentRef} />
+        <Comment />
       </PostArticleWrapper>
-      <div ref={commentRef} />
-      <Comment />
     </Main>
   );
 }

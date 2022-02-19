@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const CommentSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: 720px;
+  width: 100%;
   margin: 60px auto 100px auto;
 
   & h3 {
@@ -22,7 +22,8 @@ export const CommentForm = styled.div`
   & img {
     width: 30px;
     height: 30px;
-    border-radius: 100px;
+    border-radius: 50%;
+    object-fit: cover;
   }
 `;
 

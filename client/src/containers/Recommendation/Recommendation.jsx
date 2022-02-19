@@ -1,6 +1,5 @@
 ﻿import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import { Survey, PlantGrid, Loading, Button } from "components";
 import { fetchPlant } from "api/plant";
 import { WideContainer } from "style/ContainerStyle";
@@ -23,6 +22,8 @@ export default function Recommendation() {
     bloomingSeason: [],
     smell: [],
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isDataFilled(filter)) {
@@ -97,7 +98,7 @@ export default function Recommendation() {
   } else {
     element = (
       <>
-        <Header result>
+        <Header isFinalPage>
           <img src="img/logo.svg" alt="logo" />
           <h1>함께하길 기다리는 초록이</h1>
         </Header>
@@ -114,9 +115,14 @@ export default function Recommendation() {
 
   return (
     <Modal>
-      <CloseButton to="/">
+      <CloseButton
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
         <img src="icon/close.svg" alt="Close icon" />
       </CloseButton>
+
       <WideContainer>
         <CenterContainer>{element}</CenterContainer>
       </WideContainer>
