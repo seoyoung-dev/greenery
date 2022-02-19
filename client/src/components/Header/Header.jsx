@@ -55,7 +55,7 @@ export default function Header(props) {
                 </S.HamburgIconWrap>
                 <S.UserIconWrap>
                   <img
-                    src={userProfile.profileImg || "icon/user.svg"}
+                    src={userProfile.profileImg || "/icon/user.svg"}
                     alt="usericon"
                   />
                 </S.UserIconWrap>

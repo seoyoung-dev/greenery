@@ -20,9 +20,6 @@ export function SignUp() {
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState("img/upload.svg");
 
-  // 추가해야할 부분
-  // 입력값이 올바르지 않은 경우에는 회원가입요청을 보내지 않아야한다.
-  // password 와 checkPassword가 같아야한다.
   const fileInput = useRef("");
   const navigate = useNavigate();
 
@@ -103,7 +100,6 @@ export function SignUp() {
     const url = "api/users/register";
     const data = handleFormData();
 
-    // 서버에서 상태코드를 추가해주어야 할 것 같다. catch(err)
     axios
       .post(url, data, {
         headers: { "Content-Type": "multipart/form-data" },
