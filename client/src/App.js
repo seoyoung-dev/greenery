@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { userProfileState } from "Atoms";
 import { CookiesProvider, useCookies } from "react-cookie";
+import { setAxiosDefaultAccessToken, setAccessTokenIntoCookie } from "util";
 
 import axios from "axios";
 import GlobalStyle from "style/GlobalStyle";
@@ -22,34 +23,17 @@ function App() {
   const setUserProfile = useSetRecoilState(userProfileState);
   const [cookies, setCookie] = useCookies(["access_token"]);
 
-  // 페이지 리로드시 access_token을 재발급받기
-  const refreshAccessToken = async () => {
+  const handleToken = async () => {
     const url = "/api/users/refresh";
     const response = await axios.post(url);
 
-    setAxiosDefaultAccessToken(response);
-    setAccessTokenIntoCookie(response);
-  };
-
-  // response의 access_token을 axios.defaults로 설정하기
-  const setAxiosDefaultAccessToken = response => {
-    const { access_token } = response.data;
-
-    axios.defaults.headers.common["Authorization"] = access_token;
-  };
-
-  const setAccessTokenIntoCookie = response => {
     const JWT_EXPIRY_TIME = response.data.exp - Date.now();
-    setCookie("access_token", response.data.access_token, {
-      path: "/",
-      maxAge: JWT_EXPIRY_TIME / 1000,
-      // httpOnly: true,
-    });
-    // 10분 전에 로그인 연장
-    //
-    // setTimeout(refreshAccessToken, JWT_EXPIRY_TIME - 10 * 6000);
+
+    setAxiosDefaultAccessToken(response);
+    setAccessTokenIntoCookie(response, setCookie);
+    setTimeout(handleToken, JWT_EXPIRY_TIME - 10 * 6000);
   };
-  //
+
   const handleUserProfile = async () => {
     const url = "/api/users/auth";
     const response = await axios.get(url);
@@ -62,14 +46,13 @@ function App() {
 
   const handleReload = async () => {
     try {
-      await refreshAccessToken();
+      await handleToken();
       await handleUserProfile();
     } catch (err) {
       console.error(err);
     }
   };
 
-  // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
     handleReload();
   }, []);
