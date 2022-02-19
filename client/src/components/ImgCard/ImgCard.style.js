@@ -82,12 +82,6 @@ export const NavCard = styled(Content)`
   background-size: cover;
   width: 49%;
 
-  /* & + & {
-    @media screen and (min-width: 768px) and (max-width: 1140px) {
-      margin-left: 20px;
-    }
-
-  } */
   @media (max-width: 767px) {
     width: 90%;
     height: 600px;

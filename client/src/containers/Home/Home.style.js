@@ -58,5 +58,5 @@ export const PostCardBox = styled.div`
 export const StyledLink = styled(Link)`
   font-size: 14px;
   text-decoration: none;
-  color: #767676;
+  color: var(--lighter-text);
 `;
