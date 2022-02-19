@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const ProfileWrapper = styled.div`
+export const ProfileWrapper = styled.main`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
 `;
@@ -14,10 +14,11 @@ export const ProfileImg = styled.div`
   img {
     width: 180px;
     height: 180px;
+    object-fit: cover;
 
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
-    border-radius: 300px;
+    border-radius: 50%;
   }
 `;
 
@@ -36,9 +37,14 @@ export const Nickname = styled.div`
   text-align: center;
 
   color: #000000;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    font-size: 28px;
+  }
 `;
 export const MyPost = styled.div`
-  width: 1150px;
+  width: 100%;
   height: 21px;
 
   margin-bottom: 20px;
@@ -83,6 +89,10 @@ export const PostCardborder = styled.div`
 
   color: #e5e5e5;
   border-bottom: solid;
+
+  @media (max-width: 1140px) {
+    width: 100%;
+  }
 `;
 
 export const PostCardsWrapper = styled.div`
@@ -90,4 +100,12 @@ export const PostCardsWrapper = styled.div`
   grid-template-columns: 360px 360px 360px;
   grid-gap: 80px 28px;
   margin-top: 40px;
+
+  @media (max-width: 1140px) {
+    grid-template-columns: 360px 360px;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 360px;
+  }
 `;

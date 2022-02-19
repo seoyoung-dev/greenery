@@ -10,7 +10,7 @@ export default function TodaysPlant({ imgUrl, content, postId }) {
     const newContent = content.split("**");
     return newContent.map((text, idx) => {
       if (idx % 2 === 1) {
-        return <strong>{text}</strong>;
+        return <strong key={idx}>{text}</strong>;
       }
       return text;
     });
