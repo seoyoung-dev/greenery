@@ -8,7 +8,11 @@ export default function SideBar(props) {
       <IconBox>
         <button onClick={props.likeHandler}>
           <Icon width={20.62}>
-            <img src="/icon/thumbs-up.svg" alt="thumbs-up" />
+            {props.liked ? (
+              <img src="/icon/thumbs-up-solid.svg" alt="thumbs-up" />
+            ) : (
+              <img src="/icon/thumbs-up.svg" alt="thumbs-up" />
+            )}
           </Icon>
         </button>
 

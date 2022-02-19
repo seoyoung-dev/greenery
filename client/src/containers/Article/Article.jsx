@@ -21,10 +21,9 @@ export default function Article() {
   };
 
   const handleLikeClick = async () => {
-    const res = await axios.put(`/api/posts/${postId}/like`, {
-      userId: userProfile.id,
-    });
-    setLikes(res.data.likse);
+    const res = await axios.put(`/api/posts/${postId}/like`);
+    console.log(res.data);
+    setLikes(res.data.likes);
     if (res.status === 200) setLiked(!liked);
   };
 
@@ -52,17 +51,14 @@ export default function Article() {
     }
   };
 
-  const getPost = () => {
-    axios
-      .get(`/api/posts?postId=${postId}`)
-      .then(res => {
-        setArticle(res.data.post);
-        setLiked(res.data.post.liked);
-        setLikes(res.data.post.likes);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  const getPost = async () => {
+    const res = await axios.get(`/api/posts/?postId=${postId}`, {
+      params: { user: userProfile.id },
+    });
+    console.log(res.data.post);
+    setArticle(res.data.post);
+    setLiked(res.data.post.liked);
+    setLikes(res.data.post.likes);
   };
 
   useEffect(() => {
@@ -93,6 +89,7 @@ export default function Article() {
             updateHandler={handleUpdateClick}
             userId={userProfile.id}
             PostUserId={article.author}
+            liked={liked}
           />
         )}
         <div ref={commentRef} />
