@@ -13,7 +13,6 @@ export function validateForm(list) {
   const checkEmail = text => {
     const regEmail =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    console.log(text);
     return regEmail.test(text);
   };
 

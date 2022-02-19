@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Buttons = styled.div`
   display: flex;
@@ -29,4 +29,12 @@ export const Pages = styled.div`
     background-color: #45ba66;
     color: white;
   }
+`;
+
+export const ArrowButton = styled.button`
+  ${props =>
+    props.disabled &&
+    css`
+      visibility: hidden;
+    `}
 `;

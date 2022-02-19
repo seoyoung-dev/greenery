@@ -7,7 +7,7 @@ export const SideBarWrapper = styled.section`
   height: 276px;
 
   @media screen and (max-width: 1024px) {
-    width: 276px;
+    width: 100%;
     height: 54px;
     position: static;
     display: flex;
@@ -30,9 +30,11 @@ export const IconBox = styled.div`
   }
 
   @media screen and (max-width: 1024px) {
+    width: 100%;
     position: static;
     display: flex;
     flex-direction: row;
+    justify-content: center;
   }
 `;
 

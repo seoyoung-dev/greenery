@@ -20,6 +20,7 @@ import TodaysPlant from "./TodaysPlant";
 import WikiSearch from "./WikiSearch";
 import WikiFilter from "./WikiFilter";
 import Pagination from "./Pagination";
+import Comment from "./Comment";
 
 export {
   HeaderDropDown,
@@ -44,4 +45,5 @@ export {
   WikiFilter,
   WikiSearch,
   Pagination,
+  Comment,
 };
