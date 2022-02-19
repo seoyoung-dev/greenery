@@ -259,7 +259,7 @@ router.get("/post/like", auth, async function (req, res) {
     const userId = req.user.id;
     const [total, posts] = await Promise.all([
       Post.countDocuments({ author: userId }),
-      Post.find({ author: userId })
+      Post.find({ likes: { $in: userId } })
         .sort({ createdAt: -1 })
         .skip(postsCount * (page - 1))
         .limit(postsCount)
