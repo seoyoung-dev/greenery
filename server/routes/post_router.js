@@ -150,7 +150,6 @@ router.post("/", auth, uploadImage, async function (req, res) {
     const postData = { author: id, title, contents: contentList };
     const post = new Post(postData);
     const newPost = await post.save();
-    console.log(newPost.id);
     res.status(201).json({
       isOk: true,
       message: "Post 생성 완료",

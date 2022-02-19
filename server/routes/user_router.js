@@ -160,7 +160,6 @@ router.post("/refresh", async (req, res) => {
       if (user.token !== refresh_token) throw new Error("wrong access");
 
       const accessTokenExpires = Date.now() + accessTokenExpireTime * 3600000;
-      console.log(new Date(accessTokenExpires));
       const access_token = jwt.sign(
         {
           id: user.id,
