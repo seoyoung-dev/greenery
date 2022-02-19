@@ -5,10 +5,10 @@ export const LogoWrap = styled.div`
 `;
 export const HeaderLogo = styled.img`
   vertical-align: bottom;
-  content: url("img/favicon.svg");
+  content: url("/img/favicon.svg");
 
   @media (min-width: 768px) {
-    content: url("img/logo.svg");
+    content: url("/img/logo.svg");
   }
 `;
 
