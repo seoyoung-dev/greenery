@@ -10,7 +10,7 @@ import {
   SignUpLinkWrap,
   FormHeader,
 } from "./SignIn.style";
-import { Header, HomeLogo, TextInput, SubmitButton } from "components";
+import { HomeLogo, TextInput, SubmitButton } from "components";
 import { validateForm } from "./validation";
 
 import axios from "axios";
