@@ -62,7 +62,7 @@ export const SearchInput = styled.form`
   & input {
     box-sizing: border-box;
     padding: 5px 5px 5px 40px;
-    width: 330px;
+    width: 360px;
     height: 46px;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
