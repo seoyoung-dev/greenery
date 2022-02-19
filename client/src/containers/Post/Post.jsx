@@ -94,7 +94,10 @@ export function Post() {
           .then(res => {
             navigate(`/article/${postId}`);
           })
-          .catch(err => console.log(err))
+          .catch(err => {
+            // console.log(err);
+            alert("빈칸을 입력해주세요.");
+          })
       : axios
           .post("/api/posts", data, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -103,7 +106,10 @@ export function Post() {
             // backend에서 글생성후 postId 받아야함
             navigate(`/article/${res.data.postId}`);
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            // console.log(err);
+            alert("빈칸을 입력해주세요.");
+          });
 
     // console.log(data.getAll("title"));
     // console.log(data.getAll("userfiles"));
