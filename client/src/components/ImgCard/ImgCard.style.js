@@ -10,7 +10,7 @@ export const Container = styled.div`
 
   @media screen and (max-width: 767px) {
     width: 100%;
-    padding: 3%;
+    padding: 0;
     display: flex;
     justify-content: center;
   }
@@ -78,15 +78,16 @@ export const Detail = styled.p`
 `;
 
 export const NavCard = styled(Content)`
-  background-image: url(${props => props.imgUrl});
+  background: url(${props => props.imgUrl}) center no-repeat;
+  background-size: cover;
+  width: 49%;
 
-  & + & {
-    @media screen and (min-width: 768px) and (max-width: 1140px) {
-      margin-left: 20px;
-    }
+  @media (max-width: 767px) {
+    width: 90%;
+    height: 600px;
 
-    @media screen and (max-width: 767px) {
-      margin-top: 30px;
+    & + & {
+      margin-top: 15px;
     }
   }
 `;
