@@ -1,4 +1,3 @@
-
 <img src='https://user-images.githubusercontent.com/74144442/154645802-3d0954a7-7625-43b8-a8eb-5aa7ab020228.png' width=300px><br>
 
 > 반려식물을 죽이지 않고 '잘' 기르고 싶은 사람들을 위한 서비스<br>
@@ -71,7 +70,7 @@
 | 프로필 페이지 | 
 | ------ | 
 | <div align='center'><img src='https://user-images.githubusercontent.com/74144442/154788085-2cf61a66-9788-42fd-9109-1ed959b02ec2.png' width=500px></div> |
-| * 내가 작성한 글 확인<br />* 다른 유저가 좋아요 누른 글 확인<br />|
+| * 내가 작성한 글 확인<br />* 내가 좋아요 누른 글 확인<br />|
 
 <br />
 
