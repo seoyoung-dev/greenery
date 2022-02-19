@@ -5,11 +5,10 @@ import {
   DetailContainer,
   ImageContainer,
   Header,
-  Main,
+  Description,
   Footer,
   CloseButton,
-  MetaLeft,
-  MetaRight,
+  MetaBox,
 } from "./PlantDetail.style";
 
 export default function PlantDetail({ onClose, plant_info }) {
@@ -53,25 +52,53 @@ export default function PlantDetail({ onClose, plant_info }) {
           <Header>
             <h1>{plant_info.plantName}</h1>
           </Header>
-          <Main>
+          <Description>
             <p>
               {plant_info.functionalInfo
                 ? plant_info.functionalInfo
                 : plant_info.specialManage}
             </p>
-          </Main>
+          </Description>
           <Footer>
-            <MetaLeft>
-              <p>· 원산지 : {plant_info.originInfo}℃</p>
-              <p>· 생육 습도 : {plant_info.humidity}%</p>
-              <p>· 성장 높이 : {plant_info.growthHeight}cm</p>
-            </MetaLeft>
-            <MetaRight>
-              <p>· 물주기 봄 : {plant_info.waterCycle[0]}</p>
-              <p>· 물주기 여름 : {plant_info.waterCycle[1]}</p>
-              <p>· 물주기 가을 : {plant_info.waterCycle[2]}</p>
-              <p>· 물주기 겨울 : {plant_info.waterCycle[3]}</p>
-            </MetaRight>
+            <MetaBox>
+              <p>
+                <span>원산지 :</span> {plant_info.originInfo}℃
+              </p>
+              <p>
+                <span>생육 습도 :</span> {plant_info.humidity}%
+              </p>
+              <p>
+                <span>성장 높이 :</span> {plant_info.growthHeight}
+                {plant_info.growthHeight === 150 ? "cm 이상" : "cm"}
+              </p>
+            </MetaBox>
+            <MetaBox>
+              <p>
+                <span>광도 :</span> {plant_info.brightness.join(", ")}
+              </p>
+              <p>
+                <span>향기 :</span> {plant_info.smell}
+              </p>
+              <p>
+                <span>꽃피는 계절 :</span>{" "}
+                {plant_info.bloomingSeason.join(", ")}
+              </p>
+            </MetaBox>
+
+            <MetaBox>
+              <p>
+                <span>물주기 봄 :</span> {plant_info.waterCycle[0]}
+              </p>
+              <p>
+                <span>물주기 여름 :</span> {plant_info.waterCycle[1]}
+              </p>
+              <p>
+                <span>물주기 가을 :</span> {plant_info.waterCycle[2]}
+              </p>
+              <p>
+                <span>물주기 겨울 :</span> {plant_info.waterCycle[3]}
+              </p>
+            </MetaBox>
           </Footer>
         </DetailContainer>
       </Modal>
