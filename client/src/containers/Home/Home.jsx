@@ -46,7 +46,7 @@ export default function Home() {
       )}
       <PostContentsWrapper>
         <Title>
-          <span>많이 본 초록이들</span>
+          <span>인기 있는 초록이</span>
           <StyledLink to="/community">더 많은 초록이들 보기</StyledLink>
         </Title>
         <PostCardBox>

@@ -60,7 +60,7 @@ export function Community() {
     setPosts([]);
     getPosts();
   };
-  console.log(pageInfo.current.currentPage);
+
   useEffect(() => {
     // if (true) {
     const observer = new IntersectionObserver(ovserveHandler, {

@@ -11,7 +11,8 @@ export default function TodaysPlant({ imgUrl, content, postId }) {
       <ContentBox>
         <img src={imgUrl} alt="인기 식물 사진" />
         <p>
-          <span dangerouslySetInnerHTML={{ __html: content }}></span>
+          {/* <span dangerouslySetInnerHTML={{ __html: content }}></span> */}
+          {content}
           <TodaysLink to={`/article/${postId}`}>여기</TodaysLink>를 눌러주세요
         </p>
       </ContentBox>

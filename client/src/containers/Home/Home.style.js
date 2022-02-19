@@ -42,13 +42,16 @@ export const PostCardBox = styled.div`
   width: 100%;
   justify-content: space-between;
   white-space: wrap;
+  padding-bottom: 30px;
 
-  & + & {
-    margin-left: 200px;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    height: 5px;
   }
 
-  @media (max-width: 1140px) {
-    overflow-x: scroll;
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
   }
 `;
 
