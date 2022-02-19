@@ -110,11 +110,6 @@ export function Post() {
             // console.log(err);
             alert("빈칸을 입력해주세요.");
           });
-
-    // console.log(data.getAll("title"));
-    // console.log(data.getAll("userfiles"));
-    // console.log(data.getAll("contents"));
-    // console.log(data.getAll("imgUrl"));
   };
 
   return (

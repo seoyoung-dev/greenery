@@ -120,59 +120,61 @@ export function MyPage() {
   }, [currentClick]);
 
   return (
-    <ProfileWrapper>
+    <>
       <Header />
-      <ProfileImg>
-        <img src={userProfile.profileImg} />
-      </ProfileImg>
-      <Nickname>{userProfile.name}</Nickname>
-      <MyPost>
-        <ul>
-          <li>
-            <button id="MyPosts" onClick={GetClick}>
-              내가 작성한 글
-            </button>
-          </li>
-          <li>
-            <button id="LikePosts" onClick={GetClick}>
-              좋아요 한 글
-            </button>
-          </li>
-        </ul>
-      </MyPost>
-      <PostCardborder />
+      <ProfileWrapper>
+        <ProfileImg>
+          <img src={userProfile.profileImg} />
+        </ProfileImg>
+        <Nickname>{userProfile.name}</Nickname>
+        <MyPost>
+          <ul>
+            <li>
+              <button id="MyPosts" onClick={GetClick}>
+                내가 작성한 글
+              </button>
+            </li>
+            <li>
+              <button id="LikePosts" onClick={GetClick}>
+                좋아요 한 글
+              </button>
+            </li>
+          </ul>
+        </MyPost>
+        <PostCardborder />
 
-      <PostCardsWrapper>
-        {currentClick === "MyPosts" &&
-          posts.map(({ id, title, imgUrl, likes, author }, index) => {
-            return (
-              <PostCard
-                key={index}
-                id={id}
-                imgUrl={imgUrl}
-                title={title}
-                author={author}
-                likes={likes}
-              />
-            );
-          })}
+        <PostCardsWrapper>
+          {currentClick === "MyPosts" &&
+            posts.map(({ id, title, imgUrl, likes, author }, index) => {
+              return (
+                <PostCard
+                  key={index}
+                  id={id}
+                  imgUrl={imgUrl}
+                  title={title}
+                  author={author}
+                  likes={likes}
+                />
+              );
+            })}
 
-        {currentClick === "LikePosts" &&
-          likePosts.map(({ id, title, imgUrl, likes, author }, index) => {
-            return (
-              <PostCard
-                key={index}
-                id={id}
-                imgUrl={imgUrl}
-                title={title}
-                author={author}
-                likes={likes}
-              />
-            );
-          })}
+          {currentClick === "LikePosts" &&
+            likePosts.map(({ id, title, imgUrl, likes, author }, index) => {
+              return (
+                <PostCard
+                  key={index}
+                  id={id}
+                  imgUrl={imgUrl}
+                  title={title}
+                  author={author}
+                  likes={likes}
+                />
+              );
+            })}
 
-        <div ref={pageEnd} style={{ position: "hidden" }}></div>
-      </PostCardsWrapper>
-    </ProfileWrapper>
+          <div ref={pageEnd} style={{ position: "hidden" }}></div>
+        </PostCardsWrapper>
+      </ProfileWrapper>
+    </>
   );
 }

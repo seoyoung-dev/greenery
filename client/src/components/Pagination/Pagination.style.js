@@ -1,11 +1,13 @@
 ﻿import styled, { css } from "styled-components";
 
 export const PageButton = styled.button`
-  width: 26px;
+  min-width: 26px;
   height: 26px;
   background-color: #fff;
   border: 1px solid #e5e5e5;
+  border-radius: 3px;
   cursor: pointer;
+  color: var(--text);
 
   + button {
     margin-left: 7px;

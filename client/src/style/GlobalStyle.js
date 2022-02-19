@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
 
 
   html, body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
   }
