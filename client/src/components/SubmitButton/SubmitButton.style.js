@@ -27,8 +27,12 @@ export const Button = styled.button`
 
   font-weight: bold;
   font-size: 17px;
-
+  transition: opacity 0.2s;
   &:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  &:active {
     opacity: 0.8;
   }
 `;

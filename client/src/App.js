@@ -20,7 +20,7 @@ import Wiki from "./pages/Wiki";
 
 function App() {
   const setUserProfile = useSetRecoilState(userProfileState);
-  const [cookies, setCookie] = useCookies([]);
+  const [cookies, setCookie] = useCookies(["access_token"]);
 
   // 페이지 리로드시 access_token을 재발급받기
   const refreshAccessToken = async () => {
@@ -46,7 +46,6 @@ function App() {
     setCookie("access_token", response.data.access_token, {
       path: "/",
       maxAge: JWT_EXPIRY_TIME / 1000,
-      secure: true,
       // httpOnly: true,
     });
     // 10분 전에 로그인 연장
@@ -79,7 +78,7 @@ function App() {
   // 완료가 되면 userProfileState에 저장하기
   useEffect(() => {
     handleReload();
-  });
+  }, []);
 
   return (
     <CookiesProvider>

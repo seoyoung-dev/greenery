@@ -1,12 +1,5 @@
 ﻿import { useEffect, useState, useRef } from "react";
 
-// import Header from "components/Header";
-// import PlantGrid from "components/PlantGrid";
-// import WikiSearch from "components/WikiSearch";
-// import WikiFilter from "components/WikiFilter";
-// import Loading from "components/Loading";
-// import Pagination from "components/Pagination";
-
 import {
   Header,
   PlantGrid,
