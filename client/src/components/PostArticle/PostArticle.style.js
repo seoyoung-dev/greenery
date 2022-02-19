@@ -17,10 +17,10 @@ export const ArticleTitle = styled.span`
 export const PostInfo = styled.div`
   display: grid;
   grid-template-columns: 50px 1fr;
-
   img {
     width: 50px;
     height: 50px;
+    border-radius: 50%;
   }
 `;
 
