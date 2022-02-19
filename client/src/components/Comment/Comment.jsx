@@ -41,7 +41,7 @@ export function Comment() {
 
   function textResize() {
     const obj = textRef.current;
-    obj.style.height = "auto";
+    obj.style.height = "0px";
     obj.style.height = obj.scrollHeight + "px";
   }
 
