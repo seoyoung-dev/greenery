@@ -20,6 +20,14 @@ export const ProfileImg = styled.div`
     box-sizing: border-box;
     border-radius: 50%;
   }
+
+  @media (max-width: 767px) {
+    margin-top: 80px;
+    & img {
+      width: 100px;
+      height: 100px;
+    }
+  }
 `;
 
 export const Nickname = styled.div`
@@ -41,6 +49,7 @@ export const Nickname = styled.div`
   @media (max-width: 767px) {
     width: 100%;
     font-size: 28px;
+    margin-bottom: 50px;
   }
 `;
 export const MyPost = styled.div`
@@ -77,10 +86,11 @@ export const MyPost = styled.div`
 
     align-items: center;
     text-align: right;
+    cursor: pointer;
 
     color: #000000;
 
-    padding-bottom: 16px;
+    padding-bottom: 12px;
   }
 `;
 export const PostCardborder = styled.div`
