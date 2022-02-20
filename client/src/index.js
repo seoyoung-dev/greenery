@@ -3,10 +3,14 @@ import ReactDOM from "react-dom";
 
 import App from "./App";
 
+import { RecoilRoot } from "recoil";
+
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <RecoilRoot>
     <App />
-  </React.StrictMode>,
+  </RecoilRoot>,
+  // </React.StrictMode>,
   document.getElementById("root"),
 );
 
